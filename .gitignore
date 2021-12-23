@@ -41,3 +41,7 @@ nbdist/
 !*/build/*.java
 !*/build/*.html
 !*/build/*.xml
+node_modules
+yarn.lock
+./tools/yarn.lock
+tmp.json
