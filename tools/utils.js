@@ -10,7 +10,7 @@ async function outMenuToml(text) {
 }
 
 async function outSql(text) {
-    await exportFile("./menu.sql", text)
+    await exportFile("../sql-eduction/menu.sql", text)
 }
 
 async function reorderMenuIds() {
