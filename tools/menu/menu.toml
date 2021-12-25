@@ -9,7 +9,7 @@ path = 'members'
 ['会员管理'.'班级管理']
 menuId = 3001
 icon = 'product-list'
-path = 'classesManagement'
+path = 'managementClasses'
 
 #-----------会员管理班级管理 按钮权限------------
 ['会员管理'.'班级管理'.'按钮权限'.'查询']
@@ -42,7 +42,7 @@ perms = 'export'
 ['会员管理'.'学校管理']
 menuId = 3008
 icon = 'product-list'
-path = 'schoolsManagement'
+path = 'managementSchools'
 
 #-----------会员管理学校管理 按钮权限------------
 ['会员管理'.'学校管理'.'按钮权限'.'查询']
@@ -75,7 +75,7 @@ perms = 'export'
 ['会员管理'.'学生管理']
 menuId = 3015
 icon = 'product-list'
-path = 'studentsManagement'
+path = 'managementStudents'
 
 #-----------会员管理学生管理 按钮权限------------
 ['会员管理'.'学生管理'.'按钮权限'.'查询']
@@ -108,7 +108,7 @@ perms = 'export'
 ['会员管理'.'会员管理']
 menuId = 3022
 icon = 'product-list'
-path = 'membershipsManagement'
+path = 'managementMemberships'
 
 #-----------会员管理会员管理 按钮权限------------
 ['会员管理'.'会员管理'.'按钮权限'.'查询']
@@ -133,4 +133,106 @@ perms = 'import'
 
 ['会员管理'.'会员管理'.'按钮权限'.'导出']
 menuId = 3028
+perms = 'export'
+
+
+#------------------------资料管理(目录)---------------------------
+['资料管理']
+menuId = 3029
+icon = 'product'
+path = 'material'
+
+#------------------------资料管理.上传文件(二级菜单)---------------------------
+['资料管理'.'上传文件']
+menuId = 3030
+icon = 'product-list'
+path = 'managementUpload'
+
+#-----------资料管理上传文件 按钮权限------------
+['资料管理'.'上传文件'.'按钮权限'.'查询']
+menuId = 3031
+perms = 'query'
+
+['资料管理'.'上传文件'.'按钮权限'.'添加']
+menuId = 3032
+perms = 'add'
+
+['资料管理'.'上传文件'.'按钮权限'.'编辑']
+menuId = 3033
+perms = 'edit'
+
+['资料管理'.'上传文件'.'按钮权限'.'删除']
+menuId = 3034
+perms = 'remove'
+
+['资料管理'.'上传文件'.'按钮权限'.'导入']
+menuId = 3035
+perms = 'import'
+
+['资料管理'.'上传文件'.'按钮权限'.'导出']
+menuId = 3036
+perms = 'export'
+
+
+#------------------------资料管理.目录管理(二级菜单)---------------------------
+['资料管理'.'目录管理']
+menuId = 3037
+icon = 'product-list'
+path = 'managementDirectory'
+
+#-----------资料管理目录管理 按钮权限------------
+['资料管理'.'目录管理'.'按钮权限'.'查询']
+menuId = 3038
+perms = 'query'
+
+['资料管理'.'目录管理'.'按钮权限'.'添加']
+menuId = 3039
+perms = 'add'
+
+['资料管理'.'目录管理'.'按钮权限'.'编辑']
+menuId = 3040
+perms = 'edit'
+
+['资料管理'.'目录管理'.'按钮权限'.'删除']
+menuId = 3041
+perms = 'remove'
+
+['资料管理'.'目录管理'.'按钮权限'.'导入']
+menuId = 3042
+perms = 'import'
+
+['资料管理'.'目录管理'.'按钮权限'.'导出']
+menuId = 3043
+perms = 'export'
+
+
+#------------------------资料管理.绘本管理(二级菜单)---------------------------
+['资料管理'.'绘本管理']
+menuId = 3044
+icon = 'product-list'
+path = 'managementPicturebook'
+
+#-----------资料管理绘本管理 按钮权限------------
+['资料管理'.'绘本管理'.'按钮权限'.'查询']
+menuId = 3045
+perms = 'query'
+
+['资料管理'.'绘本管理'.'按钮权限'.'添加']
+menuId = 3046
+perms = 'add'
+
+['资料管理'.'绘本管理'.'按钮权限'.'编辑']
+menuId = 3047
+perms = 'edit'
+
+['资料管理'.'绘本管理'.'按钮权限'.'删除']
+menuId = 3048
+perms = 'remove'
+
+['资料管理'.'绘本管理'.'按钮权限'.'导入']
+menuId = 3049
+perms = 'import'
+
+['资料管理'.'绘本管理'.'按钮权限'.'导出']
+menuId = 3050
 perms = 'export'
