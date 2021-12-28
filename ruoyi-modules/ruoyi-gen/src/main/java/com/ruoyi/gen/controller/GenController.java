@@ -30,7 +30,7 @@ import com.ruoyi.gen.service.IGenTableService;
 
 /**
  * 代码生成 操作处理
- * 
+ *
  * @author ruoyi
  */
 @RequestMapping("/gen")
@@ -169,6 +169,19 @@ public class GenController extends BaseController
     public AjaxResult genCode(@PathVariable("tableName") String tableName)
     {
         genTableService.generatorCode(tableName);
+        return AjaxResult.success();
+    }
+    /**
+     * 生成代码（自定义路径）
+     */
+    @RequiresPermissions("tool:gen:code")
+    @Log(title = "直接插入项目代码生成", businessType = BusinessType.GENCODE)
+    @GetMapping("/batchGenCodewrite")
+    public AjaxResult batchGenCodewrite(String tables)
+    {
+        for (String table : Convert.toStrArray(tables)) {
+            genTableService.generatorCodeInsert(table);
+        }
         return AjaxResult.success();
     }
 

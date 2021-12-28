@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 代码生成相关配置
- * 
+ *
  * @author ruoyi
  */
 @Component
@@ -23,6 +23,30 @@ public class GenConfig
 
     /** 表前缀(类名不会包含表前缀) */
     public static String tablePrefix;
+
+    /**
+     * generated the path to the front end
+     */
+    public static String genUIPath;
+    /**
+     * generated th path to java path
+     */
+    public static String genModulePath;
+
+    public static String getGenUIPath() {
+        return genUIPath;
+    }
+
+    public  void setGenUIPath(String genUIPath) {
+        GenConfig.genUIPath = genUIPath;
+    }
+    public  void setGenModulePath(String genModulePath) {
+        GenConfig.genModulePath = genModulePath;
+    }
+
+    public static String getGenModulePath() {
+        return genModulePath;
+    }
 
     public static String getAuthor()
     {
