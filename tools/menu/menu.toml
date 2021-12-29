@@ -282,7 +282,7 @@ perms = 'export'
 ['老师管理'.'老师信息']
 menuId = 3059
 icon = 'article'
-path = 'teacherClasses'
+path = 'teacherInfos'
 
 #-----------老师管理老师信息 按钮权限------------
 ['老师管理'.'老师信息'.'按钮权限'.'查询']
@@ -314,7 +314,7 @@ perms = 'export'
 ['老师管理'.'老师讲义']
 menuId = 3066
 icon = 'article'
-path = 'teacherClasses'
+path = 'teacherHandouts'
 
 #-----------老师管理老师讲义 按钮权限------------
 ['老师管理'.'老师讲义'.'按钮权限'.'查询']

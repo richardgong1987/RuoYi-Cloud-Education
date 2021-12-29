@@ -246,58 +246,58 @@ WHERE menu_id=4;
                 '#', 'admin', SYSDATE(), '', NULL, '老师班级-导出-按钮');
     
         INSERT INTO sys_menu
-        VALUES ('3059', '老师信息', '3051', '2', 'teacherClasses', 'teachers/teacherClasses/index',
-                '', 1, 0, 'C', '0', '0', 'teachers:teacherClasses:list', 'article', 'admin', SYSDATE(), '', NULL, '老师信息-菜单');
+        VALUES ('3059', '老师信息', '3051', '2', 'teacherInfos', 'teachers/teacherInfos/index',
+                '', 1, 0, 'C', '0', '0', 'teachers:teacherInfos:list', 'article', 'admin', SYSDATE(), '', NULL, '老师信息-菜单');
     
         INSERT INTO sys_menu
-        VALUES ('3060', '查询', '3059', '1', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:query',
+        VALUES ('3060', '查询', '3059', '1', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherInfos:query',
                 '#', 'admin', SYSDATE(), '', NULL, '老师信息-查询-按钮');
     
         INSERT INTO sys_menu
-        VALUES ('3061', '添加', '3059', '2', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:add',
+        VALUES ('3061', '添加', '3059', '2', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherInfos:add',
                 '#', 'admin', SYSDATE(), '', NULL, '老师信息-添加-按钮');
     
         INSERT INTO sys_menu
-        VALUES ('3062', '编辑', '3059', '3', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:edit',
+        VALUES ('3062', '编辑', '3059', '3', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherInfos:edit',
                 '#', 'admin', SYSDATE(), '', NULL, '老师信息-编辑-按钮');
     
         INSERT INTO sys_menu
-        VALUES ('3063', '删除', '3059', '4', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:remove',
+        VALUES ('3063', '删除', '3059', '4', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherInfos:remove',
                 '#', 'admin', SYSDATE(), '', NULL, '老师信息-删除-按钮');
     
         INSERT INTO sys_menu
-        VALUES ('3064', '导入', '3059', '5', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:import',
+        VALUES ('3064', '导入', '3059', '5', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherInfos:import',
                 '#', 'admin', SYSDATE(), '', NULL, '老师信息-导入-按钮');
     
         INSERT INTO sys_menu
-        VALUES ('3065', '导出', '3059', '6', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:export',
+        VALUES ('3065', '导出', '3059', '6', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherInfos:export',
                 '#', 'admin', SYSDATE(), '', NULL, '老师信息-导出-按钮');
     
         INSERT INTO sys_menu
-        VALUES ('3066', '老师讲义', '3051', '3', 'teacherClasses', 'teachers/teacherClasses/index',
-                '', 1, 0, 'C', '0', '0', 'teachers:teacherClasses:list', 'article', 'admin', SYSDATE(), '', NULL, '老师讲义-菜单');
+        VALUES ('3066', '老师讲义', '3051', '3', 'teacherHandouts', 'teachers/teacherHandouts/index',
+                '', 1, 0, 'C', '0', '0', 'teachers:teacherHandouts:list', 'article', 'admin', SYSDATE(), '', NULL, '老师讲义-菜单');
     
         INSERT INTO sys_menu
-        VALUES ('3067', '查询', '3066', '1', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:query',
+        VALUES ('3067', '查询', '3066', '1', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherHandouts:query',
                 '#', 'admin', SYSDATE(), '', NULL, '老师讲义-查询-按钮');
     
         INSERT INTO sys_menu
-        VALUES ('3068', '添加', '3066', '2', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:add',
+        VALUES ('3068', '添加', '3066', '2', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherHandouts:add',
                 '#', 'admin', SYSDATE(), '', NULL, '老师讲义-添加-按钮');
     
         INSERT INTO sys_menu
-        VALUES ('3069', '编辑', '3066', '3', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:edit',
+        VALUES ('3069', '编辑', '3066', '3', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherHandouts:edit',
                 '#', 'admin', SYSDATE(), '', NULL, '老师讲义-编辑-按钮');
     
         INSERT INTO sys_menu
-        VALUES ('3070', '删除', '3066', '4', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:remove',
+        VALUES ('3070', '删除', '3066', '4', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherHandouts:remove',
                 '#', 'admin', SYSDATE(), '', NULL, '老师讲义-删除-按钮');
     
         INSERT INTO sys_menu
-        VALUES ('3071', '导入', '3066', '5', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:import',
+        VALUES ('3071', '导入', '3066', '5', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherHandouts:import',
                 '#', 'admin', SYSDATE(), '', NULL, '老师讲义-导入-按钮');
     
         INSERT INTO sys_menu
-        VALUES ('3072', '导出', '3066', '6', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:export',
+        VALUES ('3072', '导出', '3066', '6', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherHandouts:export',
                 '#', 'admin', SYSDATE(), '', NULL, '老师讲义-导出-按钮');
     

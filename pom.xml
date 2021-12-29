@@ -277,6 +277,7 @@
         <module>ruoyi-modules</module>
         <module>ruoyi-api</module>
         <module>ruoyi-common</module>
+        <module>ruoyi-modules-eduction</module>
     </modules>
     <packaging>pom</packaging>
 
