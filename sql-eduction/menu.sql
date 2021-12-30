@@ -14,60 +14,60 @@ WHERE menu_id=4;
                 '0', '', 'product', 'admin', SYSDATE(), '', NULL, '会员管理-目录');
     
         INSERT INTO sys_menu
-        VALUES ('3001', '班级管理', '3000', '1', 'managementClasses', 'peoples/managementClasses/index',
-                '', 1, 0, 'C', '0', '0', 'peoples:managementClasses:list', 'product-list', 'admin', SYSDATE(), '', NULL, '班级管理-菜单');
-    
-        INSERT INTO sys_menu
-        VALUES ('3002', '查询', '3001', '1', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementClasses:query',
-                '#', 'admin', SYSDATE(), '', NULL, '班级管理-查询-按钮');
-    
-        INSERT INTO sys_menu
-        VALUES ('3003', '添加', '3001', '2', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementClasses:add',
-                '#', 'admin', SYSDATE(), '', NULL, '班级管理-添加-按钮');
-    
-        INSERT INTO sys_menu
-        VALUES ('3004', '编辑', '3001', '3', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementClasses:edit',
-                '#', 'admin', SYSDATE(), '', NULL, '班级管理-编辑-按钮');
-    
-        INSERT INTO sys_menu
-        VALUES ('3005', '删除', '3001', '4', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementClasses:remove',
-                '#', 'admin', SYSDATE(), '', NULL, '班级管理-删除-按钮');
-    
-        INSERT INTO sys_menu
-        VALUES ('3006', '导入', '3001', '5', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementClasses:import',
-                '#', 'admin', SYSDATE(), '', NULL, '班级管理-导入-按钮');
-    
-        INSERT INTO sys_menu
-        VALUES ('3007', '导出', '3001', '6', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementClasses:export',
-                '#', 'admin', SYSDATE(), '', NULL, '班级管理-导出-按钮');
-    
-        INSERT INTO sys_menu
-        VALUES ('3008', '学校管理', '3000', '2', 'managementSchools', 'peoples/managementSchools/index',
+        VALUES ('3001', '学校管理', '3000', '1', 'managementSchools', 'peoples/managementSchools/index',
                 '', 1, 0, 'C', '0', '0', 'peoples:managementSchools:list', 'product-list', 'admin', SYSDATE(), '', NULL, '学校管理-菜单');
     
         INSERT INTO sys_menu
-        VALUES ('3009', '查询', '3008', '1', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementSchools:query',
+        VALUES ('3002', '查询', '3001', '1', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementSchools:query',
                 '#', 'admin', SYSDATE(), '', NULL, '学校管理-查询-按钮');
     
         INSERT INTO sys_menu
-        VALUES ('3010', '添加', '3008', '2', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementSchools:add',
+        VALUES ('3003', '添加', '3001', '2', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementSchools:add',
                 '#', 'admin', SYSDATE(), '', NULL, '学校管理-添加-按钮');
     
         INSERT INTO sys_menu
-        VALUES ('3011', '编辑', '3008', '3', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementSchools:edit',
+        VALUES ('3004', '编辑', '3001', '3', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementSchools:edit',
                 '#', 'admin', SYSDATE(), '', NULL, '学校管理-编辑-按钮');
     
         INSERT INTO sys_menu
-        VALUES ('3012', '删除', '3008', '4', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementSchools:remove',
+        VALUES ('3005', '删除', '3001', '4', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementSchools:remove',
                 '#', 'admin', SYSDATE(), '', NULL, '学校管理-删除-按钮');
     
         INSERT INTO sys_menu
-        VALUES ('3013', '导入', '3008', '5', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementSchools:import',
+        VALUES ('3006', '导入', '3001', '5', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementSchools:import',
                 '#', 'admin', SYSDATE(), '', NULL, '学校管理-导入-按钮');
     
         INSERT INTO sys_menu
-        VALUES ('3014', '导出', '3008', '6', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementSchools:export',
+        VALUES ('3007', '导出', '3001', '6', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementSchools:export',
                 '#', 'admin', SYSDATE(), '', NULL, '学校管理-导出-按钮');
+    
+        INSERT INTO sys_menu
+        VALUES ('3008', '班级管理', '3000', '2', 'managementClasses', 'peoples/managementClasses/index',
+                '', 1, 0, 'C', '0', '0', 'peoples:managementClasses:list', 'product-list', 'admin', SYSDATE(), '', NULL, '班级管理-菜单');
+    
+        INSERT INTO sys_menu
+        VALUES ('3009', '查询', '3008', '1', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementClasses:query',
+                '#', 'admin', SYSDATE(), '', NULL, '班级管理-查询-按钮');
+    
+        INSERT INTO sys_menu
+        VALUES ('3010', '添加', '3008', '2', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementClasses:add',
+                '#', 'admin', SYSDATE(), '', NULL, '班级管理-添加-按钮');
+    
+        INSERT INTO sys_menu
+        VALUES ('3011', '编辑', '3008', '3', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementClasses:edit',
+                '#', 'admin', SYSDATE(), '', NULL, '班级管理-编辑-按钮');
+    
+        INSERT INTO sys_menu
+        VALUES ('3012', '删除', '3008', '4', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementClasses:remove',
+                '#', 'admin', SYSDATE(), '', NULL, '班级管理-删除-按钮');
+    
+        INSERT INTO sys_menu
+        VALUES ('3013', '导入', '3008', '5', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementClasses:import',
+                '#', 'admin', SYSDATE(), '', NULL, '班级管理-导入-按钮');
+    
+        INSERT INTO sys_menu
+        VALUES ('3014', '导出', '3008', '6', '', '', '', 1, 0, 'F', '0', '0', 'peoples:managementClasses:export',
+                '#', 'admin', SYSDATE(), '', NULL, '班级管理-导出-按钮');
     
         INSERT INTO sys_menu
         VALUES ('3015', '学生管理', '3000', '3', 'managementStudents', 'peoples/managementStudents/index',
