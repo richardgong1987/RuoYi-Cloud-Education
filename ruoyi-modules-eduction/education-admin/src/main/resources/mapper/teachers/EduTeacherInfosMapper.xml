@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.education.admin.mapper.EduTeacherInfosMapper">
+    
+    <resultMap type="EduTeacherInfos" id="EduTeacherInfosResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="schoolId"    column="school_id"    />
+        <result property="classId"    column="class_id"    />
+        <result property="classesNums"    column="classes_nums"    />
+        <result property="phone"    column="phone"    />
+        <result property="birthday"    column="birthday"    />
+        <result property="entryTime"    column="entry_time"    />
+        <result property="education"    column="education"    />
+        <result property="graduateSchool"    column="graduate_school"    />
+        <result property="certificateBotained"    column="certificate_botained"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createBy"    column="create_by"    />
+    </resultMap>
+
+    <sql id="selectEduTeacherInfosVo">
+        select id, name, type, school_id, class_id, classes_nums, phone, birthday, entry_time, education, graduate_school, certificate_botained, create_time, update_time, update_by, create_by from edu_teacher_infos
+    </sql>
+
+    <select id="selectEduTeacherInfosList" parameterType="EduTeacherInfos" resultMap="EduTeacherInfosResult">
+        <include refid="selectEduTeacherInfosVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="schoolId != null "> and school_id = #{schoolId}</if>
+            <if test="classId != null "> and class_id = #{classId}</if>
+            <if test="classesNums != null "> and classes_nums = #{classesNums}</if>
+            <if test="phone != null  and phone != ''"> and phone like concat('%', #{phone}, '%')</if>
+            <if test="birthday != null "> and birthday = #{birthday}</if>
+            <if test="entryTime != null "> and entry_time = #{entryTime}</if>
+            <if test="education != null "> and education = #{education}</if>
+            <if test="graduateSchool != null  and graduateSchool != ''"> and graduate_school = #{graduateSchool}</if>
+        </where>
+    </select>
+    
+    <select id="selectEduTeacherInfosById" parameterType="Long" resultMap="EduTeacherInfosResult">
+        <include refid="selectEduTeacherInfosVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEduTeacherInfos" parameterType="EduTeacherInfos" useGeneratedKeys="true" keyProperty="id">
+        insert into edu_teacher_infos
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="type != null">type,</if>
+            <if test="schoolId != null">school_id,</if>
+            <if test="classId != null">class_id,</if>
+            <if test="classesNums != null">classes_nums,</if>
+            <if test="phone != null and phone != ''">phone,</if>
+            <if test="birthday != null">birthday,</if>
+            <if test="entryTime != null">entry_time,</if>
+            <if test="education != null">education,</if>
+            <if test="graduateSchool != null and graduateSchool != ''">graduate_school,</if>
+            <if test="certificateBotained != null">certificate_botained,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="createBy != null">create_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="type != null">#{type},</if>
+            <if test="schoolId != null">#{schoolId},</if>
+            <if test="classId != null">#{classId},</if>
+            <if test="classesNums != null">#{classesNums},</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="birthday != null">#{birthday},</if>
+            <if test="entryTime != null">#{entryTime},</if>
+            <if test="education != null">#{education},</if>
+            <if test="graduateSchool != null and graduateSchool != ''">#{graduateSchool},</if>
+            <if test="certificateBotained != null">#{certificateBotained},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="createBy != null">#{createBy},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEduTeacherInfos" parameterType="EduTeacherInfos">
+        update edu_teacher_infos
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="schoolId != null">school_id = #{schoolId},</if>
+            <if test="classId != null">class_id = #{classId},</if>
+            <if test="classesNums != null">classes_nums = #{classesNums},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="entryTime != null">entry_time = #{entryTime},</if>
+            <if test="education != null">education = #{education},</if>
+            <if test="graduateSchool != null and graduateSchool != ''">graduate_school = #{graduateSchool},</if>
+            <if test="certificateBotained != null">certificate_botained = #{certificateBotained},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEduTeacherInfosById" parameterType="Long">
+        delete from edu_teacher_infos where id = #{id}
+    </delete>
+
+    <delete id="deleteEduTeacherInfosByIds" parameterType="String">
+        delete from edu_teacher_infos where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
