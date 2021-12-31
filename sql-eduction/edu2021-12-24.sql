@@ -58,10 +58,10 @@ CREATE TABLE edu_members_managemembers
 (
     id          BIGINT(20)                            NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'id',
     name        VARCHAR(50) DEFAULT ''                NOT NULL COMMENT '会员姓名',
+    phone       VARCHAR(20) DEFAULT ''                NOT NULL COMMENT '电话',
     type        INT         DEFAULT 0                 NOT NULL COMMENT '注册类型',
     school_id   BIGINT(20)  DEFAULT 0                 NOT NULL COMMENT '所属学校',
     class_id    BIGINT(20)  DEFAULT 0                 NOT NULL COMMENT '所属班级',
-
     vip_time    DATETIME                              NULL COMMENT 'VIP时间',
 
     create_time DATETIME    DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',

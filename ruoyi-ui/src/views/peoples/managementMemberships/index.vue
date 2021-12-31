@@ -1,14 +1,33 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="学生姓名" prop="name">
+      <el-form-item label="会员姓名" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入学生姓名"
+          placeholder="请输入会员姓名"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
+      </el-form-item>
+      <el-form-item label="电话" prop="phone">
+        <el-input
+          v-model="queryParams.phone"
+          placeholder="请输入电话"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="注册类型" prop="type">
+        <el-select v-model="queryParams.type" placeholder="请选择注册类型" clearable size="small">
+          <el-option
+            v-for="dict in dict.type.edu_register_type"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="所属学校" prop="schoolId">
         <el-select v-model="queryParams.schoolId" placeholder="请选择所属学校" clearable size="small">
@@ -30,24 +49,13 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="是否vip" prop="isVip">
-        <el-select v-model="queryParams.isVip" placeholder="请选择是否vip" clearable size="small">
-          <el-option
-            v-for="dict in dict.type.is_vip"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="电话" prop="phone">
-        <el-input
-          v-model="queryParams.phone"
-          placeholder="请输入电话"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="VIP时间" prop="vipTime">
+        <el-date-picker clearable size="small"
+          v-model="queryParams.vipTime"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="选择VIP时间">
+        </el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -63,7 +71,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['peoples:managementStudents:add']"
+          v-hasPermi="['peoples:managementMemberships:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -74,7 +82,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['peoples:managementStudents:edit']"
+          v-hasPermi="['peoples:managementMemberships:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -85,7 +93,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['peoples:managementStudents:remove']"
+          v-hasPermi="['peoples:managementMemberships:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -95,16 +103,22 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['peoples:managementStudents:export']"
+          v-hasPermi="['peoples:managementMemberships:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="managementStudentsList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="managementMembershipsList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="id" align="center" prop="id" />
-      <el-table-column label="学生姓名" align="center" prop="name" />
+      <el-table-column label="会员姓名" align="center" prop="name" />
+      <el-table-column label="电话" align="center" prop="phone" />
+      <el-table-column label="注册类型" align="center" prop="type">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.edu_register_type" :value="scope.row.type"/>
+        </template>
+      </el-table-column>
       <el-table-column label="所属学校" align="center" prop="schoolId">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.peoples_managementSchools__dict" :value="scope.row.schoolId"/>
@@ -115,12 +129,11 @@
           <dict-tag :options="dict.type.peoples_managementClasses__dict" :value="scope.row.classId"/>
         </template>
       </el-table-column>
-      <el-table-column label="是否vip" align="center" prop="isVip">
+      <el-table-column label="VIP时间" align="center" prop="vipTime" width="180">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.is_vip" :value="scope.row.isVip"/>
+          <span>{{ parseTime(scope.row.vipTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="电话" align="center" prop="phone" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -128,14 +141,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['peoples:managementStudents:edit']"
+            v-hasPermi="['peoples:managementMemberships:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['peoples:managementStudents:remove']"
+            v-hasPermi="['peoples:managementMemberships:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -149,11 +162,24 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改学生管理对话框 -->
+    <!-- 添加或修改会员管理对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="学生姓名" prop="name">
-          <el-input v-model="form.name" placeholder="请输入学生姓名" />
+        <el-form-item label="会员姓名" prop="name">
+          <el-input v-model="form.name" placeholder="请输入会员姓名" />
+        </el-form-item>
+        <el-form-item label="电话" prop="phone">
+          <el-input v-model="form.phone" placeholder="请输入电话" />
+        </el-form-item>
+        <el-form-item label="注册类型" prop="type">
+          <el-select v-model="form.type" placeholder="请选择注册类型">
+            <el-option
+              v-for="dict in dict.type.edu_register_type"
+              :key="dict.value"
+              :label="dict.label"
+:value="parseInt(dict.value)"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="所属学校" prop="schoolId">
           <el-select v-model="form.schoolId" placeholder="请选择所属学校">
@@ -175,18 +201,13 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="是否vip" prop="isVip">
-          <el-select v-model="form.isVip" placeholder="请选择是否vip">
-            <el-option
-              v-for="dict in dict.type.is_vip"
-              :key="dict.value"
-              :label="dict.label"
-:value="dict.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="电话" prop="phone">
-          <el-input v-model="form.phone" placeholder="请输入电话" />
+        <el-form-item label="VIP时间" prop="vipTime">
+          <el-date-picker clearable size="small"
+            v-model="form.vipTime"
+            type="date"
+            value-format="yyyy-MM-dd"
+            placeholder="选择VIP时间">
+          </el-date-picker>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -198,11 +219,11 @@
 </template>
 
 <script>
-import { listManagementStudents, getManagementStudents, delManagementStudents, addManagementStudents, updateManagementStudents } from "@/api/peoples/managementStudents";
+import { listManagementMemberships, getManagementMemberships, delManagementMemberships, addManagementMemberships, updateManagementMemberships } from "@/api/peoples/managementMemberships";
 
 export default {
-  name: "ManagementStudents",
-  dicts: ['is_vip', 'peoples_managementSchools__dict', 'peoples_managementClasses__dict'],
+  name: "ManagementMemberships",
+  dicts: ['peoples_managementSchools__dict', 'edu_register_type', 'peoples_managementClasses__dict'],
   data() {
     return {
       // 遮罩层
@@ -217,8 +238,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 学生管理表格数据
-      managementStudentsList: [],
+      // 会员管理表格数据
+      managementMembershipsList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -228,23 +249,24 @@ export default {
         pageNum: 1,
         pageSize: 10,
         name: null,
+        phone: null,
+        type: null,
         schoolId: null,
         classId: null,
-        isVip: null,
-        phone: null,
+        vipTime: null,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
         name: [
-          { required: true, message: "学生姓名不能为空", trigger: "blur" }
+          { required: true, message: "会员姓名不能为空", trigger: "blur" }
+        ],
+        type: [
+          { required: true, message: "注册类型不能为空", trigger: "change" }
         ],
         schoolId: [
           { required: true, message: "所属学校不能为空", trigger: "change" }
-        ],
-        classId: [
-          { required: true, message: "所属班级不能为空", trigger: "change" }
         ],
         phone: [
           {
@@ -253,8 +275,8 @@ export default {
             trigger: "blur"
           }
         ],
-        isVip: [
-          { required: true, message: "是否vip不能为空", trigger: "change" }
+        classId: [
+          { required: true, message: "所属班级不能为空", trigger: "change" }
         ],
       }
     };
@@ -263,11 +285,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询学生管理列表 */
+    /** 查询会员管理列表 */
     getList() {
       this.loading = true;
-      listManagementStudents(this.queryParams).then(response => {
-        this.managementStudentsList = response.rows;
+      listManagementMemberships(this.queryParams).then(response => {
+        this.managementMembershipsList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -282,10 +304,11 @@ export default {
       this.form = {
         id: null,
         name: null,
+        phone: null,
+        type: null,
         schoolId: null,
         classId: null,
-        isVip: null,
-        phone: null,
+        vipTime: null,
         createTime: null,
         updateTime: null,
         updateBy: null,
@@ -313,16 +336,16 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加学生管理";
+      this.title = "添加会员管理";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getManagementStudents(id).then(response => {
+      getManagementMemberships(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改学生管理";
+        this.title = "修改会员管理";
       });
     },
     /** 提交按钮 */
@@ -330,13 +353,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateManagementStudents(this.form).then(response => {
+            updateManagementMemberships(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addManagementStudents(this.form).then(response => {
+            addManagementMemberships(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -348,8 +371,8 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除学生管理编号为"' + ids + '"的数据项？').then(function() {
-        return delManagementStudents(ids);
+      this.$modal.confirm('是否确认删除会员管理编号为"' + ids + '"的数据项？').then(function() {
+        return delManagementMemberships(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
@@ -357,9 +380,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('peoples/managementStudents/export', {
+      this.download('peoples/managementMemberships/export', {
         ...this.queryParams
-      }, `managementStudents_${new Date().getTime()}.xlsx`)
+      }, `managementMemberships_${new Date().getTime()}.xlsx`)
     }
   }
 };
