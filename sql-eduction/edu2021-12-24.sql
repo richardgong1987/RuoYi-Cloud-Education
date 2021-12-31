@@ -41,6 +41,7 @@ CREATE TABLE edu_members_managestudents
     school_id   BIGINT(20)  DEFAULT 0                 NOT NULL COMMENT '所属学校',
     class_id    BIGINT(20)  DEFAULT 0                 NOT NULL COMMENT '所属班级',
     is_vip      CHAR        DEFAULT 'N'               NOT NULL COMMENT '是否vip(Y是 N否)',
+    phone       VARCHAR(20) DEFAULT ''                NOT NULL COMMENT '电话',
 
     create_time DATETIME    DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
     update_time DATETIME    DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新时间',

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.education.admin.mapper.EduMembersManagestudentsMapper">
+    
+    <resultMap type="EduMembersManagestudents" id="EduMembersManagestudentsResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="schoolId"    column="school_id"    />
+        <result property="classId"    column="class_id"    />
+        <result property="isVip"    column="is_vip"    />
+        <result property="phone"    column="phone"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createBy"    column="create_by"    />
+    </resultMap>
+
+    <sql id="selectEduMembersManagestudentsVo">
+        select id, name, school_id, class_id, is_vip, phone, create_time, update_time, update_by, create_by from edu_members_managestudents
+    </sql>
+
+    <select id="selectEduMembersManagestudentsList" parameterType="EduMembersManagestudents" resultMap="EduMembersManagestudentsResult">
+        <include refid="selectEduMembersManagestudentsVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="schoolId != null "> and school_id = #{schoolId}</if>
+            <if test="classId != null "> and class_id = #{classId}</if>
+            <if test="isVip != null  and isVip != ''"> and is_vip = #{isVip}</if>
+            <if test="phone != null  and phone != ''"> and phone like concat('%', #{phone}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectEduMembersManagestudentsById" parameterType="Long" resultMap="EduMembersManagestudentsResult">
+        <include refid="selectEduMembersManagestudentsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEduMembersManagestudents" parameterType="EduMembersManagestudents" useGeneratedKeys="true" keyProperty="id">
+        insert into edu_members_managestudents
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="schoolId != null">school_id,</if>
+            <if test="classId != null">class_id,</if>
+            <if test="isVip != null and isVip != ''">is_vip,</if>
+            <if test="phone != null">phone,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="createBy != null">create_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="schoolId != null">#{schoolId},</if>
+            <if test="classId != null">#{classId},</if>
+            <if test="isVip != null and isVip != ''">#{isVip},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="createBy != null">#{createBy},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEduMembersManagestudents" parameterType="EduMembersManagestudents">
+        update edu_members_managestudents
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="schoolId != null">school_id = #{schoolId},</if>
+            <if test="classId != null">class_id = #{classId},</if>
+            <if test="isVip != null and isVip != ''">is_vip = #{isVip},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEduMembersManagestudentsById" parameterType="Long">
+        delete from edu_members_managestudents where id = #{id}
+    </delete>
+
+    <delete id="deleteEduMembersManagestudentsByIds" parameterType="String">
+        delete from edu_members_managestudents where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
