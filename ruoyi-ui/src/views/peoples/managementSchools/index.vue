@@ -20,15 +20,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="班级数量" prop="allClassesNum">
-        <el-input-number
-          v-model="queryParams.allClassesNum"
-          placeholder="请输入班级数量"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item label="校长姓名" prop="principalName">
         <el-input
           v-model="queryParams.principalName"

@@ -21,15 +21,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="学生数量" prop="studentsNum">
-        <el-input
-          v-model="queryParams.studentsNum"
-          placeholder="请输入学生数量"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item label="电话" prop="phone">
         <el-input
           v-model="queryParams.phone"
@@ -148,7 +140,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="学生数量" prop="studentsNum">
-          <el-input v-model="form.studentsNum" placeholder="请输入学生数量" />
+          <el-input-number v-model="form.studentsNum" placeholder="请输入学生数量" />
         </el-form-item>
         <el-form-item label="电话" prop="phone">
           <el-input v-model="form.phone" placeholder="请输入电话" />
@@ -215,7 +207,11 @@ export default {
           { required: true, message: "班主任不能为空", trigger: "change" }
         ],
         phone: [
-          { required: true, message: "电话不能为空", trigger: "blur" }
+          {
+            pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
+            message: "请输入正确的手机号码",
+            trigger: "blur"
+          }
         ],
         createTime: [
           { required: true, message: "创建时间不能为空", trigger: "blur" }
