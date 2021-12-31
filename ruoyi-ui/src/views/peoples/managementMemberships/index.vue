@@ -68,45 +68,57 @@
         <el-button
           type="primary"
           plain
-          icon="el-icon-plus"
+          icon="el-icon-menu"
           size="mini"
-          @click="handleAdd"
-          v-hasPermi="['peoples:managementMemberships:add']"
-        >新增</el-button>
+          @click="handleQuery"
+        >试用会员</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
-          type="success"
+          type="primary"
           plain
-          icon="el-icon-edit"
+          icon="el-icon-menu"
           size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['peoples:managementMemberships:edit']"
-        >修改</el-button>
+          @click="handleQuery"
+        >新用户</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
-          type="danger"
+          type="primary"
           plain
-          icon="el-icon-delete"
+          icon="el-icon-menu"
           size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['peoples:managementMemberships:remove']"
-        >删除</el-button>
+          @click="handleQuery"
+        >半年会员</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
-          type="warning"
+          type="primary"
           plain
-          icon="el-icon-download"
+          icon="el-icon-menu"
           size="mini"
-          @click="handleExport"
-          v-hasPermi="['peoples:managementMemberships:export']"
-        >导出</el-button>
+          @click="handleQuery"
+        >一年会员</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-menu"
+          size="mini"
+          @click="handleQuery"
+        >一年会员</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-menu"
+          size="mini"
+          @click="handleQuery"
+        >历史会员</el-button>
+      </el-col>
+
     </el-row>
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
