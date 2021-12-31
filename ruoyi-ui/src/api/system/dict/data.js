@@ -19,8 +19,13 @@ export function getData(dictCode) {
 
 // 根据字典类型查询字典数据信息
 export function getDicts(dictType) {
+  let url = '/system/dict/data/type/' + dictType;
+  if(dictType.endsWith("__dict")){
+    let split = dictType.split("__").shift().split("_");
+    url = `/edu-admin/${split.join("/")}/dict`
+  }
   return request({
-    url: '/system/dict/data/type/' + dictType,
+    url,
     method: 'get'
   })
 }

@@ -10,28 +10,21 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+
       <el-form-item label="所属学校" prop="schoolId">
-        <el-input
-          v-model="queryParams.schoolId"
-          placeholder="请输入所属学校"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-select v-model="queryParams.schoolId" placeholder="请选择所属学校" clearable size="small">
+          <el-option
+            v-for="dict in dict.type.peoples_managementSchools__dict"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="学生数量" prop="studentsNum">
         <el-input
           v-model="queryParams.studentsNum"
           placeholder="请输入学生数量"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="班主任" prop="headteacher">
-        <el-input
-          v-model="queryParams.headteacher"
-          placeholder="请输入班主任"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -102,7 +95,11 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="id" align="center" prop="id" />
       <el-table-column label="班级名称" align="center" prop="name" />
-      <el-table-column label="所属学校" align="center" prop="schoolId" />
+      <el-table-column label="所属学校" align="center" prop="schoolId">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.peoples_managementSchools__dict" :value="scope.row.schoolId"/>
+        </template>
+      </el-table-column>
       <el-table-column label="学生数量" align="center" prop="studentsNum" />
       <el-table-column label="班主任" align="center" prop="headteacher" />
       <el-table-column label="电话" align="center" prop="phone" />
@@ -125,7 +122,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -141,13 +138,17 @@
           <el-input v-model="form.name" placeholder="请输入班级名称" />
         </el-form-item>
         <el-form-item label="所属学校" prop="schoolId">
-          <el-input v-model="form.schoolId" placeholder="请输入所属学校" />
+          <el-select v-model="form.schoolId" placeholder="请选择所属学校">
+            <el-option
+              v-for="dict in dict.type.peoples_managementSchools__dict"
+              :key="dict.value"
+              :label="dict.label"
+:value="parseInt(dict.value)"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="学生数量" prop="studentsNum">
           <el-input v-model="form.studentsNum" placeholder="请输入学生数量" />
-        </el-form-item>
-        <el-form-item label="班主任" prop="headteacher">
-          <el-input v-model="form.headteacher" placeholder="请输入班主任" />
         </el-form-item>
         <el-form-item label="电话" prop="phone">
           <el-input v-model="form.phone" placeholder="请输入电话" />
@@ -166,6 +167,7 @@ import { listManagementClasses, getManagementClasses, delManagementClasses, addM
 
 export default {
   name: "ManagementClasses",
+  dicts: ['peoples_managementSchools__dict'],
   data() {
     return {
       // 遮罩层
@@ -204,13 +206,13 @@ export default {
           { required: true, message: "班级名称不能为空", trigger: "blur" }
         ],
         schoolId: [
-          { required: true, message: "所属学校不能为空", trigger: "blur" }
+          { required: true, message: "所属学校不能为空", trigger: "change" }
         ],
         studentsNum: [
           { required: true, message: "学生数量不能为空", trigger: "blur" }
         ],
         headteacher: [
-          { required: true, message: "班主任不能为空", trigger: "blur" }
+          { required: true, message: "班主任不能为空", trigger: "change" }
         ],
         phone: [
           { required: true, message: "电话不能为空", trigger: "blur" }
