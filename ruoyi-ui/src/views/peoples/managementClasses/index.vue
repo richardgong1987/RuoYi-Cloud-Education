@@ -326,7 +326,7 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('peoples/managementClasses/export', {
+      this.download('/edu-admin/peoples/managementClasses/export', {
         ...this.queryParams
       }, `managementClasses_${new Date().getTime()}.xlsx`)
     }

@@ -337,7 +337,7 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('peoples/managementSchools/export', {
+      this.download('/edu-admin/peoples/managementSchools/export', {
         ...this.queryParams
       }, `managementSchools_${new Date().getTime()}.xlsx`)
     }
