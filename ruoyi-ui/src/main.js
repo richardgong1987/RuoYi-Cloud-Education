@@ -12,6 +12,29 @@ import '_a/styles/elementCover.scss'
 import '_a/styles/mediaScreenXs.scss'
 import 'element-ui/lib/theme-chalk/index.css'
 
+import globalFunction from '@/libs/globalFunction'
+import * as filters from '@/filters/index'
+import element from './plugins/element'
+import config from '@/config/index'
+import uploader from 'vue-simple-uploader'
+// 引入挂载新建文件夹、新建文件、移动文件等插件
+import operateElement from '@/plugins/fileOperationPlugins'
+// collapse 展开折叠
+import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
+
+Vue.component(CollapseTransition.name, CollapseTransition)
+for (let key in globalFunction) {
+  Vue.prototype[key] = globalFunction[key]
+}
+Vue.use(element)
+Vue.prototype.$config = config
+Vue.use(uploader)
+Vue.use(operateElement) //  挂载自定义插件
+
+Object.keys(filters).forEach((key) => {
+  Vue.filter(key, filters[key])
+})
+
 
 import '@/assets/styles/index.scss' // global css
 import '@/assets/styles/ruoyi.scss' // ruoyi css
