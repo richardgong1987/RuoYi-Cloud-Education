@@ -87,6 +87,44 @@ export const constantRoutes = [
         meta: { title: '个人中心', icon: 'user' }
       }
     ]
+  },
+
+  /*****************************
+   * file manager
+   */
+  {
+    path: '/file',
+    component: () => import(/* webpackChunkName: "file" */ '_v/File.vue'),
+    meta: {
+      requireAuth: true, //  当前路由是否需要登录才可进入
+      title: '网盘',
+      content: {
+        description: '图片 文档 视频 音乐 其他 回收站 我的分享'
+      }
+    }
+  },
+  {
+    path: '/onlyoffice',
+    meta: {
+      title: '在线编辑预览',
+      content: {
+        description: 'onlyoffice 文档在线编辑预览，支持 Word Excel PowerPoint'
+      }
+    },
+    component: () =>
+      import(/* webpackChunkName: "onlyOffice" */ '_v/OnlyOffice.vue')
+  },
+  {
+    path: '/share/:shareBatchNum',
+    name: 'Share',
+    component: () => import(/* webpackChunkName: "share" */ '_v/Share.vue'),
+    meta: {
+      title: '分享',
+      content: {
+        description: '查看他人分享'
+      }
+    },
+    props: true
   }
 ]
 

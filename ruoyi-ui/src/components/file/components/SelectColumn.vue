@@ -83,10 +83,10 @@ export default {
 
 .select-column {
   .text {
-    padding-top 8px
-    cursor pointer
+    padding-top: 8px;
+    cursor:pointer;
     &:hover {
-      color $Primary
+      color: $Primary
     }
   }
 }
