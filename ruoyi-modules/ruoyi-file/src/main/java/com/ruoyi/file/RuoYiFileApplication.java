@@ -1,5 +1,6 @@
 package com.ruoyi.file;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -7,10 +8,11 @@ import com.ruoyi.common.swagger.annotation.EnableCustomSwagger2;
 
 /**
  * 文件服务
- * 
+ *
  * @author ruoyi
  */
 @EnableCustomSwagger2
+@MapperScan("com.ruoyi.file.mapper")
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 public class RuoYiFileApplication
 {
