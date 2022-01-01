@@ -1,10 +1,9 @@
 package com.ruoyi.file;
 
+import com.ruoyi.common.swagger.annotation.EnableCustomSwagger2;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import com.ruoyi.common.swagger.annotation.EnableCustomSwagger2;
 
 /**
  * 文件服务
@@ -12,8 +11,8 @@ import com.ruoyi.common.swagger.annotation.EnableCustomSwagger2;
  * @author ruoyi
  */
 @EnableCustomSwagger2
-@MapperScan("com.ruoyi.file.mapper")
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
+@MapperScan("com.ruoyi.**.mapper")
+@SpringBootApplication
 public class RuoYiFileApplication
 {
     public static void main(String[] args)

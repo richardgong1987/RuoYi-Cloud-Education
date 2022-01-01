@@ -23,21 +23,3 @@ spring:
         # 共享配置
         shared-configs:
           - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
-
-mybatis-plus:
-  config-location: classpath:mybatis-config.xml
-  global-config:
-    banner: false
-  type-aliases-package: com.ruoyi.file.domain
-  configuration:
-    map-underscore-to-camel-case: false
-  mapper-locations: classpath:mapper/*.xml
-
-
-
-## mybatis配置
-#mybatis:
-#  # 搜索指定包别名
-#  typeAliasesPackage: com.ruoyi.file.domain
-#  # 配置mapper的扫描，找到所有的mapper.xml映射文件
-#  mapperLocations: classpath:mapper/**/*.xml

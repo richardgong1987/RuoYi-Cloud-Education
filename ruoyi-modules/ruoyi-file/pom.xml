@@ -186,6 +186,11 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-api-system</artifactId>
         </dependency>
+        <!-- Mysql Connector -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
 
         <!-- RuoYi Common Swagger -->
         <dependency>

@@ -37,8 +37,6 @@ public class FileDealComp {
     @Resource
     UserFileMapper userFileMapper;
     @Resource
-    IUserService userService;
-    @Resource
     IShareService shareService;
     @Resource
     IShareFileService shareFileService;
@@ -305,17 +303,6 @@ public class FileDealComp {
         log.debug(JSON.toJSONString(userFile));
         if ("undefined".equals(shareBatchNum) || StringUtils.isEmpty(shareBatchNum)) {
 
-            UserBean sessionUserBean = userService.getUserBeanByToken(token);
-            log.debug(JSON.toJSONString("当前登录session用户：" + sessionUserBean));
-            if (sessionUserBean == null) {
-                return false;
-            }
-            log.debug("文件所属用户id：" + userFile.getUserId());
-            log.debug("登录用户id:" + sessionUserBean.getUserId());
-            if (userFile.getUserId().longValue() != sessionUserBean.getUserId().longValue()) {
-                log.info("用户id不一致，权限校验失败");
-                return false;
-            }
         } else {
             Map<String, Object> param = new HashMap<>();
             param.put("shareBatchNum", shareBatchNum);
