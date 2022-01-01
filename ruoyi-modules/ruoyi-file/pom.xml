@@ -31,7 +31,6 @@
         <thumbnailator.version>0.4.15</thumbnailator.version>
         <junrar.version>7.4.0</junrar.version>
         <fastjson.version>1.2.78</fastjson.version>
-        <swagger-annotations.version>2.1.4</swagger-annotations.version>
         <shiro-core.version>1.4.0</shiro-core.version>
         <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
         <knife4j.version>3.0.3</knife4j.version>
@@ -53,11 +52,7 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-core</artifactId>
-                <version>${shiro-core.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>com.qiwenshare</groupId>
                 <artifactId>qiwenshare-common</artifactId>
@@ -74,11 +69,6 @@
                 <version>${commons-fileupload.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>io.swagger.core.v3</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${swagger-annotations.version}</version>
-            </dependency>
             <!-- fastjson  -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -105,33 +95,11 @@
             </dependency>
 
             <dependency>
-                <groupId>com.github.tobato</groupId>
-                <artifactId>fastdfs-client</artifactId>
-                <version>${fastdfs-client.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.aliyun.oss</groupId>
-                <artifactId>aliyun-sdk-oss</artifactId>
-                <version>${aliyun.sdk.oss.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
-                <version>${knife4j.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi</artifactId>
                 <version>${poi-version}</version>
             </dependency>
 
-            <!--Excel-->
-            <dependency>
-                <groupId>org.apache.poi</groupId>
-                <artifactId>poi-ooxml</artifactId>
-                <version>${poi-version}</version>
-            </dependency>
             <!--word-->
             <dependency>
                 <groupId>org.apache.poi</groupId>
@@ -159,11 +127,7 @@
                 <artifactId>ffmpeg-platform</artifactId>
                 <version>${ffmpeg.version}</version>
             </dependency>
-            <dependency>
-                <groupId>io.minio</groupId>
-                <artifactId>minio</artifactId>
-                <version>${minio.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>com.qiniu</groupId>
                 <artifactId>qiniu-java-sdk</artifactId>
@@ -234,10 +198,6 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-        </dependency>
 
         <!-- fastjson  -->
         <dependency>
