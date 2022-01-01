@@ -235,33 +235,45 @@
         </dependency>
 
         <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- fastjson  -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.qiwenshare</groupId>
-            <artifactId>ufop-spring-boot-starter</artifactId>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
-
         <!--jpa-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
+        <!--mybatis end-->
         <dependency>
-            <groupId>com.inversoft</groupId>
-            <artifactId>prime-jwt</artifactId>
-            <version>2.0.0</version>
+            <groupId>com.qiwenshare</groupId>
+            <artifactId>ufop-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.inversoft</groupId>
+            <artifactId>prime-jwt</artifactId>
+            <version>2.0.0</version>
         </dependency>
 
     </dependencies>
