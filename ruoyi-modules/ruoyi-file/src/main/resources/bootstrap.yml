@@ -4,11 +4,6 @@ server:
 
 # Spring
 spring:
-  servlet:
-    multipart:
-      max-file-size: 2048MB
-      max-request-size: 2048MB
-
   application:
     # 应用名称
     name: ruoyi-file

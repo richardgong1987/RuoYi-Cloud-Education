@@ -1,0 +1,17 @@
+files:
+  docservice:
+    url:
+      command: coauthoring/CommandService.ashx
+      preloader: web-apps/apps/api/documents/cache-scripts.html
+      example: ''
+      site: http://192.168.31.158:80/
+      api: web-apps/apps/api/documents/api.js
+      converter: ConvertService.ashx
+    header: Authorization
+    edited-docs: .docx|.xlsx|.csv|.pptx|.txt
+    viewed-docs: .pdf|.djvu|.xps
+    secret: ''
+    convert-docs: .docm|.dotx|.dotm|.dot|.doc|.odt|.fodt|.ott|.xlsm|.xltx|.xltm|.xlt|.xls|.ods|.fods|.ots|.pptm|.ppt|.ppsx|.ppsm|.pps|.potx|.potm|.pot|.odp|.fodp|.otp|.rtf|.mht|.html|.htm|.xml|.epub|.fb2
+    timeout: '120000'
+storage-folder: app_data
+filesize-max: '5242880'
