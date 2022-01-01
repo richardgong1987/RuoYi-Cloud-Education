@@ -55,7 +55,12 @@ module.exports = {
     name: name,
     resolve: {
       alias: {
-        '@': resolve('src')
+        '@': resolve('src'),
+        _v: path.resolve(__dirname, './src/views'),
+        _c: path.resolve(__dirname, './src/components'),
+        _a: path.resolve(__dirname, './src/assets'),
+        _r: path.resolve(__dirname, './src/request'),
+        _public: path.resolve(__dirname, './public')
       }
     },
     plugins: [
