@@ -1,7 +1,7 @@
 package com.ruoyi.file.utils;
 
 import com.qiwenshare.common.util.DateUtil;
-import com.qiwenshare.file.domain.UserFile;
+import com.ruoyi.file.domain.UserFile;
 
 public class QiwenFileUtil {
 
