@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qiwenshare.file.mapper.FileMapper">
+
+    <insert id="batchInsertFile" parameterType="java.util.List">
+        INSERT ignore INTO file (userId, fileName,timeStampName, fileUrl,
+        filePath, extendName, uploadTime, fileSize, isDir)
+        VALUES
+        <foreach collection="list" item="file" index="index" separator=",">
+            (#{file.userId}, #{file.fileName},#{file.timeStampName},
+            #{file.fileUrl}, #{file.filePath}, #{file.extendName}, #{file.uploadTime},
+            #{file.fileSize}, #{file.isDir})
+        </foreach>
+    </insert>
+
+    <update id="incPointCountByPathAndName">
+        update file
+        set pointCount = pointCount + 1
+        where fileId in (
+        select fileId from userfile
+        <where>
+            <if test="userId != 0">
+                and userId = #{userId}
+            </if>
+            <if test="fileName != null">
+                and fileName = #{fileName}
+            </if>
+            <if test="oldFilePath != null">
+                and filePath = #{oldFilePath}
+            </if>
+            <if test="extendName != null">
+                and extendName = #{extendName}
+            </if>
+            and isDir = 0
+        </where>
+        )
+    </update>
+
+    <update id="incPointCountByByFilepath">
+        UPDATE file
+        SET pointCount = pointCount + 1
+        WHERE fileId IN (
+            SELECT fileId
+            FROM userfile
+            WHERE filePath LIKE N'${oldFilePath}%'
+              AND userId = #{userId}
+              AND isDir = 0
+        )
+    </update>
+
+</mapper>
