@@ -4,9 +4,9 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.qiwenshare.file.mapper.ShareMapper">
+<mapper namespace="com.ruoyi.file.mapper.ShareMapper">
 
-    <select id="selectShareList" resultType="com.qiwenshare.file.vo.share.ShareListVO">
+    <select id="selectShareList" resultType="com.ruoyi.file.vo.share.ShareListVO">
         SELECT * FROM share a
         LEFT JOIN sharefile b ON b.shareBatchNum = a.shareBatchNum
         LEFT JOIN userfile c ON c.userFileId = b.userFileId

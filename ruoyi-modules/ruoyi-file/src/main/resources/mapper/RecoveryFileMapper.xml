@@ -4,9 +4,9 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.qiwenshare.file.mapper.RecoveryFileMapper">
+<mapper namespace="com.ruoyi.file.mapper.RecoveryFileMapper">
 
-    <select id="selectRecoveryFileList" resultType="com.qiwenshare.file.vo.file.RecoveryFileListVo">
+    <select id="selectRecoveryFileList" resultType="com.ruoyi.file.vo.file.RecoveryFileListVo">
         SELECT *
         FROM recoveryfile a
                  LEFT JOIN userfile b ON a.userFileId = b.userFileId

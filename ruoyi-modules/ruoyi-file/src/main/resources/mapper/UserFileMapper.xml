@@ -4,7 +4,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.qiwenshare.file.mapper.UserFileMapper">
+<mapper namespace="com.ruoyi.file.mapper.UserFileMapper">
 
     <update id="replaceFilePath">
         UPDATE userfile
@@ -13,7 +13,7 @@
           AND userId = #{userId};
     </update>
 
-    <select id="userFileList" resultType="com.qiwenshare.file.vo.file.FileListVo">
+    <select id="userFileList" resultType="com.ruoyi.file.vo.file.FileListVo">
         select * from userfile a
         left join file on file.fileId = a.fileId
         left join image on a.fileId = image.fileId
@@ -59,28 +59,28 @@
         and userId = #{userId}
         and deleteFlag = 0
     </sql>
-    <select id="selectFileByExtendName" parameterType="com.qiwenshare.file.domain.UserFile"
-            resultType="com.qiwenshare.file.vo.file.FileListVo">
+    <select id="selectFileByExtendName" parameterType="com.ruoyi.file.domain.UserFile"
+            resultType="com.ruoyi.file.vo.file.FileListVo">
         select * from userfile
         left join image on userfile.fileId = image.fileId
         <include refid="selectByExtendName"></include>
         limit #{beginCount}, #{pageCount}
     </select>
 
-    <select id="selectCountByExtendName" parameterType="com.qiwenshare.file.domain.UserFile"
+    <select id="selectCountByExtendName" parameterType="com.ruoyi.file.domain.UserFile"
             resultType="java.lang.Long">
         select count(*) from userfile
         <include refid="selectByExtendName"></include>
     </select>
 
-    <select id="selectFileNotInExtendNames" parameterType="com.qiwenshare.file.domain.UserFile"
-            resultType="com.qiwenshare.file.vo.file.FileListVo">
+    <select id="selectFileNotInExtendNames" parameterType="com.ruoyi.file.domain.UserFile"
+            resultType="com.ruoyi.file.vo.file.FileListVo">
         select * from userfile
         <include refid="selectByNotExtendName"></include>
         limit #{beginCount}, #{pageCount}
     </select>
 
-    <select id="selectCountNotInExtendNames" parameterType="com.qiwenshare.file.domain.UserFile"
+    <select id="selectCountNotInExtendNames" parameterType="com.ruoyi.file.domain.UserFile"
             resultType="java.lang.Long">
         select count(*) from userfile
         <include refid="selectByNotExtendName"></include>
