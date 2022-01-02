@@ -10,9 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableCustomSwagger2
 @EnableRyFeignClients
 @SpringBootApplication
-public class RuoYIEduAdminApplication {
+public class RuoYiEducationAdminApplication {
     public static void main(String[] args) {
-        SpringApplication.run(RuoYIEduAdminApplication.class, args);
+        SpringApplication.run(RuoYiEducationAdminApplication.class, args);
         System.out.println("(♥◠‿◠)ﾉﾞ  RuoYIEduAdminApplication 模块启动成功   ლ(´ڡ`ლ)ﾞ  \n" +
                 " .-------.       ____     __        \n" +
                 " |  _ _   \\      \\   \\   /  /    \n" +
