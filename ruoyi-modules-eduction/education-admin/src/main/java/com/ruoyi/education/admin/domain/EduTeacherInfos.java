@@ -1,10 +1,10 @@
 package com.ruoyi.education.admin.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.annotation.Excel;
 import com.ruoyi.common.core.web.domain.BaseEntity;
 
@@ -20,6 +20,7 @@ public class EduTeacherInfos extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** id */
+    @JsonSerialize(using= ToStringSerializer.class)
     private Long id;
 
     /** 姓名 */

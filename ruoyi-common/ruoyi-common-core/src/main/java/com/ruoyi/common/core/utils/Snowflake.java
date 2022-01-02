@@ -123,10 +123,10 @@ public class Snowflake {
     }
 
     public static void main(String[] args) throws Exception {
-        var hset = new HashSet<Long>();
+        var hset = new HashSet<String>();
         for (int i = 0; i < 10000000; i++) {
-            long id1 = Snowflake.getId();
-            boolean add = hset.add(id1);
+            var id1 = Snowflake.getId();
+            boolean add = hset.add(String.valueOf(id1));
             if (!add) {
                 throw new Exception(String.valueOf(id1));
             }

@@ -3,6 +3,9 @@ package com.ruoyi.system.api.domain;
 import java.util.Date;
 import java.util.List;
 import javax.validation.constraints.*;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,7 +18,7 @@ import com.ruoyi.common.core.xss.Xss;
 
 /**
  * 用户对象 sys_user
- * 
+ *
  * @author ruoyi
  */
 public class SysUser extends BaseEntity
@@ -100,6 +103,7 @@ public class SysUser extends BaseEntity
         this.userId = userId;
     }
 
+    @JsonSerialize(using= ToStringSerializer.class)
     public Long getUserId()
     {
         return userId;
