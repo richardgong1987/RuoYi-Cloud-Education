@@ -50,18 +50,18 @@
       </el-form-item>
       <el-form-item label="生日" prop="birthday">
         <el-date-picker clearable size="small"
-          v-model="queryParams.birthday"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="选择生日">
+                        v-model="queryParams.birthday"
+                        type="date"
+                        value-format="yyyy-MM-dd"
+                        placeholder="选择生日">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="入职时间" prop="entryTime">
         <el-date-picker clearable size="small"
-          v-model="queryParams.entryTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="选择入职时间">
+                        v-model="queryParams.entryTime"
+                        type="date"
+                        value-format="yyyy-MM-dd"
+                        placeholder="选择入职时间">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="学历" prop="education">
@@ -98,7 +98,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['teachers:teacherInfos:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -109,7 +110,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['teachers:teacherInfos:edit']"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -120,7 +122,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['teachers:teacherInfos:remove']"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -130,15 +133,27 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['teachers:teacherInfos:export']"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="teacherInfosList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="id" align="center" prop="id" />
-      <el-table-column label="姓名" align="center" prop="name" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="id" align="center" prop="id"/>
+      <el-table-column label="讲义管理" align="center" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <router-link :to="'/teachers/teacherHandouts/' + scope.row.id" class="link-type">
+            <el-button
+              size="small"
+              type="primary"
+              icon="el-icon-edit"  v-hasPermi="['teachers:teacherInfos:edit']">讲义管理
+            </el-button>
+          </router-link>
+        </template>
+      </el-table-column>
+      <el-table-column label="姓名" align="center" prop="name"/>
       <el-table-column label="所属学校" align="center" prop="schoolId">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.peoples_managementSchools__dict" :value="scope.row.schoolId"/>
@@ -149,8 +164,8 @@
           <dict-tag :options="dict.type.peoples_managementClasses__dict" :value="scope.row.classId"/>
         </template>
       </el-table-column>
-      <el-table-column label="班级数量" align="center" prop="classesNums" />
-      <el-table-column label="电话" align="center" prop="phone" />
+      <el-table-column label="班级数量" align="center" prop="classesNums"/>
+      <el-table-column label="电话" align="center" prop="phone"/>
       <el-table-column label="生日" align="center" prop="birthday" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.birthday, '{y}-{m}-{d}') }}</span>
@@ -166,8 +181,8 @@
           <dict-tag :options="dict.type.education" :value="scope.row.education"/>
         </template>
       </el-table-column>
-      <el-table-column label="毕业院校" align="center" prop="graduateSchool" />
-      <el-table-column label="所获证书" align="center" prop="certificateBotained" />
+      <el-table-column label="毕业院校" align="center" prop="graduateSchool"/>
+      <el-table-column label="所获证书" align="center" prop="certificateBotained"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -176,14 +191,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['teachers:teacherInfos:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['teachers:teacherInfos:remove']"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -200,7 +217,7 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="姓名" prop="name">
-          <el-input v-model="form.name" placeholder="请输入姓名" />
+          <el-input v-model="form.name" placeholder="请输入姓名"/>
         </el-form-item>
         <el-form-item label="所属学校" prop="schoolId">
           <el-select v-model="form.schoolId" placeholder="请选择所属学校">
@@ -208,7 +225,7 @@
               v-for="dict in dict.type.peoples_managementSchools__dict"
               :key="dict.value"
               :label="dict.label"
-:value="parseInt(dict.value)"
+              :value="parseInt(dict.value)"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -218,30 +235,30 @@
               v-for="dict in dict.type.peoples_managementClasses__dict"
               :key="dict.value"
               :label="dict.label"
-:value="parseInt(dict.value)"
+              :value="parseInt(dict.value)"
             ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="班级数量" prop="classesNums">
-          <el-input-number v-model="form.classesNums" placeholder="请输入班级数量" />
+          <el-input-number v-model="form.classesNums" placeholder="请输入班级数量"/>
         </el-form-item>
         <el-form-item label="电话" prop="phone">
-          <el-input v-model="form.phone" placeholder="请输入电话" />
+          <el-input v-model="form.phone" placeholder="请输入电话"/>
         </el-form-item>
         <el-form-item label="生日" prop="birthday">
           <el-date-picker clearable size="small"
-            v-model="form.birthday"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择生日">
+                          v-model="form.birthday"
+                          type="date"
+                          value-format="yyyy-MM-dd"
+                          placeholder="选择生日">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="入职时间" prop="entryTime">
           <el-date-picker clearable size="small"
-            v-model="form.entryTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择入职时间">
+                          v-model="form.entryTime"
+                          type="date"
+                          value-format="yyyy-MM-dd"
+                          placeholder="选择入职时间">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="学历" prop="education">
@@ -250,15 +267,15 @@
               v-for="dict in dict.type.education"
               :key="dict.value"
               :label="dict.label"
-:value="parseInt(dict.value)"
+              :value="parseInt(dict.value)"
             ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="毕业院校" prop="graduateSchool">
-          <el-input v-model="form.graduateSchool" placeholder="请输入毕业院校" />
+          <el-input v-model="form.graduateSchool" placeholder="请输入毕业院校"/>
         </el-form-item>
         <el-form-item label="所获证书" prop="certificateBotained">
-          <el-input v-model="form.certificateBotained" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.certificateBotained" type="textarea" placeholder="请输入内容"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -270,7 +287,13 @@
 </template>
 
 <script>
-import { listTeacherInfos, getTeacherInfos, delTeacherInfos, addTeacherInfos, updateTeacherInfos } from "@/api/teachers/teacherInfos";
+import {
+  addTeacherInfos,
+  delTeacherInfos,
+  getTeacherInfos,
+  listTeacherInfos,
+  updateTeacherInfos
+} from "@/api/teachers/teacherInfos";
 
 export default {
   name: "TeacherInfos",
@@ -314,16 +337,16 @@ export default {
       // 表单校验
       rules: {
         name: [
-          { required: true, message: "姓名不能为空", trigger: "blur" }
+          {required: true, message: "姓名不能为空", trigger: "blur"}
         ],
         schoolId: [
-          { required: true, message: "所属学校不能为空", trigger: "change" }
+          {required: true, message: "所属学校不能为空", trigger: "change"}
         ],
         classId: [
-          { required: true, message: "所属班级不能为空", trigger: "change" }
+          {required: true, message: "所属班级不能为空", trigger: "change"}
         ],
         classesNums: [
-          { required: true, message: "班级数量不能为空", trigger: "blur" }
+          {required: true, message: "班级数量不能为空", trigger: "blur"}
         ],
         phone: [
           {
@@ -333,16 +356,16 @@ export default {
           }
         ],
         birthday: [
-          { required: true, message: "生日不能为空", trigger: "blur" }
+          {required: true, message: "生日不能为空", trigger: "blur"}
         ],
         entryTime: [
-          { required: true, message: "入职时间不能为空", trigger: "blur" }
+          {required: true, message: "入职时间不能为空", trigger: "blur"}
         ],
         education: [
-          { required: true, message: "学历不能为空", trigger: "change" }
+          {required: true, message: "学历不能为空", trigger: "change"}
         ],
         graduateSchool: [
-          { required: true, message: "毕业院校不能为空", trigger: "blur" }
+          {required: true, message: "毕业院校不能为空", trigger: "blur"}
         ],
       }
     };
@@ -400,7 +423,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -442,12 +465,13 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除老师信息编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除老师信息编号为"' + ids + '"的数据项？').then(function () {
         return delTeacherInfos(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      }).catch(() => {
+      });
     },
     /** 导出按钮操作 */
     handleExport() {

@@ -99,7 +99,7 @@ export const constantRoutes = [
     component: () => import(/* webpackChunkName: "file" */ '_v/File.vue'),
     meta: {
       requireAuth: true, //  当前路由是否需要登录才可进入
-      title: '资源管理',
+      title: '文件管理',
       content: {
         description: '图片 文档 视频 音乐 其他 回收站 我的分享'
       }
@@ -113,6 +113,19 @@ export const constantRoutes = [
     meta: {
       requireAuth: true, //  当前路由是否需要登录才可进入
       title: '资源管理',
+      content: {
+        description: '图片 文档 视频 音乐 其他 回收站 我的分享'
+      }
+    }
+  },
+  {
+    hidden: true,
+    path: '/teachers/teacherHandouts/:userId',
+    name: 'teachersTeacherHandouts',
+    component: () => import(/* webpackChunkName: "file" */ '_v/File.vue'),
+    meta: {
+      requireAuth: true, //  当前路由是否需要登录才可进入
+      title: '讲义管理',
       content: {
         description: '图片 文档 视频 音乐 其他 回收站 我的分享'
       }

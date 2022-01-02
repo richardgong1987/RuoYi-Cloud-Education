@@ -126,13 +126,16 @@
 import store from '@/store/index'
 import SparkMD5 from 'spark-md5'
 import {getToken} from "@/utils/auth";
+import {getUserId} from "@/utils/ruoyi";
 
 export default {
   data() {
+    var userId = getUserId();
     return {
+      userId:null,
       // 上传组件配置项
       options: {
-        target: `${this.$config.baseContext}/file/filetransfer/uploadfile`, // 上传文件-目标 URL
+        target: `${this.$config.baseContext}/file/filetransfer/uploadfile?userId=${userId}`, // 上传文件-目标 URL
         chunkSize: 1024 * 1024, //  每个分片的大小
         fileParameterName: 'file', //  上传文件时文件的参数名，默认 file
         maxChunkRetries: 3, //  并发上传数，默认 3

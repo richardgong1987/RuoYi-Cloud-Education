@@ -1,4 +1,5 @@
 import { getStorage } from '_r/file'
+import {getUserId} from "@/utils/ruoyi";
 
 export default {
 	state: {
@@ -23,7 +24,7 @@ export default {
 		 * 获取文件已占用的存储空间
 		 */
 		showStorage(context) {
-			return getStorage().then((res) => {
+			return getStorage({userId:getUserId()}).then((res) => {
 				if (res.success) {
 					context.commit(
 						'setStorageValue',

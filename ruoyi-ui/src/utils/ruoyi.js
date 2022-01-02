@@ -223,3 +223,11 @@ export async function blobValidate(data) {
     return true;
   }
 }
+
+export function getUserId(){
+  let userId = location.pathname.split('/').pop();
+  if (/^\d+$/.test(userId)) {
+    return  userId;
+  }
+  return '';
+}

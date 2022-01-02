@@ -23,42 +23,42 @@
           </template>
           <el-menu-item
             index="0"
-            :route="{ name: 'File', query: { fileType: 0, filePath: '/' } }"
+            :route="{ name: toPageName, query: { fileType: 0, filePath: '/',userId } }"
           >
             <i class="el-icon-menu"></i>
             <span slot="title">全部</span>
           </el-menu-item>
           <el-menu-item
             index="1"
-            :route="{ name: 'File', query: { fileType: 1 } }"
+            :route="{ name: toPageName, query: { fileType: 1,userId } }"
           >
             <i class="el-icon-picture-outline"></i>
             <span slot="title">图片</span>
           </el-menu-item>
           <el-menu-item
             index="2"
-            :route="{ name: 'File', query: { fileType: 2 } }"
+            :route="{ name: toPageName, query: { fileType: 2,userId } }"
           >
             <i class="el-icon-document"></i>
             <span slot="title">文档</span>
           </el-menu-item>
           <el-menu-item
             index="3"
-            :route="{ name: 'File', query: { fileType: 3 } }"
+            :route="{ name: toPageName, query: { fileType: 3,userId } }"
           >
             <i class="el-icon-video-camera"></i>
             <span slot="title">视频</span>
           </el-menu-item>
           <el-menu-item
             index="4"
-            :route="{ name: 'File', query: { fileType: 4 } }"
+            :route="{ name: toPageName, query: { fileType: 4,userId } }"
           >
             <i class="el-icon-headset"></i>
             <span slot="title">音乐</span>
           </el-menu-item>
           <el-menu-item
             index="5"
-            :route="{ name: 'File', query: { fileType: 5 } }"
+            :route="{ name: toPageName, query: { fileType: 5,userId } }"
           >
             <i class="el-icon-takeaway-box"></i>
             <span slot="title">其他</span>
@@ -66,7 +66,7 @@
         </el-submenu>
         <el-menu-item
           index="6"
-          :route="{ name: 'File', query: { fileType: 6 } }"
+          :route="{ name: toPageName, query: { fileType: 6,userId } }"
           class="recovery"
         >
           <i class="el-icon-delete"></i>
@@ -74,7 +74,7 @@
         </el-menu-item>
         <el-menu-item
           index="8"
-          :route="{ name: 'File', query: { fileType: 8, filePath: '/' } }"
+          :route="{ name: toPageName, query: { fileType: 8, filePath: '/',userId } }"
           class="my-share"
         >
           <i class="el-icon-share"></i>
@@ -122,42 +122,42 @@
           </template>
           <el-menu-item
             index="0"
-            :route="{ name: 'File', query: { fileType: 0, filePath: '/' } }"
+            :route="{ name: toPageName, query: { fileType: 0, filePath: '/',userId } }"
           >
             <i class="el-icon-menu"></i>
             <span slot="title">全部</span>
           </el-menu-item>
           <el-menu-item
             index="1"
-            :route="{ name: 'File', query: { fileType: 1 } }"
+            :route="{ name: toPageName, query: { fileType: 1,userId } }"
           >
             <i class="el-icon-picture-outline"></i>
             <span slot="title">图片</span>
           </el-menu-item>
           <el-menu-item
             index="2"
-            :route="{ name: 'File', query: { fileType: 2 } }"
+            :route="{ name: toPageName, query: { fileType: 2,userId } }"
           >
             <i class="el-icon-document"></i>
             <span slot="title">文档</span>
           </el-menu-item>
           <el-menu-item
             index="3"
-            :route="{ name: 'File', query: { fileType: 3 } }"
+            :route="{ name: toPageName, query: { fileType: 3,userId } }"
           >
             <i class="el-icon-video-camera"></i>
             <span slot="title">视频</span>
           </el-menu-item>
           <el-menu-item
             index="4"
-            :route="{ name: 'File', query: { fileType: 4 } }"
+            :route="{ name: toPageName, query: { fileType: 4 ,userId} }"
           >
             <i class="el-icon-headset"></i>
             <span slot="title">音乐</span>
           </el-menu-item>
           <el-menu-item
             index="5"
-            :route="{ name: 'File', query: { fileType: 5 } }"
+            :route="{ name: toPageName, query: { fileType: 5,userId } }"
           >
             <i class="el-icon-takeaway-box"></i>
             <span slot="title">其他</span>
@@ -165,7 +165,7 @@
         </el-submenu>
         <el-menu-item
           index="6"
-          :route="{ name: 'File', query: { fileType: 6 } }"
+          :route="{ name: toPageName, query: { fileType: 6 ,userId} }"
           class="recovery"
         >
           <i class="el-icon-delete"></i>
@@ -173,7 +173,7 @@
         </el-menu-item>
         <el-menu-item
           index="8"
-          :route="{ name: 'File', query: { fileType: 8, filePath: '/' } }"
+          :route="{ name: toPageName, query: { fileType: 8, filePath: '/',userId } }"
           class="my-share"
         >
           <i class="el-icon-share"></i>
@@ -229,6 +229,8 @@ export default {
   name: 'SideMenu',
   data() {
     return {
+      toPageName: "File",
+      userId: null,
       isDrawer: false, //  控制移动端菜单抽屉是否显示
       isCollapse: false, //  控制菜单收缩展开
       // 菜单 index 和名称 Map
@@ -244,9 +246,9 @@ export default {
       },
       //  自定义进度条颜色，不同占比，进度条颜色不同
       storageColor: [
-        { color: '#67C23A', percentage: 50 },
-        { color: '#E6A23C', percentage: 80 },
-        { color: '#F56C6C', percentage: 100 }
+        {color: '#67C23A', percentage: 50},
+        {color: '#E6A23C', percentage: 80},
+        {color: '#F56C6C', percentage: 100}
       ]
     }
   },
@@ -292,6 +294,8 @@ export default {
   },
   created() {
     this.isCollapse = localStorage.getItem('qiwen_is_collapse') === 'true' //  读取保存的状态
+    this.toPageName = this.$route.name;
+    this.userId = this.$route.params && this.$route.params.userId;
   },
   mounted() {
     document.title = `${this.myFileMenuMap[Number(this.activeIndex)]} - ${
