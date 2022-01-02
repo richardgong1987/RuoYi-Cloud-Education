@@ -3,11 +3,14 @@ package com.ruoyi.file.service;
 import com.ruoyi.file.config.MinioConfig;
 import com.ruoyi.file.utils.FileUploadUtils;
 import io.minio.MinioClient;
-import io.minio.PutObjectArgs;
+import io.minio.PutObjectOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 /**
  * Minio 文件存储
@@ -16,8 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Primary
 @Service
-public class MinioSysFileServiceImpl implements ISysFileService
-{
+public class MinioSysFileServiceImpl implements ISysFileService {
     @Autowired
     private MinioConfig minioConfig;
 
@@ -31,16 +33,19 @@ public class MinioSysFileServiceImpl implements ISysFileService
      * @return 访问地址
      */
     @Override
-    public String uploadFile(MultipartFile file) throws Exception
-    {
+    public String uploadFile(MultipartFile file) throws Exception {
         String fileName = FileUploadUtils.extractFilename(file);
-        PutObjectArgs args = PutObjectArgs.builder()
-                .bucket(minioConfig.getBucketName())
-                .object(fileName)
-                .stream(file.getInputStream(), file.getSize(), -1)
-                .contentType(file.getContentType())
-                .build();
-        client.putObject(args);
-        return minioConfig.getUrl() + "/" + minioConfig.getBucketName() + "/" + fileName;
+//        PutObjectArgs args = PutObjectArgs.builder()
+//                .bucket(minioConfig.getBucketName())
+//                .object(fileName)
+//                .stream(file.getInputStream(), file.getSize(), -1)
+//                .contentType(file.getContentType())
+//                .build();
+//        client.putObject(args);
+        PutObjectOptions putObjectOptions = new PutObjectOptions(file.getSize(), 1024 * 1024 * 5);
+        InputStream inputStream = file.getInputStream();
+        // 使用putObject上传一个文件到存储桶中。
+        client.putObject(minioConfig.getBucketName(), fileName, inputStream, putObjectOptions);
+        return minioConfig.getConsoleUrl() + "/" + minioConfig.getBucketName() + "/" + fileName;
     }
 }

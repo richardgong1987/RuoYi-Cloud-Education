@@ -160,8 +160,6 @@ public class FiletransferController {
         if (userId == null) {
             userId = SecurityUtils.getUserId();
         }
-        ;
-
         filetransferService.uploadFile(request, uploadFileDto, userId);
 
         UploadFileVo uploadFileVo = new UploadFileVo();

@@ -43,6 +43,7 @@
 
         <qiniu.version>7.7.0</qiniu.version>
         <hutool.version>5.5.8</hutool.version>
+        <minio.version>7.0.2</minio.version>
     </properties>
     <dependencyManagement>
         <dependencies>
