@@ -90,6 +90,7 @@ Vue.component('FileUpload', FileUpload)
 Vue.component('ImageUpload', ImageUpload)
 Vue.component('ImagePreview', ImagePreview)
 Vue.component('CustomDict', CustomDict)
+Vue.component('CustomDict', CustomDict)
 
 Vue.use(directive)
 Vue.use(plugins)

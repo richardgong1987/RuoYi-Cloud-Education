@@ -7,36 +7,9 @@
 			router
 		>
 			<el-menu-item
-				index="File"
-				:route="{ name: 'File', query: { fileType: 0, filePath: '/' } }"
-				>网盘</el-menu-item
-			>
-			<template v-if="isLogin">
-				<el-submenu
-					class="user-exit-submenu"
-					index="User"
-					v-if="screenWidth <= 768"
-				>
-					<template slot="title">
-						<i class="el-icon-user-solid"></i>
-						<span>{{ username }}</span>
-					</template>
-					<el-menu-item @click="exitButton()">退出</el-menu-item>
-				</el-submenu>
-				<template v-else>
-					<!-- 为了和其他菜单样式保持一致，请一定要添加类名 el-menu-item -->
-					<div class="el-menu-item exit" @click="exitButton()">退出</div>
-					<div class="el-menu-item username" v-show="isLogin">
-						<i class="el-icon-user-solid"></i> <span>{{ username }}</span>
-					</div>
-				</template>
-			</template>
-			<el-menu-item
-				class="login"
-				index="Login"
-				:route="{ name: 'Login' }"
-				v-show="!isLogin"
-				>登录</el-menu-item
+				index="index"
+				:route="{ path: '/index' }"
+				>首页</el-menu-item
 			>
 		</el-menu>
 	</div>

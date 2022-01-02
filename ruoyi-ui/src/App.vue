@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <router-view />
+    <el-backtop class="backtop" target="#app" title="回到顶部"></el-backtop>
   </div>
 </template>
 

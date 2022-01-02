@@ -1,7 +1,11 @@
 <template>
-	<div class="report-onlyoffice">
-		<div id="placeholder"></div>
-	</div>
+  <div>
+    <Header></Header>
+    <div class="report-onlyoffice">
+      <div id="placeholder"></div>
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -10,9 +14,12 @@ import {
 	editOfficeFile,
 	previewOfficeFile
 } from '_r/onlyoffice'
-
+import Header from '_c/Header.vue'
 export default {
 	name: 'OnlyOffice',
+  components: {
+    Header,
+  },
 	data() {
 		return {
 			docEditor: null, //  文档编辑器

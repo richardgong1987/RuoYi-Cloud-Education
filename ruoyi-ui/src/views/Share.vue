@@ -1,63 +1,66 @@
 <template>
-	<div class="share-wrapper">
-		<div class="share-file-wrapper" v-if="shareStep === 3">
-			<div class="operation-wrapper">
-				<!-- 面包屑导航栏 -->
-				<BreadCrumb class="breadcrumb" :fileType="7"></BreadCrumb>
-				<el-button
-					type="primary"
-					size="mini"
-					icon="el-icon-takeaway-box"
-					@click="handleSaveBtnClick"
-					>保存到网盘</el-button
-				>
-			</div>
-			<!-- 文件列表-表格模式 -->
-			<FileTable
-				ref="fileTableInstance"
-				:fileType="7"
-				:filePath="filePath"
-				:fileList="fileList"
-				:loading="loading"
-			></FileTable>
-		</div>
-		<!-- 校验文件分享链接状态和是否需要提取码对话框 -->
-		<el-dialog
-			title="文件分享"
-			:visible.sync="dialogShareFile.visible"
-			:show-close="false"
-			:close-on-click-modal="false"
-			:close-on-press-escape="false"
-			width="500px"
-		>
-			<div class="end-time" v-if="shareStep === 1">此分享链接已过期</div>
-			<el-form
-				class="extraction-code-form"
-				v-if="shareStep === 2"
-				ref="codeForm"
-				:model="dialogShareFile.codeForm"
-				:rules="dialogShareFile.codeFormRules"
-				label-width="80px"
-			>
-				<el-form-item label="提取码" prop="extractionCode">
-					<el-input
-						v-model="dialogShareFile.codeForm.extractionCode"
-					></el-input>
-				</el-form-item>
-			</el-form>
-			<span slot="footer" class="dialog-footer">
+  <div>
+    <div class="share-wrapper">
+      <div class="share-file-wrapper" v-if="shareStep === 3">
+        <div class="operation-wrapper">
+          <!-- 面包屑导航栏 -->
+          <BreadCrumb class="breadcrumb" :fileType="7"></BreadCrumb>
+          <el-button
+            type="primary"
+            size="mini"
+            icon="el-icon-takeaway-box"
+            @click="handleSaveBtnClick"
+          >保存到网盘</el-button
+          >
+        </div>
+        <!-- 文件列表-表格模式 -->
+        <FileTable
+          ref="fileTableInstance"
+          :fileType="7"
+          :filePath="filePath"
+          :fileList="fileList"
+          :loading="loading"
+        ></FileTable>
+      </div>
+      <!-- 校验文件分享链接状态和是否需要提取码对话框 -->
+      <el-dialog
+        title="文件分享"
+        :visible.sync="dialogShareFile.visible"
+        :show-close="false"
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
+        width="500px"
+      >
+        <div class="end-time" v-if="shareStep === 1">此分享链接已过期</div>
+        <el-form
+          class="extraction-code-form"
+          v-if="shareStep === 2"
+          ref="codeForm"
+          :model="dialogShareFile.codeForm"
+          :rules="dialogShareFile.codeFormRules"
+          label-width="80px"
+        >
+          <el-form-item label="提取码" prop="extractionCode">
+            <el-input
+              v-model="dialogShareFile.codeForm.extractionCode"
+            ></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
 				<el-button v-if="shareStep === 1" @click="handleCloseBtnClick()"
-					>关 闭</el-button
-				>
+        >关 闭</el-button
+        >
 				<el-button
-					v-else
-					type="primary"
-					@click="handleSubmitBtnClick('codeForm')"
-					>提 交</el-button
-				>
+          v-else
+          type="primary"
+          @click="handleSubmitBtnClick('codeForm')"
+        >提 交</el-button
+        >
 			</span>
-		</el-dialog>
-	</div>
+      </el-dialog>
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -69,11 +72,12 @@ import {
 	checkShareLinkCode,
 	getShareFileList
 } from '_r/file'
-
+import Header from '_c/Header.vue'
 export default {
 	name: 'Share',
 	components: {
 		BreadCrumb,
+    Header,
 		FileTable
 	},
 	data() {
