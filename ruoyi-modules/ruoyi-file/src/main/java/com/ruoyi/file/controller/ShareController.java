@@ -54,9 +54,11 @@ public class ShareController {
     @PostMapping(value = "/sharefile")
     @MyLog(operation = "分享文件", module = CURRENT_MODULE)
     @ResponseBody
-    public RestResult<ShareFileVO> shareFile(@RequestBody ShareFileDTO shareSecretDTO, String token) {
+    public RestResult<ShareFileVO> shareFile(@RequestBody ShareFileDTO shareSecretDTO, Long userId) {
         ShareFileVO shareSecretVO = new ShareFileVO();
-        var userId = SecurityUtils.getUserId();
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
 
         String uuid = UUID.randomUUID().toString().replace("-", "");
         Share share = new Share();
@@ -107,8 +109,10 @@ public class ShareController {
     @MyLog(operation = "保存分享文件", module = CURRENT_MODULE)
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
-    public RestResult saveShareFile(@RequestBody SaveShareFileDTO saveShareFileDTO, String token) {
-        var userId = SecurityUtils.getUserId();
+    public RestResult saveShareFile(@RequestBody SaveShareFileDTO saveShareFileDTO, Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
         List<ShareFile> fileList = JSON.parseArray(saveShareFileDTO.getFiles(), ShareFile.class);
         String savefilePath = saveShareFileDTO.getFilePath();
 
@@ -122,9 +126,10 @@ public class ShareController {
                 List<UserFile> userfileList = userFileService.selectFileListLikeRightFilePath(userFile.getFilePath() + userFile.getFileName(), userFile.getUserId());
                 log.info("查询文件列表：" + JSON.toJSONString(userfileList));
                 String filePath = userFile.getFilePath();
+                Long finalUserId = userId;
                 userfileList.forEach(p -> {
                     p.setUserFileId(null);
-                    p.setUserId(userId);
+                    p.setUserId(finalUserId);
                     p.setFilePath(p.getFilePath().replaceFirst(filePath + fileName, savefilePath + savefileName));
                     saveUserFileList.add(p);
                     log.info("当前文件：" + JSON.toJSONString(p));
@@ -151,8 +156,10 @@ public class ShareController {
     @Operation(summary = "查看已分享列表", description = "查看已分享列表", tags = {"share"})
     @GetMapping(value = "/shareList")
     @ResponseBody
-    public RestResult shareList(ShareListDTO shareListDTO, String token) {
-        var userId = SecurityUtils.getUserId();
+    public RestResult shareList(ShareListDTO shareListDTO, Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
         List<ShareListVO> shareList = shareService.selectShareList(shareListDTO, userId);
 
         int total = shareService.selectShareListTotalCount(shareListDTO, userId);

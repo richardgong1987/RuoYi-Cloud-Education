@@ -65,10 +65,12 @@ public class OfficeController {
     @Operation(summary = "创建office文件", description = "创建office文件", tags = {"office"})
     @ResponseBody
     @RequestMapping(value = "/createofficefile", method = RequestMethod.POST)
-    public RestResult<Object> createOfficeFile(@RequestBody CreateOfficeFileDTO createOfficeFileDTO, String token) {
+    public RestResult<Object> createOfficeFile(@RequestBody CreateOfficeFileDTO createOfficeFileDTO, Long userId) {
         RestResult<Object> result = new RestResult<>();
         try {
-            var userId = SecurityUtils.getUserId();
+            if (userId == null) {
+                userId = SecurityUtils.getUserId();
+            }
             String fileName = createOfficeFileDTO.getFileName();
             String filePath = createOfficeFileDTO.getFilePath();
             String extendName = createOfficeFileDTO.getExtendName();
@@ -128,9 +130,11 @@ public class OfficeController {
     @Operation(summary = "预览office文件", description = "预览office文件", tags = {"office"})
     @RequestMapping(value = "/previewofficefile", method = RequestMethod.POST)
     @ResponseBody
-    public RestResult<Object> previewOfficeFile(HttpServletRequest request, @RequestBody PreviewOfficeFileDTO previewOfficeFileDTO, String token) {
+    public RestResult<Object> previewOfficeFile(HttpServletRequest request, @RequestBody PreviewOfficeFileDTO previewOfficeFileDTO, Long userId) {
         RestResult<Object> result = new RestResult<>();
-        var userId = SecurityUtils.getUserId();
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
         try {
 
             UserFile userFile = userFileService.getById(previewOfficeFileDTO.getUserFileId());
@@ -144,7 +148,7 @@ public class OfficeController {
                     "admin",
                     "view");
 
-            String query = "?type=show&token=" + token;
+            String query = "?type=show&userId=" + userId;
             file.editorConfig.callbackUrl = baseUrl + "/office/IndexServlet" + query;
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("file", file);
@@ -164,10 +168,12 @@ public class OfficeController {
     @Operation(summary = "编辑office文件", description = "编辑office文件", tags = {"office"})
     @ResponseBody
     @RequestMapping(value = "/editofficefile", method = RequestMethod.POST)
-    public RestResult<Object> editOfficeFile(HttpServletRequest request, @RequestBody EditOfficeFileDTO editOfficeFileDTO, String token) {
+    public RestResult<Object> editOfficeFile(HttpServletRequest request, @RequestBody EditOfficeFileDTO editOfficeFileDTO, Long userId) {
         RestResult<Object> result = new RestResult<>();
         log.info("editOfficeFile");
-        var userId = SecurityUtils.getUserId();
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
         try {
 
             UserFile userFile = userFileService.getById(editOfficeFileDTO.getUserFileId());
@@ -184,7 +190,7 @@ public class OfficeController {
                     "edit");
             file.changeType(request.getParameter("mode"), "edit");
 
-            String query = "?type=edit&userFileId=" + userFile.getUserFileId() + "&token=" + token;
+            String query = "?type=edit&userFileId=" + userFile.getUserFileId() + "&userId=" + userId;
             file.editorConfig.callbackUrl = baseUrl + "/office/IndexServlet" + query;
 
             JSONObject jsonObject = new JSONObject();
@@ -203,11 +209,12 @@ public class OfficeController {
     }
 
 
-    @RequestMapping(value = "/IndexServlet", method = RequestMethod.POST)
+    @PostMapping("/IndexServlet")
     @ResponseBody
-    public void IndexServlet(HttpServletResponse response, HttpServletRequest request) throws IOException {
-        var userId = SecurityUtils.getUserId();
-        String token = request.getParameter("token");
+    public void indexServlet(HttpServletResponse response, HttpServletRequest request, Long userId) throws IOException {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
 
         PrintWriter writer = response.getWriter();
         Scanner scanner = new Scanner(request.getInputStream()).useDelimiter("\\A");
@@ -255,7 +262,7 @@ public class OfficeController {
                     }
                     LambdaUpdateWrapper<FileBean> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
                     fileLength = connection.getContentLength();
-                    log.info("当前修改文件大小为：" + Long.valueOf(fileLength));
+                    log.info("当前修改文件大小为：" + (long) fileLength);
 
                     DownloadFile downloadFile = new DownloadFile();
                     downloadFile.setFileUrl(fileBean.getFileUrl());
@@ -263,7 +270,7 @@ public class OfficeController {
                     String md5Str = DigestUtils.md5Hex(inputStream);
                     lambdaUpdateWrapper
                             .set(FileBean::getIdentifier, md5Str)
-                            .set(FileBean::getFileSize, Long.valueOf(fileLength))
+                            .set(FileBean::getFileSize, (long) fileLength)
                             .set(FileBean::getModifyTime, DateUtil.getCurrentTime())
                             .set(FileBean::getModifyUserId, userId)
                             .eq(FileBean::getFileId, fileBean.getFileId());

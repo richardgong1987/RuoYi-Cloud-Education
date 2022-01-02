@@ -36,7 +36,7 @@ public class RecoveryFileController {
     @MyLog(operation = "删除回收文件", module = CURRENT_MODULE)
     @RequestMapping(value = "/deleterecoveryfile", method = RequestMethod.POST)
     @ResponseBody
-    public RestResult<String> deleteRecoveryFile(@RequestBody DeleteRecoveryFileDTO deleteRecoveryFileDTO, String token) {
+    public RestResult<String> deleteRecoveryFile(@RequestBody DeleteRecoveryFileDTO deleteRecoveryFileDTO, Long userId) {
 
         RecoveryFile recoveryFile = recoveryFileService.getById(deleteRecoveryFileDTO.getRecoveryFileId());
         UserFile userFile = userFileService.getById(recoveryFile.getUserFileId());
@@ -51,8 +51,10 @@ public class RecoveryFileController {
     @RequestMapping(value = "/batchdelete", method = RequestMethod.POST)
     @MyLog(operation = "批量删除回收文件", module = CURRENT_MODULE)
     @ResponseBody
-    public RestResult<String> batchDeleteRecoveryFile(@RequestBody BatchDeleteRecoveryFileDTO batchDeleteRecoveryFileDTO, String token) {
-        var userId = SecurityUtils.getUserId();
+    public RestResult<String> batchDeleteRecoveryFile(@RequestBody BatchDeleteRecoveryFileDTO batchDeleteRecoveryFileDTO, Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
         List<RecoveryFile> recoveryFileList = JSON.parseArray(batchDeleteRecoveryFileDTO.getRecoveryFileIds(), RecoveryFile.class);
         for (RecoveryFile recoveryFile : recoveryFileList) {
 
@@ -68,8 +70,10 @@ public class RecoveryFileController {
     @Operation(summary = "回收文件列表", description = "回收文件列表", tags = {"recoveryfile"})
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
-    public RestResult<List<RecoveryFileListVo>> getRecoveryFileList(String token) {
-        var userId = SecurityUtils.getUserId();
+    public RestResult<List<RecoveryFileListVo>> getRecoveryFileList(Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
         RestResult<List<RecoveryFileListVo>> restResult = new RestResult<>();
         List<RecoveryFileListVo> recoveryFileList = recoveryFileService.selectRecoveryFileList(userId);
         restResult.setData(recoveryFileList);
@@ -82,8 +86,10 @@ public class RecoveryFileController {
     @RequestMapping(value = "/restorefile", method = RequestMethod.POST)
     @MyLog(operation = "还原文件", module = CURRENT_MODULE)
     @ResponseBody
-    public RestResult restoreFile(@RequestBody RestoreFileDTO restoreFileDto, String token) {
-        var userId = SecurityUtils.getUserId();
+    public RestResult restoreFile(@RequestBody RestoreFileDTO restoreFileDto, Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
         recoveryFileService.restorefile(restoreFileDto.getDeleteBatchNum(), restoreFileDto.getFilePath(), userId);
         return RestResult.success().message("还原成功！");
     }

@@ -70,10 +70,12 @@ public class FiletransferController {
     @RequestMapping(value = "/uploadfile", method = RequestMethod.GET)
     @MyLog(operation = "极速上传", module = CURRENT_MODULE)
     @ResponseBody
-    public RestResult<UploadFileVo> uploadFileSpeed(UploadFileDTO uploadFileDto, String token) {
+    public RestResult<UploadFileVo> uploadFileSpeed(UploadFileDTO uploadFileDto, Long userId) {
 
-        var userId = SecurityUtils.getUserId();
-        ;
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
+
 
         UploadFileVo uploadFileVo = new UploadFileVo();
         Map<String, Object> param = new HashMap<>();
@@ -154,8 +156,10 @@ public class FiletransferController {
     @RequestMapping(value = "/uploadfile", method = RequestMethod.POST)
     @MyLog(operation = "上传文件", module = CURRENT_MODULE)
     @ResponseBody
-    public RestResult<UploadFileVo> uploadFile(HttpServletRequest request, UploadFileDTO uploadFileDto, String token) {
-        var userId = SecurityUtils.getUserId();
+    public RestResult<UploadFileVo> uploadFile(HttpServletRequest request, UploadFileDTO uploadFileDto, Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
         ;
 
         filetransferService.uploadFile(request, uploadFileDto, userId);
@@ -266,9 +270,11 @@ public class FiletransferController {
     @Operation(summary = "获取存储信息", description = "获取存储信息", tags = {"filetransfer"})
     @RequestMapping(value = "/getstorage", method = RequestMethod.GET)
     @ResponseBody
-    public RestResult<StorageBean> getStorage(String token) {
-        var userId = SecurityUtils.getUserId();
-        ;
+    public RestResult<StorageBean> getStorage(Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
+
         StorageBean storageBean = new StorageBean();
 
         storageBean.setUserId(userId);

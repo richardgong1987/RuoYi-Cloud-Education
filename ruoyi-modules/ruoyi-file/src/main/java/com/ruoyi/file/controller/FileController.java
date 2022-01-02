@@ -102,9 +102,10 @@ public class FileController {
     @GetMapping(value = "/search")
     @MyLog(operation = "文件搜索", module = CURRENT_MODULE)
     @ResponseBody
-    public RestResult<SearchHits<FileSearch>> searchFile(SearchFileDTO searchFileDTO) {
-        UserBean sessionUserBean = (UserBean) SessionUtil.getSession();
-        var userId = SecurityUtils.getUserId();
+    public RestResult<SearchHits<FileSearch>> searchFile(SearchFileDTO searchFileDTO, Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
         HighlightBuilder.Field allHighLight = new HighlightBuilder.Field("*").preTags("<span class='keyword'>")
                 .postTags("</span>");
@@ -193,8 +194,11 @@ public class FileController {
     public RestResult getFileList(
             @Parameter(description = "文件路径", required = true) String filePath,
             @Parameter(description = "当前页", required = true) long currentPage,
-            @Parameter(description = "页面数量", required = true) long pageCount) {
-        var userId = SecurityUtils.getUserId();
+            @Parameter(description = "页面数量", required = true) long pageCount, Long userId) {
+
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
         UserFile userFile = new UserFile();
         userFile.setUserId(userId);
 
