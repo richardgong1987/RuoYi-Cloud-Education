@@ -8,8 +8,8 @@
 
     <select id="selectRecoveryFileList" resultType="com.ruoyi.file.vo.file.RecoveryFileListVo">
         SELECT *
-        FROM recoveryfile a
-                 LEFT JOIN userfile b ON a.userFileId = b.userFileId
+        FROM file_recoveryfile a
+                 LEFT JOIN file_userfile b ON a.userFileId = b.userFileId
         WHERE userId = #{userId}
     </select>
 </mapper>

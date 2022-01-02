@@ -8,10 +8,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
-@Table(name = "userfile", uniqueConstraints = {
+@Table(name = "file_userfile", uniqueConstraints = {
     @UniqueConstraint(name = "fileindex", columnNames = {"fileName", "filePath", "extendName", "deleteFlag", "userId"})})
 @Entity
-@TableName("userfile")
+@TableName("file_userfile")
 public class UserFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

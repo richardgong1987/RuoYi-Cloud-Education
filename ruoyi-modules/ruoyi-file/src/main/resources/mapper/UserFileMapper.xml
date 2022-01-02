@@ -7,16 +7,16 @@
 <mapper namespace="com.ruoyi.file.mapper.UserFileMapper">
 
     <update id="replaceFilePath">
-        UPDATE userfile
+        UPDATE file_userfile
         SET filepath=REPLACE(filepath, #{oldFilePath}, #{filePath})
         WHERE filepath LIKE N'${oldFilePath}%'
           AND userId = #{userId};
     </update>
 
     <select id="userFileList" resultType="com.ruoyi.file.vo.file.FileListVo">
-        select * from userfile a
-        left join file on file.fileId = a.fileId
-        left join image on a.fileId = image.fileId
+        select * from file_userfile a
+        left JOIN file_file on file_file.fileId = a.fileId
+        left join file_image on a.fileId = file_image.fileId
         <where>
             <if test="userFile.userId != null">
                 and a.userId = #{userFile.userId}
@@ -42,7 +42,7 @@
     </select>
 
     <sql id="selectByExtendName">
-        left join file on file.fileId = userfile.fileId
+        left JOIN file_file on file_file.fileId = file_userfile.fileId
         where extendName in
         <foreach collection="fileNameList" open="(" close=")" separator="," item="fileName">
             #{fileName}
@@ -51,7 +51,7 @@
         and deleteFlag = 0
     </sql>
     <sql id="selectByNotExtendName">
-        left join file on file.fileId = userfile.fileId
+        left JOIN file_file on file_file.fileId = file_userfile.fileId
         where extendName not in
         <foreach collection="fileNameList" open="(" close=")" separator="," item="fileName">
             #{fileName}
@@ -61,41 +61,41 @@
     </sql>
     <select id="selectFileByExtendName" parameterType="com.ruoyi.file.domain.UserFile"
             resultType="com.ruoyi.file.vo.file.FileListVo">
-        select * from userfile
-        left join image on userfile.fileId = image.fileId
+        select * from file_userfile
+        left join file_image on file_userfile.fileId = file_image.fileId
         <include refid="selectByExtendName"></include>
         limit #{beginCount}, #{pageCount}
     </select>
 
     <select id="selectCountByExtendName" parameterType="com.ruoyi.file.domain.UserFile"
             resultType="java.lang.Long">
-        select count(*) from userfile
+        select count(*) from file_userfile
         <include refid="selectByExtendName"></include>
     </select>
 
     <select id="selectFileNotInExtendNames" parameterType="com.ruoyi.file.domain.UserFile"
             resultType="com.ruoyi.file.vo.file.FileListVo">
-        select * from userfile
+        select * from file_userfile
         <include refid="selectByNotExtendName"></include>
         limit #{beginCount}, #{pageCount}
     </select>
 
     <select id="selectCountNotInExtendNames" parameterType="com.ruoyi.file.domain.UserFile"
             resultType="java.lang.Long">
-        select count(*) from userfile
+        select count(*) from file_userfile
         <include refid="selectByNotExtendName"></include>
     </select>
 
 
     <update id="updateFilepathByFilepath">
-        UPDATE userfile
+        UPDATE file_userfile
         SET filePath=REPLACE(filePath, #{param1}, #{param2})
         WHERE filePath LIKE N'${param1}%'
           AND userId = #{param3}
     </update>
 
     <update id="updateFilepathByPathAndName">
-        update userfile set filePath = #{param2}
+        UPDATE file_userfile set filePath = #{param2}
         where filePath = #{param1} and fileName = #{param3}
         <if test="param4 != null">
             and extendName = #{param4}
@@ -107,11 +107,11 @@
     </update>
 
     <insert id="batchInsertByPathAndName">
-        insert into userfile ( deleteBatchNum, deleteFlag, deleteTime,
+        insert into file_userfile ( deleteBatchNum, deleteFlag, deleteTime,
         extendName, fileId, fileName, filePath, isDir, uploadTime, userId)
         (select deleteBatchNum, deleteFlag, deleteTime, extendName, fileId,
         fileName, #{newFilePath}, isDir, uploadTime, userId
-        from userfile
+        from file_userfile
         <where>
             <if test="userId != 0">
                 and userId = #{userId}
@@ -136,7 +136,7 @@
     </insert>
 
     <update id="batchInsertByFilepath">
-        INSERT INTO userfile (deleteBatchNum, deleteFlag, deleteTime,
+        INSERT INTO file_userfile (deleteBatchNum, deleteFlag, deleteTime,
                               extendName, fileId, fileName, filePath, isDir, uploadTime, userId)
             (SELECT deleteBatchNum,
                     deleteFlag,
@@ -148,7 +148,7 @@
                     isDir,
                     uploadTime,
                     userId
-             FROM userfile
+             FROM file_userfile
              WHERE filePath LIKE N'${oldFilePath}%'
                AND userId = #{userId}
             )
@@ -157,9 +157,9 @@
 
     <select id="selectStorageSizeByUserId" resultType="java.lang.Long" parameterType="java.lang.Long">
         SELECT SUM(fileSize)
-        FROM userfile
-                 LEFT JOIN file ON file.fileId = userfile.fileId
-        WHERE userfile.userId = #{userId}
+        FROM file_userfile
+                 left JOIN file_file on file_file.fileId = file_userfile.fileId
+        WHERE file_userfile.userId = #{userId}
     </select>
 
 </mapper>

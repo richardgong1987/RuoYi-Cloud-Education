@@ -11,9 +11,9 @@ import lombok.Data;
  * 存储信息类
  */
 @Data
-@Table(name = "storage")
+@Table(name = "file_storage")
 @Entity
-@TableName("storage")
+@TableName("file_storage")
 public class StorageBean {
 
     @Id

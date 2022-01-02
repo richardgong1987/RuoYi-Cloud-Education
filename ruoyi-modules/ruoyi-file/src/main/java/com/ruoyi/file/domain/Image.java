@@ -14,9 +14,9 @@ import lombok.Data;
  * @date 2021/12/7 22:05
  */
 @Data
-@Table(name = "image")
+@Table(name = "file_image")
 @Entity
-@TableName("image")
+@TableName("file_image")
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

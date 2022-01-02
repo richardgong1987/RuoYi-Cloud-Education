@@ -8,9 +8,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
-@Table(name = "sysparam")
+@Table(name = "file_sysparam")
 @Entity
-@TableName("sysparam")
+@TableName("file_sysparam")
 public class SysParam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

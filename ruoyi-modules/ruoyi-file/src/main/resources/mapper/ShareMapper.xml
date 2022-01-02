@@ -7,10 +7,10 @@
 <mapper namespace="com.ruoyi.file.mapper.ShareMapper">
 
     <select id="selectShareList" resultType="com.ruoyi.file.vo.share.ShareListVO">
-        SELECT * FROM share a
-        LEFT JOIN sharefile b ON b.shareBatchNum = a.shareBatchNum
-        LEFT JOIN userfile c ON c.userFileId = b.userFileId
-        LEFT JOIN file d ON d.fileId = c.fileId
+        SELECT *  FROM file_share a
+        LEFT JOIN file_sharefile b ON b.shareBatchNum = a.shareBatchNum
+        LEFT JOIN file_userfile c ON c.userFileId = b.userFileId
+        left JOIN file_file d ON d.fileId = c.fileId
         WHERE shareFilePath = #{shareFilePath}
         <if test="shareBatchNum != null">
             AND a.shareBatchNum = #{shareBatchNum}
@@ -21,10 +21,10 @@
     </select>
 
     <select id="selectShareListTotalCount" resultType="java.lang.Integer">
-        SELECT count(*) FROM share a
-        LEFT JOIN sharefile b ON b.shareBatchNum = a.shareBatchNum
-        LEFT JOIN userfile c ON c.userFileId = b.userFileId
-        LEFT JOIN file d ON d.fileId = c.fileId
+        SELECT count(*)  FROM file_share a
+        LEFT JOIN file_sharefile b ON b.shareBatchNum = a.shareBatchNum
+        LEFT JOIN file_userfile c ON c.userFileId = b.userFileId
+        left JOIN file_file d ON d.fileId = c.fileId
         WHERE shareFilePath = #{shareFilePath}
         <if test="shareBatchNum != null">
             AND a.shareBatchNum = #{shareBatchNum}

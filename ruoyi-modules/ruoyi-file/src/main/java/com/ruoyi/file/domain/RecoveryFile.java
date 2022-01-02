@@ -8,9 +8,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
-@Table(name = "recoveryfile")
+@Table(name = "file_recoveryfile")
 @Entity
-@TableName("recoveryfile")
+@TableName("file_recoveryfile")
 public class RecoveryFile {
 
     @Id

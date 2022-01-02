@@ -13,9 +13,9 @@ import javax.persistence.*;
  * @author ma116
  */
 @Data
-@Table(name = "file")
+@Table(name = "file_file")
 @Entity
-@TableName("file")
+@TableName("file_file")
 public class FileBean {
 
     @Id

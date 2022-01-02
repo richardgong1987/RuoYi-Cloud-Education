@@ -8,9 +8,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
-@Table(name = "sharefile")
+@Table(name = "file_sharefile")
 @Entity
-@TableName("sharefile")
+@TableName("file_sharefile")
 public class ShareFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

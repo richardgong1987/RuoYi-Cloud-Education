@@ -7,7 +7,7 @@
 <mapper namespace="com.ruoyi.file.mapper.FileMapper">
 
     <insert id="batchInsertFile" parameterType="java.util.List">
-        INSERT ignore INTO file (userId, fileName,timeStampName, fileUrl,
+        INSERT ignore file_file (userId, fileName,timeStampName, fileUrl,
         filePath, extendName, uploadTime, fileSize, isDir)
         VALUES
         <foreach collection="list" item="file" index="index" separator=",">
@@ -18,10 +18,10 @@
     </insert>
 
     <update id="incPointCountByPathAndName">
-        update file
+        update file_file
         set pointCount = pointCount + 1
         where fileId in (
-        select fileId from userfile
+        select fileId from file_userfile
         <where>
             <if test="userId != 0">
                 and userId = #{userId}
@@ -41,11 +41,11 @@
     </update>
 
     <update id="incPointCountByByFilepath">
-        UPDATE file
+        update file_file
         SET pointCount = pointCount + 1
         WHERE fileId IN (
             SELECT fileId
-            FROM userfile
+            FROM file_userfile
             WHERE filePath LIKE N'${oldFilePath}%'
               AND userId = #{userId}
               AND isDir = 0

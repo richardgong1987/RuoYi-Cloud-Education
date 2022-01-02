@@ -8,9 +8,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
-@Table(name = "uploadtaskdetail")
+@Table(name = "file_uploadtaskdetail")
 @Entity
-@TableName("uploadtaskdetail")
+@TableName("file_uploadtaskdetail")
 public class UploadTaskDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
