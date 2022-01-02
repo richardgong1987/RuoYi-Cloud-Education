@@ -23,6 +23,8 @@ import com.qiwenshare.ufop.factory.UFOPFactory;
 import com.qiwenshare.ufop.operation.download.Downloader;
 import com.qiwenshare.ufop.operation.download.domain.DownloadFile;
 import com.qiwenshare.ufop.util.UFOPUtils;
+import com.ruoyi.common.core.utils.SpringUtils;
+import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.file.api.*;
 import com.ruoyi.file.component.FileDealComp;
 import com.ruoyi.file.domain.*;
@@ -71,7 +73,7 @@ public class FiletransferController {
     @ResponseBody
     public RestResult<UploadFileVo> uploadFileSpeed(UploadFileDTO uploadFileDto, @RequestHeader("token") String token) {
 
-        var userId = 1L;
+        var userId = SecurityUtils.getUserId();;
 
         UploadFileVo uploadFileVo = new UploadFileVo();
         Map<String, Object> param = new HashMap<String, Object>();
@@ -84,12 +86,12 @@ public class FiletransferController {
             UserFile userFile = new UserFile();
 
             // @todos  user id 0L
-            userFile.setUserId(0L);
+            userFile.setUserId(userId);
             String relativePath = uploadFileDto.getRelativePath();
             if (relativePath.contains("/")) {
                 userFile.setFilePath(uploadFileDto.getFilePath() + UFOPUtils.getParentPath(relativePath) + "/");
                 fileDealComp.restoreParentFilePath(uploadFileDto.getFilePath() + UFOPUtils.getParentPath(relativePath) + "/", userId);
-                fileDealComp.deleteRepeatSubDirFile(uploadFileDto.getFilePath(), 0L);
+                fileDealComp.deleteRepeatSubDirFile(uploadFileDto.getFilePath(), userId);
             } else {
                 userFile.setFilePath(uploadFileDto.getFilePath());
             }
@@ -153,7 +155,7 @@ public class FiletransferController {
     @MyLog(operation = "上传文件", module = CURRENT_MODULE)
     @ResponseBody
     public RestResult<UploadFileVo> uploadFile(HttpServletRequest request, UploadFileDTO uploadFileDto, @RequestHeader("token") String token) {
-        var userId = 1L;
+        var userId = SecurityUtils.getUserId();;
 
         filetransferService.uploadFile(request, uploadFileDto, userId);
 
@@ -264,11 +266,10 @@ public class FiletransferController {
     @RequestMapping(value = "/getstorage", method = RequestMethod.GET)
     @ResponseBody
     public RestResult<StorageBean> getStorage(String token) {
-        var userId = 1L;
+        var userId = SecurityUtils.getUserId();;
         StorageBean storageBean = new StorageBean();
 
         storageBean.setUserId(userId);
-
 
         Long storageSize = filetransferService.selectStorageSizeByUserId(userId);
         StorageBean storage = new StorageBean();

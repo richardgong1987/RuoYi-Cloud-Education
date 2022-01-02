@@ -20,6 +20,7 @@ import com.qiwenshare.ufop.operation.download.domain.DownloadFile;
 import com.qiwenshare.ufop.operation.write.Writer;
 import com.qiwenshare.ufop.operation.write.domain.WriteFile;
 import com.qiwenshare.ufop.util.UFOPUtils;
+import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.file.advice.QiwenException;
 import com.ruoyi.file.api.IFileService;
 import com.ruoyi.file.api.IUserFileService;
@@ -32,6 +33,7 @@ import com.ruoyi.file.domain.UserFile;
 import com.ruoyi.file.dto.file.*;
 import com.ruoyi.file.utils.SessionUtil;
 import com.ruoyi.file.vo.file.FileListVo;
+import com.ruoyi.system.api.model.LoginUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -193,8 +195,7 @@ public class FileController {
             @Parameter(description = "文件路径", required = true) String filePath,
             @Parameter(description = "当前页", required = true) long currentPage,
             @Parameter(description = "页面数量", required = true) long pageCount) {
-
-        var userId = 1L;
+        var userId = SecurityUtils.getUserId();
         UserFile userFile = new UserFile();
         userFile.setUserId(userId);
 
