@@ -1,59 +1,64 @@
 <template>
-	<div class="header-wrapper">
-		<el-menu
-			:default-active="activeIndex"
-			class="top-menu-list"
-			mode="horizontal"
-			router
-		>
-			<el-menu-item
-				index="index"
-				:route="{ path: '/index' }"
-				>首页</el-menu-item
-			>
-		</el-menu>
-	</div>
+  <div class="header-wrapper">
+    <el-menu
+      :default-active="activeIndex"
+      class="top-menu-list"
+      mode="horizontal"
+      router
+    >
+      <el-menu-item
+        index="index"
+        :route="{ path: backName }"
+      >返回
+      </el-menu-item
+      >
+    </el-menu>
+  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
-	name: 'Header',
-	data() {
-		return {
-		}
-	},
-	computed: {
-		...mapGetters(['isLogin', 'username']),
-		// 当前激活菜单的 index
-		activeIndex() {
-			return this.$route.name || 'Home' //  获取当前路由名称
-		},
-		isProductEnv() {
-			return (
-				process.env.NODE_ENV !== 'development' &&
-				location.origin === 'https://pan.qiwenshare.com'
-			)
-		},
-		// 屏幕宽度
-		screenWidth() {
-			return this.$store.state.common.screenWidth
-		}
-	},
-	methods: {
-		/**
-		 * 退出登录
-		 * @description 清除 cookie 存放的 token  并跳转到登录页面
-		 */
-		exitButton() {
-			this.$message.success('退出登录成功！')
-			this.$store.dispatch('getUserInfo').then(() => {
-				this.removeCookies(this.$config.tokenKeyName)
-				this.$router.push({ path: '/login' })
-			})
-		}
-	}
+  name: 'Header',
+  data() {
+    return {
+      backName: '/index'
+    }
+  },
+  created() {
+    this.backName = location.pathname.includes("/teachers/teacherHandouts/") ? "/teachers/teacherInfos" : "/index"
+  },
+  computed: {
+    ...mapGetters(['isLogin', 'username']),
+    // 当前激活菜单的 index
+    activeIndex() {
+      return this.$route.name || 'Home' //  获取当前路由名称
+    },
+    isProductEnv() {
+      return (
+        process.env.NODE_ENV !== 'development' &&
+        location.origin === 'https://pan.qiwenshare.com'
+      )
+    },
+    // 屏幕宽度
+    screenWidth() {
+      return this.$store.state.common.screenWidth
+    }
+  },
+  methods: {
+    /**
+     * 退出登录
+     * @description 清除 cookie 存放的 token  并跳转到登录页面
+     */
+    exitButton() {
+      this.$message.success('退出登录成功！')
+      this.$store.dispatch('getUserInfo').then(() => {
+        this.removeCookies(this.$config.tokenKeyName)
+        this.$router.push({path: '/login'})
+      })
+    }
+  }
 }
 </script>
 
@@ -77,7 +82,7 @@ export default {
     display: none;
   }
 
-   ::v-deep  .el-menu--horizontal {
+  ::v-deep .el-menu--horizontal {
     .el-menu-item:not(.is-disabled):hover {
       border-bottom-color: $Primary !important;
       background: $tabBackColor;
@@ -85,6 +90,7 @@ export default {
 
     .external-link {
       padding: 0;
+
       a {
         display: block;
         padding: 0 20px;
