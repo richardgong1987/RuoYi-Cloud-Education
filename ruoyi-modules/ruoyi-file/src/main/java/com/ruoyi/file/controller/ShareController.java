@@ -20,7 +20,6 @@ import com.ruoyi.file.api.IUserFileService;
 import com.ruoyi.file.component.FileDealComp;
 import com.ruoyi.file.domain.Share;
 import com.ruoyi.file.domain.ShareFile;
-import com.ruoyi.file.domain.UserBean;
 import com.ruoyi.file.domain.UserFile;
 import com.ruoyi.file.dto.sharefile.*;
 import com.ruoyi.file.vo.share.ShareFileListVO;
@@ -55,7 +54,7 @@ public class ShareController {
     @PostMapping(value = "/sharefile")
     @MyLog(operation = "分享文件", module = CURRENT_MODULE)
     @ResponseBody
-    public RestResult<ShareFileVO> shareFile(@RequestBody ShareFileDTO shareSecretDTO, @RequestHeader("token") String token) {
+    public RestResult<ShareFileVO> shareFile(@RequestBody ShareFileDTO shareSecretDTO, String token) {
         ShareFileVO shareSecretVO = new ShareFileVO();
         var userId = SecurityUtils.getUserId();
 
@@ -108,7 +107,7 @@ public class ShareController {
     @MyLog(operation = "保存分享文件", module = CURRENT_MODULE)
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
-    public RestResult saveShareFile(@RequestBody SaveShareFileDTO saveShareFileDTO, @RequestHeader("token") String token) {
+    public RestResult saveShareFile(@RequestBody SaveShareFileDTO saveShareFileDTO, String token) {
         var userId = SecurityUtils.getUserId();
         List<ShareFile> fileList = JSON.parseArray(saveShareFileDTO.getFiles(), ShareFile.class);
         String savefilePath = saveShareFileDTO.getFilePath();
@@ -152,7 +151,7 @@ public class ShareController {
     @Operation(summary = "查看已分享列表", description = "查看已分享列表", tags = {"share"})
     @GetMapping(value = "/shareList")
     @ResponseBody
-    public RestResult shareList(ShareListDTO shareListDTO, @RequestHeader("token") String token) {
+    public RestResult shareList(ShareListDTO shareListDTO, String token) {
         var userId = SecurityUtils.getUserId();
         List<ShareListVO> shareList = shareService.selectShareList(shareListDTO, userId);
 

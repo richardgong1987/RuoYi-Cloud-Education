@@ -18,7 +18,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ClassUtils;
-import com.qiwenshare.common.exception.NotLoginException;
 import com.qiwenshare.common.result.RestResult;
 import com.qiwenshare.common.util.DateUtil;
 import com.qiwenshare.ufop.factory.UFOPFactory;
@@ -32,7 +31,6 @@ import com.ruoyi.file.api.IFileService;
 import com.ruoyi.file.api.IUserFileService;
 import com.ruoyi.file.domain.FileBean;
 import com.ruoyi.file.domain.FileModel;
-import com.ruoyi.file.domain.UserBean;
 import com.ruoyi.file.domain.UserFile;
 import com.ruoyi.file.dto.file.CreateOfficeFileDTO;
 import com.ruoyi.file.dto.file.EditOfficeFileDTO;
@@ -67,7 +65,7 @@ public class OfficeController {
     @Operation(summary = "创建office文件", description = "创建office文件", tags = {"office"})
     @ResponseBody
     @RequestMapping(value = "/createofficefile", method = RequestMethod.POST)
-    public RestResult<Object> createOfficeFile(@RequestBody CreateOfficeFileDTO createOfficeFileDTO, @RequestHeader("token") String token) {
+    public RestResult<Object> createOfficeFile(@RequestBody CreateOfficeFileDTO createOfficeFileDTO, String token) {
         RestResult<Object> result = new RestResult<>();
         try {
             var userId = SecurityUtils.getUserId();
@@ -130,7 +128,7 @@ public class OfficeController {
     @Operation(summary = "预览office文件", description = "预览office文件", tags = {"office"})
     @RequestMapping(value = "/previewofficefile", method = RequestMethod.POST)
     @ResponseBody
-    public RestResult<Object> previewOfficeFile(HttpServletRequest request, @RequestBody PreviewOfficeFileDTO previewOfficeFileDTO, @RequestHeader("token") String token) {
+    public RestResult<Object> previewOfficeFile(HttpServletRequest request, @RequestBody PreviewOfficeFileDTO previewOfficeFileDTO, String token) {
         RestResult<Object> result = new RestResult<>();
         var userId = SecurityUtils.getUserId();
         try {
@@ -166,7 +164,7 @@ public class OfficeController {
     @Operation(summary = "编辑office文件", description = "编辑office文件", tags = {"office"})
     @ResponseBody
     @RequestMapping(value = "/editofficefile", method = RequestMethod.POST)
-    public RestResult<Object> editOfficeFile(HttpServletRequest request, @RequestBody EditOfficeFileDTO editOfficeFileDTO, @RequestHeader("token") String token) {
+    public RestResult<Object> editOfficeFile(HttpServletRequest request, @RequestBody EditOfficeFileDTO editOfficeFileDTO, String token) {
         RestResult<Object> result = new RestResult<>();
         log.info("editOfficeFile");
         var userId = SecurityUtils.getUserId();

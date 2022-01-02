@@ -33,7 +33,6 @@ import com.ruoyi.file.domain.UserFile;
 import com.ruoyi.file.dto.file.*;
 import com.ruoyi.file.utils.SessionUtil;
 import com.ruoyi.file.vo.file.FileListVo;
-import com.ruoyi.system.api.model.LoginUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

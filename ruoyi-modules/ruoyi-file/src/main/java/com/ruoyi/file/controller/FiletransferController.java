@@ -23,7 +23,6 @@ import com.qiwenshare.ufop.factory.UFOPFactory;
 import com.qiwenshare.ufop.operation.download.Downloader;
 import com.qiwenshare.ufop.operation.download.domain.DownloadFile;
 import com.qiwenshare.ufop.util.UFOPUtils;
-import com.ruoyi.common.core.utils.SpringUtils;
 import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.file.api.*;
 import com.ruoyi.file.component.FileDealComp;
@@ -71,9 +70,10 @@ public class FiletransferController {
     @RequestMapping(value = "/uploadfile", method = RequestMethod.GET)
     @MyLog(operation = "极速上传", module = CURRENT_MODULE)
     @ResponseBody
-    public RestResult<UploadFileVo> uploadFileSpeed(UploadFileDTO uploadFileDto, @RequestHeader("token") String token) {
+    public RestResult<UploadFileVo> uploadFileSpeed(UploadFileDTO uploadFileDto, String token) {
 
-        var userId = SecurityUtils.getUserId();;
+        var userId = SecurityUtils.getUserId();
+        ;
 
         UploadFileVo uploadFileVo = new UploadFileVo();
         Map<String, Object> param = new HashMap<>();
@@ -154,8 +154,9 @@ public class FiletransferController {
     @RequestMapping(value = "/uploadfile", method = RequestMethod.POST)
     @MyLog(operation = "上传文件", module = CURRENT_MODULE)
     @ResponseBody
-    public RestResult<UploadFileVo> uploadFile(HttpServletRequest request, UploadFileDTO uploadFileDto, @RequestHeader("token") String token) {
-        var userId = SecurityUtils.getUserId();;
+    public RestResult<UploadFileVo> uploadFile(HttpServletRequest request, UploadFileDTO uploadFileDto, String token) {
+        var userId = SecurityUtils.getUserId();
+        ;
 
         filetransferService.uploadFile(request, uploadFileDto, userId);
 
@@ -266,7 +267,8 @@ public class FiletransferController {
     @RequestMapping(value = "/getstorage", method = RequestMethod.GET)
     @ResponseBody
     public RestResult<StorageBean> getStorage(String token) {
-        var userId = SecurityUtils.getUserId();;
+        var userId = SecurityUtils.getUserId();
+        ;
         StorageBean storageBean = new StorageBean();
 
         storageBean.setUserId(userId);
