@@ -51,7 +51,7 @@ public class RecoveryFileController {
     @MyLog(operation = "批量删除回收文件", module = CURRENT_MODULE)
     @ResponseBody
     public RestResult<String> batchDeleteRecoveryFile(@RequestBody BatchDeleteRecoveryFileDTO batchDeleteRecoveryFileDTO, @RequestHeader("token") String token) {
-        var userId = 0L;
+        var userId = 1L;
         List<RecoveryFile> recoveryFileList = JSON.parseArray(batchDeleteRecoveryFileDTO.getRecoveryFileIds(), RecoveryFile.class);
         for (RecoveryFile recoveryFile : recoveryFileList) {
 
@@ -68,7 +68,7 @@ public class RecoveryFileController {
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
     public RestResult<List<RecoveryFileListVo>> getRecoveryFileList(@RequestHeader("token") String token) {
-        var userId = 0L;
+        var userId = 1L;
         RestResult<List<RecoveryFileListVo>> restResult = new RestResult<>();
         List<RecoveryFileListVo> recoveryFileList = recoveryFileService.selectRecoveryFileList(userId);
         restResult.setData(recoveryFileList);
@@ -82,7 +82,7 @@ public class RecoveryFileController {
     @MyLog(operation = "还原文件", module = CURRENT_MODULE)
     @ResponseBody
     public RestResult restoreFile(@RequestBody RestoreFileDTO restoreFileDto, @RequestHeader("token") String token) {
-        var userId = 0L;
+        var userId = 1L;
         recoveryFileService.restorefile(restoreFileDto.getDeleteBatchNum(), restoreFileDto.getFilePath(), userId);
         return RestResult.success().message("还原成功！");
     }

@@ -71,7 +71,7 @@ public class FiletransferController {
     @ResponseBody
     public RestResult<UploadFileVo> uploadFileSpeed(UploadFileDTO uploadFileDto, @RequestHeader("token") String token) {
 
-        var userId = 0L;
+        var userId = 1L;
 
         UploadFileVo uploadFileVo = new UploadFileVo();
         Map<String, Object> param = new HashMap<String, Object>();
@@ -153,7 +153,7 @@ public class FiletransferController {
     @MyLog(operation = "上传文件", module = CURRENT_MODULE)
     @ResponseBody
     public RestResult<UploadFileVo> uploadFile(HttpServletRequest request, UploadFileDTO uploadFileDto, @RequestHeader("token") String token) {
-        var userId = 0L;
+        var userId = 1L;
 
         filetransferService.uploadFile(request, uploadFileDto, userId);
 
@@ -263,8 +263,8 @@ public class FiletransferController {
     @Operation(summary = "获取存储信息", description = "获取存储信息", tags = {"filetransfer"})
     @RequestMapping(value = "/getstorage", method = RequestMethod.GET)
     @ResponseBody
-    public RestResult<StorageBean> getStorage(@RequestHeader("token") String token) {
-        var userId = 0L;
+    public RestResult<StorageBean> getStorage(String token) {
+        var userId = 1L;
         StorageBean storageBean = new StorageBean();
 
         storageBean.setUserId(userId);

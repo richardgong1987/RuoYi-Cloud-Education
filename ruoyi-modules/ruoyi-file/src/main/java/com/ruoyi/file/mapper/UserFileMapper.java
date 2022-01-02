@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
 public interface UserFileMapper extends BaseMapper<UserFile> {
     void replaceFilePath(@Param("filePath") String filePath, @Param("oldFilePath") String oldFilePath, @Param("userId") Long userId);
 
-    List<FileListVo> userFileList(@Param("userFile") UserFile userFile, Long beginCount, Long pageCount);
+    List<FileListVo> userFileList(@Param("userFile") UserFile userFile, @Param("beginCount") Long beginCount, @Param("pageCount") Long pageCount);
 
     void updateFilepathByPathAndName(String oldfilePath, String newfilePath, String fileName, String extendName, long userId);
 

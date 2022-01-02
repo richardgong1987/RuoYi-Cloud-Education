@@ -106,7 +106,7 @@ public class FileController {
         var userId = sessionUserBean.getUserId();
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
         HighlightBuilder.Field allHighLight = new HighlightBuilder.Field("*").preTags("<span class='keyword'>")
-            .postTags("</span>");
+                .postTags("</span>");
 
         queryBuilder.withHighlightFields(allHighLight);
 
@@ -132,17 +132,17 @@ public class FileController {
         DisMaxQueryBuilder disMaxQueryBuilder = QueryBuilders.disMaxQuery();
 
         QueryBuilder q1 = QueryBuilders.boolQuery()
-            .must(QueryBuilders.multiMatchQuery(searchFileDTO.getFileName(), "fileName", "content"))
-            .must(QueryBuilders.termQuery("userId", userId)).boost(1f);  //分词
+                .must(QueryBuilders.multiMatchQuery(searchFileDTO.getFileName(), "fileName", "content"))
+                .must(QueryBuilders.termQuery("userId", userId)).boost(1f);  //分词
 
         QueryBuilder q2 = QueryBuilders.boolQuery()
-            .must(QueryBuilders.wildcardQuery("fileName", "*" + searchFileDTO.getFileName() + "*"))
-            .must(QueryBuilders.termQuery("userId", userId)).boost(2f); //模糊匹配
+                .must(QueryBuilders.wildcardQuery("fileName", "*" + searchFileDTO.getFileName() + "*"))
+                .must(QueryBuilders.termQuery("userId", userId)).boost(2f); //模糊匹配
 
         disMaxQueryBuilder.add(q1);
         disMaxQueryBuilder.add(q2);
         NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
-            .withQuery(disMaxQueryBuilder).withHighlightFields(allHighLight).build();
+                .withQuery(disMaxQueryBuilder).withHighlightFields(allHighLight).build();
 //
 //        queryBuilder.withQuery(QueryBuilders.boolQuery()
 ////                .must(QueryBuilders.matchQuery("fileName", searchFileDTO.getFileName()))
@@ -173,12 +173,12 @@ public class FileController {
 
         LambdaUpdateWrapper<UserFile> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
         lambdaUpdateWrapper.set(UserFile::getFileName, renameFileDto.getFileName())
-            .set(UserFile::getUploadTime, DateUtil.getCurrentTime())
-            .eq(UserFile::getUserFileId, renameFileDto.getUserFileId());
+                .set(UserFile::getUploadTime, DateUtil.getCurrentTime())
+                .eq(UserFile::getUserFileId, renameFileDto.getUserFileId());
         userFileService.update(lambdaUpdateWrapper);
         if (1 == userFile.getIsDir()) {
             userFileService.replaceUserFilePath(userFile.getFilePath() + renameFileDto.getFileName() + "/",
-                userFile.getFilePath() + userFile.getFileName() + "/", sessionUserBean.getUserId());
+                    userFile.getFilePath() + userFile.getFileName() + "/", sessionUserBean.getUserId());
         }
 
         fileDealComp.uploadESByUserFileId(renameFileDto.getUserFileId());
@@ -190,21 +190,13 @@ public class FileController {
     @RequestMapping(value = "/getfilelist", method = RequestMethod.GET)
     @ResponseBody
     public RestResult getFileList(
-        @Parameter(description = "文件路径", required = true) String filePath,
-        @Parameter(description = "当前页", required = true) long currentPage,
-        @Parameter(description = "页面数量", required = true) long pageCount) {
+            @Parameter(description = "文件路径", required = true) String filePath,
+            @Parameter(description = "当前页", required = true) long currentPage,
+            @Parameter(description = "页面数量", required = true) long pageCount) {
 
+        var userId = 1L;
         UserFile userFile = new UserFile();
-        UserBean sessionUserBean = (UserBean) SessionUtil.getSession();
-        if (sessionUserBean == null) {
-            throw new NotLoginException();
-        }
-        if (userFile == null) {
-            return RestResult.fail();
-
-        }
-        userFile.setUserId(sessionUserBean.getUserId());
-
+        userFile.setUserId(userId);
 
         List<FileListVo> fileList = null;
         userFile.setFilePath(UFOPUtils.urlDecode(filePath));
@@ -219,12 +211,12 @@ public class FileController {
 
         LambdaQueryWrapper<UserFile> userFileLambdaQueryWrapper = new LambdaQueryWrapper<>();
         userFileLambdaQueryWrapper.eq(UserFile::getUserId, userFile.getUserId())
-            .eq(UserFile::getFilePath, userFile.getFilePath())
-            .eq(UserFile::getDeleteFlag, 0);
+                .eq(UserFile::getFilePath, userFile.getFilePath())
+                .eq(UserFile::getDeleteFlag, 0);
 //        int total = userFileService.count(userFileLambdaQueryWrapper);
 
         Map<String, Object> map = new HashMap<>();
-//        map.put("total", total);
+        map.put("total", fileList.size());
         map.put("list", fileList);
 
 

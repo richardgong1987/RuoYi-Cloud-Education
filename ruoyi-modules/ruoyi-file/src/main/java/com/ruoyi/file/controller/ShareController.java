@@ -56,7 +56,7 @@ public class ShareController {
     @ResponseBody
     public RestResult<ShareFileVO> shareFile(@RequestBody ShareFileDTO shareSecretDTO, @RequestHeader("token") String token) {
         ShareFileVO shareSecretVO = new ShareFileVO();
-        var userId = 0L;
+        var userId = 1L;
 
         String uuid = UUID.randomUUID().toString().replace("-", "");
         Share share = new Share();
@@ -108,7 +108,7 @@ public class ShareController {
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     public RestResult saveShareFile(@RequestBody SaveShareFileDTO saveShareFileDTO, @RequestHeader("token") String token) {
-        var userId = 0L;
+        var userId = 1L;
         List<ShareFile> fileList = JSON.parseArray(saveShareFileDTO.getFiles(), ShareFile.class);
         String savefilePath = saveShareFileDTO.getFilePath();
 
@@ -152,7 +152,7 @@ public class ShareController {
     @GetMapping(value = "/shareList")
     @ResponseBody
     public RestResult shareList(ShareListDTO shareListDTO, @RequestHeader("token") String token) {
-        var userId = 0L;
+        var userId = 1L;
         List<ShareListVO> shareList = shareService.selectShareList(shareListDTO, userId);
 
         int total = shareService.selectShareListTotalCount(shareListDTO, userId);
