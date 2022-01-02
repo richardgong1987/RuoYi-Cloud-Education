@@ -12,7 +12,6 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.qiwenshare.common.anno.MyLog;
-import com.qiwenshare.common.exception.NotLoginException;
 import com.qiwenshare.common.result.RestResult;
 import com.qiwenshare.common.util.DateUtil;
 import com.qiwenshare.ufop.factory.UFOPFactory;
@@ -28,10 +27,8 @@ import com.ruoyi.file.component.FileDealComp;
 import com.ruoyi.file.config.es.FileSearch;
 import com.ruoyi.file.domain.FileBean;
 import com.ruoyi.file.domain.TreeNode;
-import com.ruoyi.file.domain.UserBean;
 import com.ruoyi.file.domain.UserFile;
 import com.ruoyi.file.dto.file.*;
-import com.ruoyi.file.utils.SessionUtil;
 import com.ruoyi.file.vo.file.FileListVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -76,8 +73,6 @@ public class FileController {
     @MyLog(operation = "创建文件", module = CURRENT_MODULE)
     @ResponseBody
     public RestResult<String> createFile(@Valid @RequestBody CreateFileDTO createFileDto) {
-
-        UserBean sessionUserBean = (UserBean) SessionUtil.getSession();
 
         boolean isDirExist = userFileService.isDirExist(createFileDto.getFileName(), createFileDto.getFilePath(), SecurityUtils.getUserId());
 
@@ -162,10 +157,6 @@ public class FileController {
     @ResponseBody
     public RestResult<String> renameFile(@RequestBody RenameFileDTO renameFileDto) {
 
-        UserBean sessionUserBean = (UserBean) SessionUtil.getSession();
-        if (sessionUserBean == null) {
-            throw new NotLoginException();
-        }
         UserFile userFile = userFileService.getById(renameFileDto.getUserFileId());
 
         List<UserFile> userFiles = userFileService.selectUserFileByNameAndPath(renameFileDto.getFileName(), userFile.getFilePath(), SecurityUtils.getUserId());
@@ -234,10 +225,6 @@ public class FileController {
     @ResponseBody
     public RestResult<String> deleteImageByIds(@RequestBody BatchDeleteFileDTO batchDeleteFileDto) {
 
-        UserBean sessionUserBean = (UserBean) SessionUtil.getSession();
-        if (sessionUserBean == null) {
-            throw new NotLoginException();
-        }
         List<UserFile> userFiles = JSON.parseArray(batchDeleteFileDto.getFiles(), UserFile.class);
         DigestUtils.md5Hex("data");
         for (UserFile userFile : userFiles) {
@@ -255,10 +242,6 @@ public class FileController {
     @ResponseBody
     public RestResult deleteFile(@RequestBody DeleteFileDTO deleteFileDto) {
 
-        UserBean sessionUserBean = (UserBean) SessionUtil.getSession();
-        if (sessionUserBean == null) {
-            throw new NotLoginException();
-        }
         userFileService.deleteUserFile(deleteFileDto.getUserFileId(), SecurityUtils.getUserId());
         fileDealComp.deleteESByUserFileId(deleteFileDto.getUserFileId());
 
@@ -272,10 +255,6 @@ public class FileController {
     @ResponseBody
     public RestResult<String> unzipFile(@RequestBody UnzipFileDTO unzipFileDto) {
 
-        UserBean sessionUserBean = (UserBean) SessionUtil.getSession();
-        if (sessionUserBean == null) {
-            throw new NotLoginException();
-        }
         try {
             fileService.unzipFile(unzipFileDto.getUserFileId(), unzipFileDto.getUnzipMode(), unzipFileDto.getFilePath());
         } catch (QiwenException e) {
@@ -292,10 +271,6 @@ public class FileController {
     @ResponseBody
     public RestResult<String> copyFile(@RequestBody CopyFileDTO copyFileDTO) {
 
-        UserBean sessionUserBean = (UserBean) SessionUtil.getSession();
-        if (sessionUserBean == null) {
-            throw new NotLoginException();
-        }
         long userFileId = copyFileDTO.getUserFileId();
         UserFile userFile = userFileService.getById(userFileId);
         String oldfilePath = userFile.getFilePath();
@@ -320,10 +295,6 @@ public class FileController {
     @ResponseBody
     public RestResult<String> moveFile(@RequestBody MoveFileDTO moveFileDto) {
 
-        UserBean sessionUserBean = (UserBean) SessionUtil.getSession();
-        if (sessionUserBean == null) {
-            throw new NotLoginException();
-        }
         String oldfilePath = moveFileDto.getOldFilePath();
         String newfilePath = moveFileDto.getFilePath();
         String fileName = moveFileDto.getFileName();
@@ -346,10 +317,6 @@ public class FileController {
     @ResponseBody
     public RestResult<String> batchMoveFile(@RequestBody BatchMoveFileDTO batchMoveFileDto) {
 
-        UserBean sessionUserBean = (UserBean) SessionUtil.getSession();
-        if (sessionUserBean == null) {
-            throw new NotLoginException();
-        }
         String files = batchMoveFileDto.getFiles();
         String newfilePath = batchMoveFileDto.getFilePath();
 
