@@ -278,7 +278,7 @@ export default {
   watch: {
     // 监听左侧菜单切换，修改浏览器标签标题
     activeIndex(newValue) {
-      document.title = `${this.myFileMenuMap[Number(newValue)]} - ${
+      document.title = ` ${
         this.$config.siteName
       }`
       this.isDrawer = false
@@ -298,7 +298,7 @@ export default {
     this.userId = this.$route.params && this.$route.params.userId;
   },
   mounted() {
-    document.title = `${this.myFileMenuMap[Number(this.activeIndex)]} - ${
+    document.title = ` ${
       this.$config.siteName
     }`
   }

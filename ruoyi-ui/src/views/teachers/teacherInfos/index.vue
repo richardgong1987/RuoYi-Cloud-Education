@@ -144,13 +144,11 @@
       <el-table-column label="id" align="center" prop="id"/>
       <el-table-column label="讲义管理" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <router-link :to="'/teachers/teacherHandouts/' + scope.row.id" class="link-type">
-            <el-button
-              size="small"
-              type="primary"
-              icon="el-icon-edit"  v-hasPermi="['teachers:teacherInfos:edit']">讲义管理
+            <el-button @click="toHandOut(scope.row.id,scope.row.name)"
+                       size="small"
+                       type="primary"
+                       icon="el-icon-edit" v-hasPermi="['teachers:teacherInfos:edit']">讲义管理
             </el-button>
-          </router-link>
         </template>
       </el-table-column>
       <el-table-column label="姓名" align="center" prop="name"/>
@@ -294,7 +292,7 @@ import {
   listTeacherInfos,
   updateTeacherInfos
 } from "@/api/teachers/teacherInfos";
-
+import cache from '@/plugins/cache'
 export default {
   name: "TeacherInfos",
   dicts: ['peoples_managementSchools__dict', 'peoples_managementClasses__dict', 'education'],
@@ -374,6 +372,10 @@ export default {
     this.getList();
   },
   methods: {
+    toHandOut: function (userId,name) {
+      this.$router.push({path: `/teachers/teacherHandouts/${userId}`});
+      cache.session.set("teacherName", name);
+    },
     /** 查询老师信息列表 */
     getList() {
       this.loading = true;

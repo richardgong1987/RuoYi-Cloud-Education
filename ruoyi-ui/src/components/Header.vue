@@ -10,24 +10,34 @@
         index="index"
         :route="{ path: backName }"
       >返回
-      </el-menu-item
-      >
+      </el-menu-item>
+      <el-menu-item v-if="teacherName"
+      >{{teacherName}}>老师的讲义
+      </el-menu-item>
     </el-menu>
   </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
+import cache from "@/plugins/cache";
 
 export default {
   name: 'Header',
   data() {
     return {
-      backName: '/index'
+      backName: '/index',
+      teacherName:''
     }
   },
   created() {
-    this.backName = location.pathname.includes("/teachers/teacherHandouts/") ? "/teachers/teacherInfos" : "/index"
+    if (location.pathname.includes("/teachers/teacherHandouts/")) {
+      this.backName =   "/teachers/teacherInfos";
+      this.teacherName = cache.session.get("teacherName");
+    } else {
+      this.backName =   "/index";
+      this.teacherName = '';
+    }
   },
   computed: {
     ...mapGetters(['isLogin', 'username']),
