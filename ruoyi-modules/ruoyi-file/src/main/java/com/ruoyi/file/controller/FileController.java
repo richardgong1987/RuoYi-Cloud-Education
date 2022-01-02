@@ -80,14 +80,14 @@ public class FileController {
 
         UserBean sessionUserBean = (UserBean) SessionUtil.getSession();
 
-        boolean isDirExist = userFileService.isDirExist(createFileDto.getFileName(), createFileDto.getFilePath(), sessionUserBean.getUserId());
+        boolean isDirExist = userFileService.isDirExist(createFileDto.getFileName(), createFileDto.getFilePath(), SecurityUtils.getUserId());
 
         if (isDirExist) {
             return RestResult.fail().message("同名文件已存在");
         }
 
         UserFile userFile = new UserFile();
-        userFile.setUserId(sessionUserBean.getUserId());
+        userFile.setUserId(SecurityUtils.getUserId());
         userFile.setFileName(createFileDto.getFileName());
         userFile.setFilePath(createFileDto.getFilePath());
         userFile.setDeleteFlag(0);
@@ -105,7 +105,7 @@ public class FileController {
     @ResponseBody
     public RestResult<SearchHits<FileSearch>> searchFile(SearchFileDTO searchFileDTO) {
         UserBean sessionUserBean = (UserBean) SessionUtil.getSession();
-        var userId = sessionUserBean.getUserId();
+        var userId = SecurityUtils.getUserId();
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
         HighlightBuilder.Field allHighLight = new HighlightBuilder.Field("*").preTags("<span class='keyword'>")
                 .postTags("</span>");
@@ -149,7 +149,7 @@ public class FileController {
 //        queryBuilder.withQuery(QueryBuilders.boolQuery()
 ////                .must(QueryBuilders.matchQuery("fileName", searchFileDTO.getFileName()))
 //                .must(QueryBuilders.multiMatchQuery(searchFileDTO.getFileName(),"fileName", "content"))
-//                .must(QueryBuilders.termQuery("userId", sessionUserBean.getUserId()))
+//                .must(QueryBuilders.termQuery("userId", SecurityUtils.getUserId()))
 //                ).withQuery(QueryBuilders.wildcardQuery("fileName", "*" + searchFileDTO.getFileName() + "*"));
         SearchHits<FileSearch> search = elasticsearchRestTemplate.search(searchQuery, FileSearch.class);
 
@@ -168,7 +168,7 @@ public class FileController {
         }
         UserFile userFile = userFileService.getById(renameFileDto.getUserFileId());
 
-        List<UserFile> userFiles = userFileService.selectUserFileByNameAndPath(renameFileDto.getFileName(), userFile.getFilePath(), sessionUserBean.getUserId());
+        List<UserFile> userFiles = userFileService.selectUserFileByNameAndPath(renameFileDto.getFileName(), userFile.getFilePath(), SecurityUtils.getUserId());
         if (userFiles != null && !userFiles.isEmpty()) {
             return RestResult.fail().message("同名文件已存在");
         }
@@ -180,7 +180,7 @@ public class FileController {
         userFileService.update(lambdaUpdateWrapper);
         if (1 == userFile.getIsDir()) {
             userFileService.replaceUserFilePath(userFile.getFilePath() + renameFileDto.getFileName() + "/",
-                    userFile.getFilePath() + userFile.getFileName() + "/", sessionUserBean.getUserId());
+                    userFile.getFilePath() + userFile.getFileName() + "/", SecurityUtils.getUserId());
         }
 
         fileDealComp.uploadESByUserFileId(renameFileDto.getUserFileId());
@@ -239,7 +239,7 @@ public class FileController {
         DigestUtils.md5Hex("data");
         for (UserFile userFile : userFiles) {
 
-            userFileService.deleteUserFile(userFile.getUserFileId(), sessionUserBean.getUserId());
+            userFileService.deleteUserFile(userFile.getUserFileId(), SecurityUtils.getUserId());
             fileDealComp.deleteESByUserFileId(userFile.getUserFileId());
         }
 
@@ -256,7 +256,7 @@ public class FileController {
         if (sessionUserBean == null) {
             throw new NotLoginException();
         }
-        userFileService.deleteUserFile(deleteFileDto.getUserFileId(), sessionUserBean.getUserId());
+        userFileService.deleteUserFile(deleteFileDto.getUserFileId(), SecurityUtils.getUserId());
         fileDealComp.deleteESByUserFileId(deleteFileDto.getUserFileId());
 
         return RestResult.success();
@@ -306,7 +306,7 @@ public class FileController {
             }
         }
 
-        userFileService.userFileCopy(oldfilePath, newfilePath, fileName, extendName, sessionUserBean.getUserId());
+        userFileService.userFileCopy(oldfilePath, newfilePath, fileName, extendName, SecurityUtils.getUserId());
         return RestResult.success();
 
     }
@@ -332,7 +332,7 @@ public class FileController {
             }
         }
 
-        userFileService.updateFilepathByFilepath(oldfilePath, newfilePath, fileName, extendName, sessionUserBean.getUserId());
+        userFileService.updateFilepathByFilepath(oldfilePath, newfilePath, fileName, extendName, SecurityUtils.getUserId());
         return RestResult.success();
 
     }
@@ -361,7 +361,7 @@ public class FileController {
                 }
             }
 
-            userFileService.updateFilepathByFilepath(userFile.getFilePath(), newfilePath, userFile.getFileName(), userFile.getExtendName(), sessionUserBean.getUserId());
+            userFileService.updateFilepathByFilepath(userFile.getFilePath(), newfilePath, userFile.getFileName(), userFile.getExtendName(), SecurityUtils.getUserId());
         }
 
         return RestResult.success().data("批量移动文件成功");
@@ -376,13 +376,9 @@ public class FileController {
                                                                       @Parameter(description = "当前页", required = true) long currentPage,
                                                                       @Parameter(description = "页面数量", required = true) long pageCount) {
 
-        UserBean sessionUserBean = (UserBean) SessionUtil.getSession();
-        if (sessionUserBean == null) {
-            throw new NotLoginException();
-        }
-        long userId = sessionUserBean.getUserId();
+        long userId = SecurityUtils.getUserId();
 
-        List<FileListVo> fileList = new ArrayList<>();
+        List<FileListVo> fileList;
         Long beginCount = 0L;
         if (pageCount == 0 || currentPage == 0) {
             beginCount = 0L;
@@ -420,12 +416,8 @@ public class FileController {
     public RestResult<TreeNode> getFileTree() {
         RestResult<TreeNode> result = new RestResult<TreeNode>();
 
-        UserBean sessionUserBean = (UserBean) SessionUtil.getSession();
-        if (sessionUserBean == null) {
-            throw new NotLoginException();
-        }
 
-        List<UserFile> userFileList = userFileService.selectFilePathTreeByUserId(sessionUserBean.getUserId());
+        List<UserFile> userFileList = userFileService.selectFilePathTreeByUserId(SecurityUtils.getUserId());
         TreeNode resultTreeNode = new TreeNode();
         resultTreeNode.setLabel("/");
         resultTreeNode.setId(0L);
@@ -469,7 +461,6 @@ public class FileController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public RestResult<String> updateFile(@RequestBody UpdateFileDTO updateFileDTO) {
-        UserBean sessionUserBean = (UserBean) SessionUtil.getSession();
         UserFile userFile = userFileService.getById(updateFileDTO.getUserFileId());
         FileBean fileBean = fileService.getById(userFile.getFileId());
         if (fileBean.getPointCount() > 1) {
@@ -491,7 +482,7 @@ public class FileController {
             String md5Str = DigestUtils.md5Hex(inputStream);
             fileBean.setIdentifier(md5Str);
             fileBean.setModifyTime(DateUtil.getCurrentTime());
-            fileBean.setModifyUserId(sessionUserBean.getUserId());
+            fileBean.setModifyUserId(SecurityUtils.getUserId());
             fileBean.setFileSize((long) fileSize);
             fileService.updateById(fileBean);
         } catch (Exception e) {

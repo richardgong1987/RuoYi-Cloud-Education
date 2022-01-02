@@ -95,6 +95,7 @@ export const constantRoutes = [
   {
     hidden: true,
     path: '/file',
+    name: 'File',
     component: () => import(/* webpackChunkName: "file" */ '_v/File.vue'),
     meta: {
       requireAuth: true, //  当前路由是否需要登录才可进入
@@ -107,6 +108,7 @@ export const constantRoutes = [
   {
     hidden: true,
     path: '/material/fileDrive',
+    name: 'materialFileDrive',
     component: () => import(/* webpackChunkName: "file" */ '_v/File.vue'),
     meta: {
       requireAuth: true, //  当前路由是否需要登录才可进入
@@ -120,6 +122,7 @@ export const constantRoutes = [
   {
     hidden: true,
     path: '/onlyoffice',
+    name: 'Onlyoffice',
     meta: {
       title: '在线编辑预览',
       content: {

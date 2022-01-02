@@ -76,7 +76,7 @@ public class FiletransferController {
         var userId = SecurityUtils.getUserId();;
 
         UploadFileVo uploadFileVo = new UploadFileVo();
-        Map<String, Object> param = new HashMap<String, Object>();
+        Map<String, Object> param = new HashMap<>();
         param.put("identifier", uploadFileDto.getIdentifier());
 
         List<FileBean> list = fileService.listByMap(param);

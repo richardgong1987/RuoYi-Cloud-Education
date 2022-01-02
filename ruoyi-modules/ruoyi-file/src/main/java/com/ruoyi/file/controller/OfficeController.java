@@ -27,6 +27,7 @@ import com.qiwenshare.ufop.operation.copy.domain.CopyFile;
 import com.qiwenshare.ufop.operation.download.domain.DownloadFile;
 import com.qiwenshare.ufop.operation.write.Writer;
 import com.qiwenshare.ufop.operation.write.domain.WriteFile;
+import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.file.api.IFileService;
 import com.ruoyi.file.api.IUserFileService;
 import com.ruoyi.file.domain.FileBean;
@@ -69,7 +70,7 @@ public class OfficeController {
     public RestResult<Object> createOfficeFile(@RequestBody CreateOfficeFileDTO createOfficeFileDTO, @RequestHeader("token") String token) {
         RestResult<Object> result = new RestResult<>();
         try {
-            var userId = 1L;
+            var userId = SecurityUtils.getUserId();
             String fileName = createOfficeFileDTO.getFileName();
             String filePath = createOfficeFileDTO.getFilePath();
             String extendName = createOfficeFileDTO.getExtendName();
@@ -131,7 +132,7 @@ public class OfficeController {
     @ResponseBody
     public RestResult<Object> previewOfficeFile(HttpServletRequest request, @RequestBody PreviewOfficeFileDTO previewOfficeFileDTO, @RequestHeader("token") String token) {
         RestResult<Object> result = new RestResult<>();
-        var userId = 1L;
+        var userId = SecurityUtils.getUserId();
         try {
 
             UserFile userFile = userFileService.getById(previewOfficeFileDTO.getUserFileId());
@@ -168,7 +169,7 @@ public class OfficeController {
     public RestResult<Object> editOfficeFile(HttpServletRequest request, @RequestBody EditOfficeFileDTO editOfficeFileDTO, @RequestHeader("token") String token) {
         RestResult<Object> result = new RestResult<>();
         log.info("editOfficeFile");
-        var userId = 1L;
+        var userId = SecurityUtils.getUserId();
         try {
 
             UserFile userFile = userFileService.getById(editOfficeFileDTO.getUserFileId());
@@ -207,7 +208,7 @@ public class OfficeController {
     @RequestMapping(value = "/IndexServlet", method = RequestMethod.POST)
     @ResponseBody
     public void IndexServlet(HttpServletResponse response, HttpServletRequest request) throws IOException {
-        var userId = 1L;
+        var userId = SecurityUtils.getUserId();
         String token = request.getParameter("token");
 
         PrintWriter writer = response.getWriter();

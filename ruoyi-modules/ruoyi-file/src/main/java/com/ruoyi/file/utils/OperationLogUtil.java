@@ -2,6 +2,7 @@ package com.ruoyi.file.utils;
 
 import com.qiwenshare.common.util.CollectUtil;
 import com.qiwenshare.common.util.DateUtil;
+import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.file.domain.OperationLogBean;
 import com.ruoyi.file.domain.UserBean;
 
@@ -23,10 +24,7 @@ public class OperationLogUtil {
 
 //        UserBean sessionUserBean = (UserBean) SecurityUtils.getSubject().getPrincipal();
         //用户需要登录才能进行的操作，需要记录操作日志
-        long userId = 1;
-        if (sessionUserBean != null) {
-            userId = sessionUserBean.getUserId();
-        }
+        long userId = SecurityUtils.getUserId();
         OperationLogBean operationLogBean = new OperationLogBean();
         operationLogBean.setUserId(userId);
         operationLogBean.setTime(DateUtil.getCurrentTime());
