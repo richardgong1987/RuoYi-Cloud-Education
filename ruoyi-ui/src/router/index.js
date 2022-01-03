@@ -119,19 +119,6 @@ export const constantRoutes = [
       }
     }
   },
-  {
-    hidden: true,
-    path: '/teachers/teacherHandouts/:userId',
-    name: 'teachersTeacherHandouts',
-    component: () => import(/* webpackChunkName: "file" */ '_v/File.vue'),
-    meta: {
-      requireAuth: true, //  当前路由是否需要登录才可进入
-      title: '讲义管理',
-      content: {
-        description: '图片 文档 视频 音乐 其他 回收站 我的分享'
-      }
-    }
-  },
 
   {
     hidden: true,
@@ -191,6 +178,21 @@ export const dynamicRoutes = [
       }
     ]
   },
+  {
+    hidden: true,
+    path: '/teachers',
+    component: Layout,
+    permissions: ['teachers:teacherInfos:edit'],
+    children: [
+      {
+        path: 'teacherHandouts/:teacherId',
+        component: () => import(/* webpackChunkName: "file" */ '_v/File.vue'),
+        name: 'teachersTeacherHandouts',
+        meta: { title: '老师讲义管理', activeMenu: '/teachers/teacherInfos' }
+      }
+    ]
+  },
+
   {
     path: '/system/role-auth',
     component: Layout,
