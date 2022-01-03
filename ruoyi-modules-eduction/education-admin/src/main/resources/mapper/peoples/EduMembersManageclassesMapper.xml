@@ -11,14 +11,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="studentsNum"    column="students_num"    />
         <result property="headteacher"    column="headteacher"    />
         <result property="phone"    column="phone"    />
+        <result property="committee"    column="committee"    />
         <result property="createTime"    column="create_time"    />
+        <result property="classRepresentative"    column="class_representative"    />
         <result property="updateTime"    column="update_time"    />
         <result property="updateBy"    column="update_by"    />
         <result property="createBy"    column="create_by"    />
     </resultMap>
 
     <sql id="selectEduMembersManageclassesVo">
-        select id, name, school_id, students_num, headteacher, phone, create_time, update_time, update_by, create_by from edu_members_manageclasses
+        select id, name, school_id, students_num, headteacher, phone, committee, create_time, class_representative, update_time, update_by, create_by from edu_members_manageclasses
     </sql>
 
     <select id="selectEduMembersManageclassesList" parameterType="EduMembersManageclasses" resultMap="EduMembersManageclassesResult">
@@ -29,6 +31,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="studentsNum != null "> and students_num = #{studentsNum}</if>
             <if test="headteacher != null "> and headteacher = #{headteacher}</if>
             <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="committee != null  and committee != ''"> and committee = #{committee}</if>
+            <if test="classRepresentative != null  and classRepresentative != ''"> and class_representative = #{classRepresentative}</if>
         </where>
     </select>
     
@@ -45,7 +49,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="studentsNum != null">students_num,</if>
             <if test="headteacher != null">headteacher,</if>
             <if test="phone != null and phone != ''">phone,</if>
+            <if test="committee != null and committee != ''">committee,</if>
             <if test="createTime != null">create_time,</if>
+            <if test="classRepresentative != null and classRepresentative != ''">class_representative,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="updateBy != null and updateBy != ''">update_by,</if>
             <if test="createBy != null and createBy != ''">create_by,</if>
@@ -56,7 +62,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="studentsNum != null">#{studentsNum},</if>
             <if test="headteacher != null">#{headteacher},</if>
             <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="committee != null and committee != ''">#{committee},</if>
             <if test="createTime != null">#{createTime},</if>
+            <if test="classRepresentative != null and classRepresentative != ''">#{classRepresentative},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
             <if test="createBy != null and createBy != ''">#{createBy},</if>
@@ -71,7 +79,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="studentsNum != null">students_num = #{studentsNum},</if>
             <if test="headteacher != null">headteacher = #{headteacher},</if>
             <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="committee != null and committee != ''">committee = #{committee},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="classRepresentative != null and classRepresentative != ''">class_representative = #{classRepresentative},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             <if test="createBy != null and createBy != ''">create_by = #{createBy},</if>

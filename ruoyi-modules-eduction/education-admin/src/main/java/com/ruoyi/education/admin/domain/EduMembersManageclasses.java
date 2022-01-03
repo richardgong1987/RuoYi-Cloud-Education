@@ -10,7 +10,7 @@ import com.ruoyi.common.core.web.domain.BaseEntity;
  * 班级管理对象 edu_members_manageclasses
  *
  * @author richard
- * @date 2021-12-30
+ * @date 2022-01-04
  */
 @Data
 public class EduMembersManageclasses extends BaseEntity
@@ -39,5 +39,13 @@ public class EduMembersManageclasses extends BaseEntity
     /** 电话 */
     @Excel(name = "电话")
     private String phone;
+
+    /** 班委成员 */
+    @Excel(name = "班委成员")
+    private String committee;
+
+    /** 课代表 */
+    @Excel(name = "课代表")
+    private String classRepresentative;
 
 }
