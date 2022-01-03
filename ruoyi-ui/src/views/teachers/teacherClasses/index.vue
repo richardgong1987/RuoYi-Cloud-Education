@@ -13,7 +13,7 @@
       <el-form-item label="所属学校" prop="schoolId">
         <el-select v-model="queryParams.schoolId" placeholder="请选择所属学校" clearable size="small">
           <el-option
-            v-for="dict in dict.type.school_type"
+            v-for="dict in dict.type.peoples_managementSchools__dict"
             :key="dict.value"
             :label="dict.label"
             :value="dict.value"
@@ -28,16 +28,6 @@
           size="small"
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
-      <el-form-item label="班主任" prop="headteacher">
-        <el-select v-model="queryParams.headteacher" placeholder="请选择班主任" clearable size="small">
-          <el-option
-            v-for="dict in dict.type.sys_notice_status"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
-        </el-select>
       </el-form-item>
       <el-form-item label="电话" prop="phone">
         <el-input
@@ -106,15 +96,10 @@
       <el-table-column label="班级名称" align="center" prop="name" />
       <el-table-column label="所属学校" align="center" prop="schoolId">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.school_type" :value="scope.row.schoolId"/>
+          <dict-tag :options="dict.type.peoples_managementSchools__dict" :value="scope.row.schoolId"/>
         </template>
       </el-table-column>
       <el-table-column label="学生数量" align="center" prop="studentsNum" />
-      <el-table-column label="班主任" align="center" prop="headteacher">
-        <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_notice_status" :value="scope.row.headteacher"/>
-        </template>
-      </el-table-column>
       <el-table-column label="电话" align="center" prop="phone" />
       <el-table-column label="班委成员" align="center" prop="committee" />
       <el-table-column label="课代表" align="center" prop="classRepresentative" />
@@ -155,7 +140,7 @@
         <el-form-item label="所属学校" prop="schoolId">
           <el-select v-model="form.schoolId" placeholder="请选择所属学校">
             <el-option
-              v-for="dict in dict.type.school_type"
+              v-for="dict in dict.type.peoples_managementSchools__dict"
               :key="dict.value"
               :label="dict.label"
 :value="parseInt(dict.value)"
@@ -164,16 +149,6 @@
         </el-form-item>
         <el-form-item label="学生数量" prop="studentsNum">
           <el-input v-model="form.studentsNum" placeholder="请输入学生数量" />
-        </el-form-item>
-        <el-form-item label="班主任" prop="headteacher">
-          <el-select v-model="form.headteacher" placeholder="请选择班主任">
-            <el-option
-              v-for="dict in dict.type.sys_notice_status"
-              :key="dict.value"
-              :label="dict.label"
-:value="parseInt(dict.value)"
-            ></el-option>
-          </el-select>
         </el-form-item>
         <el-form-item label="电话" prop="phone">
           <el-input v-model="form.phone" placeholder="请输入电话" />
@@ -231,9 +206,10 @@ import {deepCopyJson} from "@/utils/ruoyi";
 
 export default {
   name: "TeacherClasses",
-  dicts: ['sys_notice_status', 'school_type'],
+  dicts: ['sys_notice_status', 'peoples_managementSchools__dict'],
   data() {
     return {
+      teacherClassesList:[],
       options: [],
       options2: [],
       // 遮罩层
@@ -267,7 +243,9 @@ export default {
         classRepresentative: null,
       },
       // 表单参数
-      form: {},
+      form: {
+        headteacher:''
+      },
       // 表单校验
       rules: {
         name: [
@@ -278,9 +256,6 @@ export default {
         ],
         studentsNum: [
           {required: true, message: "学生数量不能为空", trigger: "blur"}
-        ],
-        headteacher: [
-          {required: true, message: "班主任不能为空", trigger: "change"}
         ],
         phone: [
           {
@@ -294,24 +269,13 @@ export default {
         ],
         classRepresentative: [
           {required: false, message: "课代表不能为空", trigger: "blur"}
-        ],
-        createTime: [
-          {required: true, message: "创建时间不能为空", trigger: "blur"}
-        ],
-        updateTime: [
-          {required: true, message: "更新时间不能为空", trigger: "blur"}
-        ],
-        updateBy: [
-          {required: true, message: "更新者不能为空", trigger: "blur"}
-        ],
-        createBy: [
-          {required: true, message: "创建者不能为空", trigger: "blur"}
         ]
       }
     };
   },
   created() {
     this.getList();
+    this.form.headteacher = this.$route.params && this.$route.params.teacherId;
   },
   methods: {
     remoteMethod: async function (query) {
@@ -366,7 +330,7 @@ export default {
         name: null,
         schoolId: null,
         studentsNum: null,
-        headteacher: null,
+        headteacher: this.$route.params && this.$route.params.teacherId,
         phone: null,
         committee: null,
         createTime: null,

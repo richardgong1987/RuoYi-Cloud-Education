@@ -389,7 +389,7 @@ export default {
       cache.session.set("teacherName", name);
     },
     toTeacherClasses: function (teacherId,name) {
-      this.$router.push({path: `/teachers/teacherClasses/${teacherId}`});
+      this.$router.push({path: `/teachers/teacherClasses/teacher/${teacherId}`});
     },
     /** 查询老师信息列表 */
     getList() {

@@ -88,19 +88,7 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/teachers/teacherClasses/:teacherId',
-    component: Layout,
-    hidden: true,
-    children: [
-      {
-        path: 'profile',
-        component: () => import('@/views/teachers/teacherClasses/index'),
-        name: 'Profile',
-        meta: { title: '老师班级', icon: 'user' }
-      }
-    ]
-  },
+
 
   /*****************************
    * file manager
@@ -186,6 +174,20 @@ export const dynamicRoutes = [
         component: () => import('@/views/system/user/authRole'),
         name: 'AuthRole',
         meta: { title: '分配角色', activeMenu: '/system/user' }
+      }
+    ]
+  },
+  {
+    path: '/teachers/teacherClasses',
+    hidden: true,
+    component: Layout,
+    permissions: ['teachers:teacherInfos:edit'],
+    children: [
+      {
+        path: 'teacher/:teacherId',
+        component: () => import('@/views/teachers/teacherClasses/index'),
+        name: 'teachersTeacherClasses',
+        meta: { title: '老师班级管理', activeMenu: '/teachers/teacherInfos' }
       }
     ]
   },
