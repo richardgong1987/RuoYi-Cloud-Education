@@ -21,7 +21,16 @@
           />
         </el-select>
       </el-form-item>
-
+      <el-form-item label="班主任" prop="headteacher">
+        <el-select v-model="queryParams.headteacher" placeholder="请选择班主任" clearable size="small">
+          <el-option
+            v-for="dict in dict.type.teachers_teacherInfos__dict"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="电话" prop="phone">
         <el-input
           v-model="queryParams.phone"
@@ -93,8 +102,14 @@
         </template>
       </el-table-column>
       <el-table-column label="学生数量" align="center" prop="studentsNum" />
-      <el-table-column label="班主任" align="center" prop="headteacher" />
+      <el-table-column label="班主任" align="center" prop="headteacher">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.teachers_teacherInfos__dict" :value="scope.row.headteacher"/>
+        </template>
+      </el-table-column>
       <el-table-column label="电话" align="center" prop="phone" />
+      <el-table-column label="班委成员" align="center" prop="committee" />
+      <el-table-column label="课代表" align="center" prop="classRepresentative" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -142,8 +157,24 @@
         <el-form-item label="学生数量" prop="studentsNum">
           <el-input-number v-model="form.studentsNum" placeholder="请输入学生数量" />
         </el-form-item>
+        <el-form-item label="班主任" prop="headteacher">
+          <el-select v-model="form.headteacher" placeholder="请选择班主任">
+            <el-option
+              v-for="dict in dict.type.teachers_teacherInfos__dict"
+              :key="dict.value"
+              :label="dict.label"
+:value="parseInt(dict.value)"
+            ></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="电话" prop="phone">
           <el-input v-model="form.phone" placeholder="请输入电话" />
+        </el-form-item>
+        <el-form-item label="班委成员" prop="committee">
+          <el-input v-model="form.committee" type="textarea" placeholder="请输入内容" />
+        </el-form-item>
+        <el-form-item label="课代表" prop="classRepresentative">
+          <el-input v-model="form.classRepresentative" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -159,7 +190,7 @@ import { listManagementClasses, getManagementClasses, delManagementClasses, addM
 
 export default {
   name: "ManagementClasses",
-  dicts: ['peoples_managementSchools__dict'],
+  dicts: ['teachers_teacherInfos__dict', 'peoples_managementSchools__dict'],
   data() {
     return {
       // 遮罩层
@@ -189,6 +220,8 @@ export default {
         studentsNum: null,
         headteacher: null,
         phone: null,
+        committee: null,
+        classRepresentative: null,
       },
       // 表单参数
       form: {},
@@ -213,8 +246,14 @@ export default {
             trigger: "blur"
           }
         ],
+        committee: [
+          { required: true, message: "班委成员不能为空", trigger: "blur" }
+        ],
         createTime: [
           { required: true, message: "创建时间不能为空", trigger: "blur" }
+        ],
+        classRepresentative: [
+          { required: true, message: "课代表不能为空", trigger: "blur" }
         ],
         updateTime: [
           { required: true, message: "更新时间不能为空", trigger: "blur" }
@@ -255,7 +294,9 @@ export default {
         studentsNum: null,
         headteacher: null,
         phone: null,
+        committee: null,
         createTime: null,
+        classRepresentative: null,
         updateTime: null,
         updateBy: null,
         createBy: null
