@@ -1,8 +1,12 @@
 package com.ruoyi.education.admin.controller;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.education.admin.domain.EduTeacherInfos;
+import com.ruoyi.education.admin.utils.BizUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,6 +51,11 @@ public class EduMembersManagestudentsController extends BaseController
         return getDataTable(list);
     }
 
+    @GetMapping("/dict")
+    public AjaxResult listDict(EduMembersManagestudents eduMembersManagestudents) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+        List<EduMembersManagestudents> list = eduMembersManagestudentsService.selectEduMembersManagestudentsList(eduMembersManagestudents);
+        return AjaxResult.success(BizUtils.toSysDictData(list));
+    }
     /**
      * 导出学生管理列表
      */

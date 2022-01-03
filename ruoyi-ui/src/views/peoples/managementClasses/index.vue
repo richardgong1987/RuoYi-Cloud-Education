@@ -55,7 +55,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['peoples:managementClasses:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -66,7 +67,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['peoples:managementClasses:edit']"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -77,7 +79,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['peoples:managementClasses:remove']"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -87,29 +90,28 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['peoples:managementClasses:export']"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="managementClassesList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="id" align="center" prop="id" />
-      <el-table-column label="班级名称" align="center" prop="name" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="id" align="center" prop="id"/>
+      <el-table-column label="班级名称" align="center" prop="name"/>
       <el-table-column label="所属学校" align="center" prop="schoolId">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.peoples_managementSchools__dict" :value="scope.row.schoolId"/>
         </template>
       </el-table-column>
-      <el-table-column label="学生数量" align="center" prop="studentsNum" />
+      <el-table-column label="学生数量" align="center" prop="studentsNum"/>
       <el-table-column label="班主任" align="center" prop="headteacher">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.teachers_teacherInfos__dict" :value="scope.row.headteacher"/>
         </template>
       </el-table-column>
-      <el-table-column label="电话" align="center" prop="phone" />
-      <el-table-column label="班委成员" align="center" prop="committee" />
-      <el-table-column label="课代表" align="center" prop="classRepresentative" />
+      <el-table-column label="电话" align="center" prop="phone"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -118,14 +120,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['peoples:managementClasses:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['peoples:managementClasses:remove']"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -142,7 +146,7 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="班级名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入班级名称" />
+          <el-input v-model="form.name" placeholder="请输入班级名称"/>
         </el-form-item>
         <el-form-item label="所属学校" prop="schoolId">
           <el-select v-model="form.schoolId" placeholder="请选择所属学校">
@@ -150,12 +154,12 @@
               v-for="dict in dict.type.peoples_managementSchools__dict"
               :key="dict.value"
               :label="dict.label"
-:value="parseInt(dict.value)"
+              :value="parseInt(dict.value)"
             ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="学生数量" prop="studentsNum">
-          <el-input-number v-model="form.studentsNum" placeholder="请输入学生数量" />
+          <el-input-number v-model="form.studentsNum" placeholder="请输入学生数量"/>
         </el-form-item>
         <el-form-item label="班主任" prop="headteacher">
           <el-select v-model="form.headteacher" placeholder="请选择班主任">
@@ -163,18 +167,48 @@
               v-for="dict in dict.type.teachers_teacherInfos__dict"
               :key="dict.value"
               :label="dict.label"
-:value="parseInt(dict.value)"
+              :value="parseInt(dict.value)"
             ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="电话" prop="phone">
-          <el-input v-model="form.phone" placeholder="请输入电话" />
+          <el-input v-model="form.phone" placeholder="请输入电话"/>
         </el-form-item>
         <el-form-item label="班委成员" prop="committee">
-          <el-input v-model="form.committee" type="textarea" placeholder="请输入内容" />
+          <el-select
+            v-model="form.committee"
+            multiple
+            filterable
+            remote
+            reserve-keyword
+            placeholder="请输入学生名字关键词"
+            :remote-method="remoteMethod"
+            :loading="loading">
+            <el-option
+              v-for="item in options"
+              :key="item.dictValue"
+              :label="item.dictLabel"
+              :value="item.dictValue">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="课代表" prop="classRepresentative">
-          <el-input v-model="form.classRepresentative" type="textarea" placeholder="请输入内容" />
+          <el-select
+            v-model="form.classRepresentative"
+            multiple
+            filterable
+            remote
+            reserve-keyword
+            placeholder="请输入学生名字关键词"
+            :remote-method="remoteMethod2"
+            :loading="loading">
+            <el-option
+              v-for="item in options2"
+              :key="item.dictValue"
+              :label="item.dictLabel"
+              :value="item.dictValue">
+            </el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -186,13 +220,23 @@
 </template>
 
 <script>
-import { listManagementClasses, getManagementClasses, delManagementClasses, addManagementClasses, updateManagementClasses } from "@/api/peoples/managementClasses";
+import {
+  addManagementClasses,
+  delManagementClasses,
+  getManagementClasses,
+  listManagementClasses,
+  updateManagementClasses
+} from "@/api/peoples/managementClasses";
+import request from "@/utils/request";
+import {deepCopyJson} from "@/utils/ruoyi";
 
 export default {
   name: "ManagementClasses",
   dicts: ['teachers_teacherInfos__dict', 'peoples_managementSchools__dict'],
   data() {
     return {
+      options: [],
+      options2: [],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -228,16 +272,16 @@ export default {
       // 表单校验
       rules: {
         name: [
-          { required: true, message: "班级名称不能为空", trigger: "blur" }
+          {required: true, message: "班级名称不能为空", trigger: "blur"}
         ],
         schoolId: [
-          { required: true, message: "所属学校不能为空", trigger: "change" }
+          {required: true, message: "所属学校不能为空", trigger: "change"}
         ],
         studentsNum: [
-          { required: true, message: "学生数量不能为空", trigger: "blur" }
+          {required: true, message: "学生数量不能为空", trigger: "blur"}
         ],
         headteacher: [
-          { required: true, message: "班主任不能为空", trigger: "change" }
+          {required: true, message: "班主任不能为空", trigger: "change"}
         ],
         phone: [
           {
@@ -247,22 +291,22 @@ export default {
           }
         ],
         committee: [
-          { required: true, message: "班委成员不能为空", trigger: "blur" }
-        ],
-        createTime: [
-          { required: true, message: "创建时间不能为空", trigger: "blur" }
+          {required: false, message: "班委成员不能为空", trigger: "blur"}
         ],
         classRepresentative: [
-          { required: true, message: "课代表不能为空", trigger: "blur" }
+          {required: false, message: "课代表不能为空", trigger: "blur"}
+        ],
+        createTime: [
+          {required: true, message: "创建时间不能为空", trigger: "blur"}
         ],
         updateTime: [
-          { required: true, message: "更新时间不能为空", trigger: "blur" }
+          {required: true, message: "更新时间不能为空", trigger: "blur"}
         ],
         updateBy: [
-          { required: true, message: "更新者不能为空", trigger: "blur" }
+          {required: true, message: "更新者不能为空", trigger: "blur"}
         ],
         createBy: [
-          { required: true, message: "创建者不能为空", trigger: "blur" }
+          {required: true, message: "创建者不能为空", trigger: "blur"}
         ]
       }
     };
@@ -271,6 +315,36 @@ export default {
     this.getList();
   },
   methods: {
+    remoteMethod: async function (query) {
+      if (query !== '') {
+        this.loading = true;
+        let list = await request({
+          url: '/edu-admin/peoples/managementStudents/dict',
+          method: 'get',
+          params: {name: query}
+        });
+
+        this.loading = false;
+        this.options = list.data;
+      } else {
+        this.options = [];
+      }
+    },
+    remoteMethod2: async function (query) {
+      if (query !== '') {
+        this.loading = true;
+        let list = await request({
+          url: '/edu-admin/peoples/managementStudents/dict',
+          method: 'get',
+          params: {name: query}
+        });
+
+        this.loading = false;
+        this.options2 = list.data;
+      } else {
+        this.options2 = [];
+      }
+    },
     /** 查询班级管理列表 */
     getList() {
       this.loading = true;
@@ -316,7 +390,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -330,23 +404,32 @@ export default {
       this.reset();
       const id = row.id || this.ids
       getManagementClasses(id).then(response => {
-        this.form = response.data;
+        var data = response.data;
+        data.committee = data.committee && data.committee.split(',')
+        data.classRepresentative = data.classRepresentative && data.classRepresentative.split(',')
+        this.form = data;
         this.open = true;
         this.title = "修改班级管理";
       });
     },
     /** 提交按钮 */
     submitForm() {
+      // committee
+      console.log("this.form:", this.form);
+
       this.$refs["form"].validate(valid => {
         if (valid) {
+          let form = deepCopyJson(this.form);
+          form.committee = this.form.committee && this.form.committee.join(",");
+          form.classRepresentative = this.form.classRepresentative && this.form.classRepresentative.join(",");
           if (this.form.id != null) {
-            updateManagementClasses(this.form).then(response => {
+            updateManagementClasses(form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addManagementClasses(this.form).then(response => {
+            addManagementClasses(form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -358,12 +441,13 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除班级管理编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除班级管理编号为"' + ids + '"的数据项？').then(function () {
         return delManagementClasses(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      }).catch(() => {
+      });
     },
     /** 导出按钮操作 */
     handleExport() {

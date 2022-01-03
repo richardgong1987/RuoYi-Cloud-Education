@@ -1,10 +1,5 @@
 package com.ruoyi.education.admin.controller;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
 import com.ruoyi.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.web.controller.BaseController;
 import com.ruoyi.common.core.web.domain.AjaxResult;
@@ -18,6 +13,11 @@ import com.ruoyi.education.admin.utils.BizUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+
 /**
  * 老师信息Controller
  *
@@ -26,8 +26,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/teachers/teacherInfos")
-public class EduTeacherInfosController extends BaseController
-{
+public class EduTeacherInfosController extends BaseController {
     @Autowired
     private IEduTeacherInfosService eduTeacherInfosService;
 
@@ -36,25 +35,25 @@ public class EduTeacherInfosController extends BaseController
      */
     @RequiresPermissions("teachers:teacherInfos:list")
     @GetMapping("/list")
-    public TableDataInfo list(EduTeacherInfos eduTeacherInfos)
-    {
+    public TableDataInfo list(EduTeacherInfos eduTeacherInfos) {
         startPage();
         List<EduTeacherInfos> list = eduTeacherInfosService.selectEduTeacherInfosList(eduTeacherInfos);
         return getDataTable(list);
     }
+
     @GetMapping("/dict")
-    public AjaxResult listDict() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        List<EduTeacherInfos> list = eduTeacherInfosService.selectEduTeacherInfosList(new EduTeacherInfos());
+    public AjaxResult listDict(EduTeacherInfos eduTeacherInfos) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+        List<EduTeacherInfos> list = eduTeacherInfosService.selectEduTeacherInfosList(eduTeacherInfos);
         return AjaxResult.success(BizUtils.toSysDictData(list));
     }
+
     /**
      * 导出老师信息列表
      */
     @RequiresPermissions("teachers:teacherInfos:export")
     @Log(title = "老师信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, EduTeacherInfos eduTeacherInfos)
-    {
+    public void export(HttpServletResponse response, EduTeacherInfos eduTeacherInfos) {
         List<EduTeacherInfos> list = eduTeacherInfosService.selectEduTeacherInfosList(eduTeacherInfos);
         ExcelUtil<EduTeacherInfos> util = new ExcelUtil<EduTeacherInfos>(EduTeacherInfos.class);
         util.exportExcel(response, list, "老师信息数据");
@@ -65,8 +64,7 @@ public class EduTeacherInfosController extends BaseController
      */
     @RequiresPermissions("teachers:teacherInfos:query")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
-    {
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
         return AjaxResult.success(eduTeacherInfosService.selectEduTeacherInfosById(id));
     }
 
@@ -76,8 +74,7 @@ public class EduTeacherInfosController extends BaseController
     @RequiresPermissions("teachers:teacherInfos:add")
     @Log(title = "老师信息", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody EduTeacherInfos eduTeacherInfos)
-    {
+    public AjaxResult add(@RequestBody EduTeacherInfos eduTeacherInfos) {
         return toAjax(eduTeacherInfosService.insertEduTeacherInfos(eduTeacherInfos));
     }
 
@@ -87,8 +84,7 @@ public class EduTeacherInfosController extends BaseController
     @RequiresPermissions("teachers:teacherInfos:edit")
     @Log(title = "老师信息", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody EduTeacherInfos eduTeacherInfos)
-    {
+    public AjaxResult edit(@RequestBody EduTeacherInfos eduTeacherInfos) {
         return toAjax(eduTeacherInfosService.updateEduTeacherInfos(eduTeacherInfos));
     }
 
@@ -97,9 +93,8 @@ public class EduTeacherInfosController extends BaseController
      */
     @RequiresPermissions("teachers:teacherInfos:remove")
     @Log(title = "老师信息", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(eduTeacherInfosService.deleteEduTeacherInfosByIds(ids));
     }
 }

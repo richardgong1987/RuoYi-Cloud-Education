@@ -231,3 +231,6 @@ export function getUserId(){
   }
   return '';
 }
+export function deepCopyJson(obj){
+  return JSON.parse(JSON.stringify(obj));
+}
