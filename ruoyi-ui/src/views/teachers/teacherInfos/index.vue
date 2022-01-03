@@ -152,7 +152,7 @@
             </el-button>
           </div>
           <div class="padding-content">
-            <el-button @click="toHandOut(scope.row.id,scope.row.name)"
+            <el-button @click="toTeacherClasses(scope.row.id,scope.row.name)"
                        size="small"
                        type="success"
                        icon="el-icon-edit" v-hasPermi="['teachers:teacherInfos:edit']">老师的班级
@@ -380,6 +380,7 @@ export default {
     };
   },
   created() {
+
     this.getList();
   },
   methods: {
@@ -387,9 +388,8 @@ export default {
       this.$router.push({path: `/teachers/teacherHandouts/${userId}`});
       cache.session.set("teacherName", name);
     },
-    toTeacherClasses: function (userId,name) {
-      this.$router.push({path: `/teachers/teacherHandouts/${userId}`});
-      cache.session.set("teacherName", name);
+    toTeacherClasses: function (teacherId,name) {
+      this.$router.push({path: `/teachers/teacherClasses/${teacherId}`});
     },
     /** 查询老师信息列表 */
     getList() {

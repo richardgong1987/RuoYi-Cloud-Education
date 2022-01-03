@@ -189,31 +189,3 @@ WHERE menu_id=4;
         VALUES ('3044', '导出', '3038', '6', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherInfos:export',
                 '#', 'admin', SYSDATE(), '', NULL, '老师信息-导出-按钮');
     
-        INSERT INTO sys_menu
-        VALUES ('3045', '老师班级', '3037', '2', 'teacherClasses', 'teachers/teacherClasses/index',
-                '', 1, 0, 'C', '0', '0', 'teachers:teacherClasses:list', 'article', 'admin', SYSDATE(), '', NULL, '老师班级-菜单');
-    
-        INSERT INTO sys_menu
-        VALUES ('3046', '查询', '3045', '1', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:query',
-                '#', 'admin', SYSDATE(), '', NULL, '老师班级-查询-按钮');
-    
-        INSERT INTO sys_menu
-        VALUES ('3047', '添加', '3045', '2', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:add',
-                '#', 'admin', SYSDATE(), '', NULL, '老师班级-添加-按钮');
-    
-        INSERT INTO sys_menu
-        VALUES ('3048', '编辑', '3045', '3', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:edit',
-                '#', 'admin', SYSDATE(), '', NULL, '老师班级-编辑-按钮');
-    
-        INSERT INTO sys_menu
-        VALUES ('3049', '删除', '3045', '4', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:remove',
-                '#', 'admin', SYSDATE(), '', NULL, '老师班级-删除-按钮');
-    
-        INSERT INTO sys_menu
-        VALUES ('3050', '导入', '3045', '5', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:import',
-                '#', 'admin', SYSDATE(), '', NULL, '老师班级-导入-按钮');
-    
-        INSERT INTO sys_menu
-        VALUES ('3051', '导出', '3045', '6', '', '', '', 1, 0, 'F', '0', '0', 'teachers:teacherClasses:export',
-                '#', 'admin', SYSDATE(), '', NULL, '老师班级-导出-按钮');
-    

@@ -88,6 +88,19 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/teachers/teacherClasses/:teacherId',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'profile',
+        component: () => import('@/views/teachers/teacherClasses/index'),
+        name: 'Profile',
+        meta: { title: '老师班级', icon: 'user' }
+      }
+    ]
+  },
 
   /*****************************
    * file manager
