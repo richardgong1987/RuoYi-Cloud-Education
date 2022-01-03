@@ -72,16 +72,19 @@ public class FileController {
     @RequestMapping(value = "/createfile", method = RequestMethod.POST)
     @MyLog(operation = "创建文件", module = CURRENT_MODULE)
     @ResponseBody
-    public RestResult<String> createFile(@Valid @RequestBody CreateFileDTO createFileDto) {
+    public RestResult<String> createFile(@Valid @RequestBody CreateFileDTO createFileDto, Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
 
-        boolean isDirExist = userFileService.isDirExist(createFileDto.getFileName(), createFileDto.getFilePath(), SecurityUtils.getUserId());
+        boolean isDirExist = userFileService.isDirExist(createFileDto.getFileName(), createFileDto.getFilePath(), userId);
 
         if (isDirExist) {
             return RestResult.fail().message("同名文件已存在");
         }
 
         UserFile userFile = new UserFile();
-        userFile.setUserId(SecurityUtils.getUserId());
+        userFile.setUserId(userId);
         userFile.setFileName(createFileDto.getFileName());
         userFile.setFilePath(createFileDto.getFilePath());
         userFile.setDeleteFlag(0);
@@ -144,7 +147,7 @@ public class FileController {
 //        queryBuilder.withQuery(QueryBuilders.boolQuery()
 ////                .must(QueryBuilders.matchQuery("fileName", searchFileDTO.getFileName()))
 //                .must(QueryBuilders.multiMatchQuery(searchFileDTO.getFileName(),"fileName", "content"))
-//                .must(QueryBuilders.termQuery("userId", SecurityUtils.getUserId()))
+//                .must(QueryBuilders.termQuery("userId", userId))
 //                ).withQuery(QueryBuilders.wildcardQuery("fileName", "*" + searchFileDTO.getFileName() + "*"));
         SearchHits<FileSearch> search = elasticsearchRestTemplate.search(searchQuery, FileSearch.class);
 
@@ -155,11 +158,14 @@ public class FileController {
     @RequestMapping(value = "/renamefile", method = RequestMethod.POST)
     @MyLog(operation = "文件重命名", module = CURRENT_MODULE)
     @ResponseBody
-    public RestResult<String> renameFile(@RequestBody RenameFileDTO renameFileDto) {
+    public RestResult<String> renameFile(@RequestBody RenameFileDTO renameFileDto, Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
 
         UserFile userFile = userFileService.getById(renameFileDto.getUserFileId());
 
-        List<UserFile> userFiles = userFileService.selectUserFileByNameAndPath(renameFileDto.getFileName(), userFile.getFilePath(), SecurityUtils.getUserId());
+        List<UserFile> userFiles = userFileService.selectUserFileByNameAndPath(renameFileDto.getFileName(), userFile.getFilePath(), userId);
         if (userFiles != null && !userFiles.isEmpty()) {
             return RestResult.fail().message("同名文件已存在");
         }
@@ -171,7 +177,7 @@ public class FileController {
         userFileService.update(lambdaUpdateWrapper);
         if (1 == userFile.getIsDir()) {
             userFileService.replaceUserFilePath(userFile.getFilePath() + renameFileDto.getFileName() + "/",
-                    userFile.getFilePath() + userFile.getFileName() + "/", SecurityUtils.getUserId());
+                    userFile.getFilePath() + userFile.getFileName() + "/", userId);
         }
 
         fileDealComp.uploadESByUserFileId(renameFileDto.getUserFileId());
@@ -223,13 +229,15 @@ public class FileController {
     @RequestMapping(value = "/batchdeletefile", method = RequestMethod.POST)
     @MyLog(operation = "批量删除文件", module = CURRENT_MODULE)
     @ResponseBody
-    public RestResult<String> deleteImageByIds(@RequestBody BatchDeleteFileDTO batchDeleteFileDto) {
-
+    public RestResult<String> deleteImageByIds(@RequestBody BatchDeleteFileDTO batchDeleteFileDto, Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
         List<UserFile> userFiles = JSON.parseArray(batchDeleteFileDto.getFiles(), UserFile.class);
         DigestUtils.md5Hex("data");
         for (UserFile userFile : userFiles) {
 
-            userFileService.deleteUserFile(userFile.getUserFileId(), SecurityUtils.getUserId());
+            userFileService.deleteUserFile(userFile.getUserFileId(), userId);
             fileDealComp.deleteESByUserFileId(userFile.getUserFileId());
         }
 
@@ -240,9 +248,11 @@ public class FileController {
     @RequestMapping(value = "/deletefile", method = RequestMethod.POST)
     @MyLog(operation = "删除文件", module = CURRENT_MODULE)
     @ResponseBody
-    public RestResult deleteFile(@RequestBody DeleteFileDTO deleteFileDto) {
-
-        userFileService.deleteUserFile(deleteFileDto.getUserFileId(), SecurityUtils.getUserId());
+    public RestResult deleteFile(@RequestBody DeleteFileDTO deleteFileDto, Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
+        userFileService.deleteUserFile(deleteFileDto.getUserFileId(), userId);
         fileDealComp.deleteESByUserFileId(deleteFileDto.getUserFileId());
 
         return RestResult.success();
@@ -269,7 +279,10 @@ public class FileController {
     @RequestMapping(value = "/copyfile", method = RequestMethod.POST)
     @MyLog(operation = "文件复制", module = CURRENT_MODULE)
     @ResponseBody
-    public RestResult<String> copyFile(@RequestBody CopyFileDTO copyFileDTO) {
+    public RestResult<String> copyFile(@RequestBody CopyFileDTO copyFileDTO, Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
 
         long userFileId = copyFileDTO.getUserFileId();
         UserFile userFile = userFileService.getById(userFileId);
@@ -284,7 +297,7 @@ public class FileController {
             }
         }
 
-        userFileService.userFileCopy(oldfilePath, newfilePath, fileName, extendName, SecurityUtils.getUserId());
+        userFileService.userFileCopy(oldfilePath, newfilePath, fileName, extendName, userId);
         return RestResult.success();
 
     }
@@ -293,7 +306,10 @@ public class FileController {
     @RequestMapping(value = "/movefile", method = RequestMethod.POST)
     @MyLog(operation = "文件移动", module = CURRENT_MODULE)
     @ResponseBody
-    public RestResult<String> moveFile(@RequestBody MoveFileDTO moveFileDto) {
+    public RestResult<String> moveFile(@RequestBody MoveFileDTO moveFileDto, Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
 
         String oldfilePath = moveFileDto.getOldFilePath();
         String newfilePath = moveFileDto.getFilePath();
@@ -306,7 +322,7 @@ public class FileController {
             }
         }
 
-        userFileService.updateFilepathByFilepath(oldfilePath, newfilePath, fileName, extendName, SecurityUtils.getUserId());
+        userFileService.updateFilepathByFilepath(oldfilePath, newfilePath, fileName, extendName, userId);
         return RestResult.success();
 
     }
@@ -315,7 +331,10 @@ public class FileController {
     @RequestMapping(value = "/batchmovefile", method = RequestMethod.POST)
     @MyLog(operation = "批量移动文件", module = CURRENT_MODULE)
     @ResponseBody
-    public RestResult<String> batchMoveFile(@RequestBody BatchMoveFileDTO batchMoveFileDto) {
+    public RestResult<String> batchMoveFile(@RequestBody BatchMoveFileDTO batchMoveFileDto, Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
 
         String files = batchMoveFileDto.getFiles();
         String newfilePath = batchMoveFileDto.getFilePath();
@@ -331,7 +350,7 @@ public class FileController {
                 }
             }
 
-            userFileService.updateFilepathByFilepath(userFile.getFilePath(), newfilePath, userFile.getFileName(), userFile.getExtendName(), SecurityUtils.getUserId());
+            userFileService.updateFilepathByFilepath(userFile.getFilePath(), newfilePath, userFile.getFileName(), userFile.getExtendName(), userId);
         }
 
         return RestResult.success().data("批量移动文件成功");
@@ -344,9 +363,10 @@ public class FileController {
     @ResponseBody
     public RestResult<List<Map<String, Object>>> selectFileByFileType(@Parameter(description = "文件类型", required = true) int fileType,
                                                                       @Parameter(description = "当前页", required = true) long currentPage,
-                                                                      @Parameter(description = "页面数量", required = true) long pageCount) {
-
-        long userId = SecurityUtils.getUserId();
+                                                                      @Parameter(description = "页面数量", required = true) long pageCount, Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
 
         List<FileListVo> fileList;
         Long beginCount = 0L;
@@ -383,11 +403,14 @@ public class FileController {
     @Operation(summary = "获取文件树", description = "文件移动的时候需要用到该接口，用来展示目录树", tags = {"file"})
     @RequestMapping(value = "/getfiletree", method = RequestMethod.GET)
     @ResponseBody
-    public RestResult<TreeNode> getFileTree() {
+    public RestResult<TreeNode> getFileTree(Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
         RestResult<TreeNode> result = new RestResult<TreeNode>();
 
 
-        List<UserFile> userFileList = userFileService.selectFilePathTreeByUserId(SecurityUtils.getUserId());
+        List<UserFile> userFileList = userFileService.selectFilePathTreeByUserId(userId);
         TreeNode resultTreeNode = new TreeNode();
         resultTreeNode.setLabel("/");
         resultTreeNode.setId(0L);
@@ -414,12 +437,9 @@ public class FileController {
 
         }
         List<TreeNode> treeNodeList = resultTreeNode.getChildren();
-        Collections.sort(treeNodeList, new Comparator<TreeNode>() {
-            @Override
-            public int compare(TreeNode o1, TreeNode o2) {
-                long i = o1.getId() - o2.getId();
-                return (int) i;
-            }
+        Collections.sort(treeNodeList, (o1, o2) -> {
+            long i = o1.getId() - o2.getId();
+            return (int) i;
         });
         result.setSuccess(true);
         result.setData(resultTreeNode);
@@ -430,7 +450,10 @@ public class FileController {
     @Operation(summary = "修改文件", description = "支持普通文本类文件的修改", tags = {"file"})
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public RestResult<String> updateFile(@RequestBody UpdateFileDTO updateFileDTO) {
+    public RestResult<String> updateFile(@RequestBody UpdateFileDTO updateFileDTO,Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
         UserFile userFile = userFileService.getById(updateFileDTO.getUserFileId());
         FileBean fileBean = fileService.getById(userFile.getFileId());
         if (fileBean.getPointCount() > 1) {
@@ -452,7 +475,7 @@ public class FileController {
             String md5Str = DigestUtils.md5Hex(inputStream);
             fileBean.setIdentifier(md5Str);
             fileBean.setModifyTime(DateUtil.getCurrentTime());
-            fileBean.setModifyUserId(SecurityUtils.getUserId());
+            fileBean.setModifyUserId(userId);
             fileBean.setFileSize((long) fileSize);
             fileService.updateById(fileBean);
         } catch (Exception e) {
