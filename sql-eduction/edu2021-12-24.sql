@@ -1,17 +1,19 @@
 DROP TABLE IF EXISTS edu_members_manageclasses;
 CREATE TABLE edu_members_manageclasses
 (
-    id           BIGINT(20)                             NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'id',
-    name         VARCHAR(255) DEFAULT ''                NOT NULL COMMENT '班级名称',
-    school_id    BIGINT(20)   DEFAULT 0                 NOT NULL COMMENT '所属学校',
-    students_num INT          DEFAULT 0                 NOT NULL COMMENT '学生数量',
-    headteacher  BIGINT       DEFAULT 0                 NOT NULL COMMENT '班主任',
-    phone        VARCHAR(16)  DEFAULT ''                NOT NULL COMMENT '电话',
+    id                   BIGINT(20)                              NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'id',
+    name                 VARCHAR(255)  DEFAULT ''                NOT NULL COMMENT '班级名称',
+    school_id            BIGINT(20)    DEFAULT 0                 NOT NULL COMMENT '所属学校',
+    students_num         INT           DEFAULT 0                 NOT NULL COMMENT '学生数量',
+    headteacher          BIGINT        DEFAULT 0                 NOT NULL COMMENT '班主任',
+    phone                VARCHAR(16)   DEFAULT ''                NOT NULL COMMENT '电话',
+    committee            VARCHAR(2000) DEFAULT ''                NOT NULL COMMENT '班委成员',
+    class_representative VARCHAR(16)   DEFAULT ''                NOT NULL COMMENT '课代表',
 
-    create_time  DATETIME     DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
-    update_time  DATETIME     DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新时间',
-    update_by    VARCHAR(64)  DEFAULT ''                NOT NULL COMMENT '更新者',
-    create_by    VARCHAR(64)  DEFAULT ''                NOT NULL COMMENT '创建者'
+    create_time          DATETIME      DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
+    update_time          DATETIME      DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新时间',
+    update_by            VARCHAR(64)   DEFAULT ''                NOT NULL COMMENT '更新者',
+    create_by            VARCHAR(64)   DEFAULT ''                NOT NULL COMMENT '创建者'
 )
     COMMENT '班级管理';
 

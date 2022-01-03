@@ -1,8 +1,53 @@
-## 平台简介
+# 平台简介
 
-这是一个使用微服务实现的教育平台.
+这是一个基于[若依RuoYi-Cloud微服务版本](https://gitee.com/y_project/RuoYi-Cloud)实现的教育平台.
 
-## 教育平台功能
+能批量改作业,管理学校,学生,文件网盘,讲义管理
+
+
+
+项目还在不断更新迭代中. 有还有功能没完善. 大概会在2022年1月底会上一版,包含微信小程序. 
+
+
+
+# 安装方式
+
+### 第一步:
+
+把基础后端和前端项目部署起来先.
+
+因为本项目是基于RuoYi-Cloud的,只要把RuoYi-Cloud部署起来就成功了90%了,并且,决大部分文档只需要参考RuoYi-Cloud的就可以
+
+[环境部署文档 | RuoYi-clould](http://doc.ruoyi.vip/ruoyi-cloud/document/hjbs.html)
+
+```shell
+http://doc.ruoyi.vip/ruoyi-cloud/document/hjbs.html
+```
+
+## 第二步:
+
+把前面一步完成了后.
+
+在项目根目录下的sql-eduction目录下有三个sql脚本
+
+```shell
+sql-eduction
+|-- config_info.sql
+|-- edu2021-12-24.sql
+`-- menu.sql
+```
+
+- config_info.sql请刷到ry-config库中
+
+- 其它两个都刷到ry-clould库中
+
+
+
+作完前面两大步骤.就可以正常运行本项目了.
+
+
+
+# 功能展示截图:
 
 * ### 学校管理 ![img.png](assets/img.png)
 
