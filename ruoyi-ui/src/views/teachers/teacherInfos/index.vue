@@ -142,14 +142,25 @@
     <el-table v-loading="loading" :data="teacherInfosList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="id" align="center" prop="id"/>
-      <el-table-column label="讲义管理" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="讲义管理" align="center" class-name="small-padding ">
         <template slot-scope="scope">
+          <div class="padding-content">
             <el-button @click="toHandOut(scope.row.id,scope.row.name)"
                        size="small"
                        type="primary"
                        icon="el-icon-edit" v-hasPermi="['teachers:teacherInfos:edit']">讲义管理
             </el-button>
+          </div>
+          <div class="padding-content">
+            <el-button @click="toHandOut(scope.row.id,scope.row.name)"
+                       size="small"
+                       type="success"
+                       icon="el-icon-edit" v-hasPermi="['teachers:teacherInfos:edit']">老师的班级
+            </el-button>
+          </div>
+
         </template>
+
       </el-table-column>
       <el-table-column label="姓名" align="center" prop="name"/>
       <el-table-column label="所属学校" align="center" prop="schoolId">
@@ -373,6 +384,10 @@ export default {
   },
   methods: {
     toHandOut: function (userId,name) {
+      this.$router.push({path: `/teachers/teacherHandouts/${userId}`});
+      cache.session.set("teacherName", name);
+    },
+    toTeacherClasses: function (userId,name) {
       this.$router.push({path: `/teachers/teacherHandouts/${userId}`});
       cache.session.set("teacherName", name);
     },
