@@ -34,11 +34,16 @@ http://doc.ruoyi.vip/ruoyi-cloud/document/hjbs.html
 
 接下来作以下操作:
 
-安装elasticsearch
+- 安装elasticsearch
 
 https://www.elastic.co/elasticsearch/
 
-因为RuoYiFileApplication服务的网盘功能的搜索是基于elasticsearch的
+- 安装minio
+
+  https://min.io/
+
+因为RuoYiFileApplication服务的网盘功能的搜索是基于elasticsearch的,文件管理默认使用的是minio
+
 
 在项目根目录下的sql-eduction目录下有三个sql脚本
 
@@ -52,11 +57,15 @@ sql-eduction
 - ry-config.sql请刷覆盖到ry-config库中
   
   注意:
+
   这里的mysql,redis密码统一放在ruoyi-application-dev.yml
+
+   另外minio的用户名和密码在ruoyi-file-dev.yml里需要修改 
 
 - 其它两个都刷到ry-clould库中
 
 - 教育平台的微服务是RuoYiEducationAdminApplication,RuoYiFileApplication启动这个两个
+
 
 作完前面两大步骤.就可以正常运行本项目了.
 
