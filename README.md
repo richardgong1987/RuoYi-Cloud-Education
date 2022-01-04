@@ -45,17 +45,17 @@ sql-eduction
 
 # 功能展示截图:
 
-* ### 学校管理 ![img.png](assets/img.png)
+* ### 学校管理,班级管理,学生管理,会员管理 ![img.png](assets/img.png)
 
-* ### 文件网盘(用于管理素材,视频,绘本等)
+* ### 文件网盘(用于管理素材,视频,绘本,一切文件管理)
   
   ![](assets/2022-01-03-11-04-04-image.png)
   
   ![](assets/2022-01-03-11-04-59-image.png)
 
-* ### 讲义管理
+* ### 讲义管理,各个老师班级管理
   
-  ![](assets/2022-01-03-11-06-56-image.png)
+  ![](/Users/richard/IdeaProjects/RuoYi-Cloud-Education/assets/2022-01-04-10-10-45-image.png)
   
   ![](assets/2022-01-03-11-08-03-image.png)
 
