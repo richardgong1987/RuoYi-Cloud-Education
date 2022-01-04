@@ -32,6 +32,17 @@ http://doc.ruoyi.vip/ruoyi-cloud/document/hjbs.html
 
 把前面一步完成了后.
 
+接下来作以下操作:
+
+
+安装elasticsearch
+
+https://www.elastic.co/elasticsearch/
+
+因为RuoYiFileApplication服务的网盘功能的搜索是基于elasticsearch的
+
+
+
 在项目根目录下的sql-eduction目录下有三个sql脚本
 
 ```shell
@@ -48,7 +59,7 @@ sql-eduction
 
 - 其它两个都刷到ry-clould库中
 
-- 教育平台的微服务是RuoYiEducationAdminApplication,启动这个
+- 教育平台的微服务是RuoYiEducationAdminApplication,RuoYiFileApplication启动这个两个
 
 作完前面两大步骤.就可以正常运行本项目了.
 
