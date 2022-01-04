@@ -24,6 +24,10 @@
 http://doc.ruoyi.vip/ruoyi-cloud/document/hjbs.html
 ```
 
+注意:
+
+这里的mysql,redis密码统分别放在nacos各个不同的微服务配置文件中.要分开修改.
+
 ## 第二步:
 
 把前面一步完成了后.
@@ -38,8 +42,13 @@ sql-eduction
 ```
 
 - config_info.sql请刷到ry-config库中
+  
+  注意:
+  这里的mysql,redis密码统一放在ruoyi-application-dev.yml
 
 - 其它两个都刷到ry-clould库中
+
+- 教育平台的微服务是RuoYiEducationAdminApplication,启动这个
 
 作完前面两大步骤.就可以正常运行本项目了.
 
