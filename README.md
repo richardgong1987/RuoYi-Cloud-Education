@@ -1,4 +1,4 @@
-# 平台简介
+`# 平台简介
 
 这是一个基于[若依RuoYi-Cloud微服务版本](https://gitee.com/y_project/RuoYi-Cloud)实现的教育平台.
 
@@ -51,7 +51,9 @@ https://www.elastic.co/elasticsearch/
 sql-eduction
 |-- ry-config.sql
 |-- edu2021-12-24.sql
-`-- menu.sql
+|-- menu.sql
+|-- file.sql
+
 ```
 
 - ry-config.sql请刷覆盖到ry-config库中
@@ -62,7 +64,7 @@ sql-eduction
 
    另外minio的用户名和密码在ruoyi-file-dev.yml里需要修改 
 
-- 其它两个都刷到ry-clould库中
+- 其它三个都刷到ry-clould库中
 
 - 教育平台的微服务是RuoYiEducationAdminApplication,RuoYiFileApplication启动这个两个
 
