@@ -44,12 +44,12 @@ https://www.elastic.co/elasticsearch/
 
 ```shell
 sql-eduction
-|-- config_info.sql
+|-- ry-config.sql
 |-- edu2021-12-24.sql
 `-- menu.sql
 ```
 
-- config_info.sql请刷到ry-config库中
+- ry-config.sql请刷覆盖到ry-config库中
   
   注意:
   这里的mysql,redis密码统一放在ruoyi-application-dev.yml
