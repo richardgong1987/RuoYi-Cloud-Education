@@ -34,14 +34,11 @@ http://doc.ruoyi.vip/ruoyi-cloud/document/hjbs.html
 
 接下来作以下操作:
 
-
 安装elasticsearch
 
 https://www.elastic.co/elasticsearch/
 
 因为RuoYiFileApplication服务的网盘功能的搜索是基于elasticsearch的
-
-
 
 在项目根目录下的sql-eduction目录下有三个sql脚本
 
