@@ -1,11 +1,11 @@
 <template>
   <div v-if="!item.hidden">
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
-      <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path, onlyOneChild.query)">
+      <div v-if="onlyOneChild.meta" @click="toPageAction(resolvePath(onlyOneChild.path, onlyOneChild.query))">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
           <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
         </el-menu-item>
-      </app-link>
+      </div>
     </template>
 
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
@@ -55,6 +55,9 @@ export default {
     return {}
   },
   methods: {
+    toPageAction:function (url){
+      this.$router.push({path: url});
+    },
     hasOneShowingChild(children = [], parent) {
       if (!children) {
         children = [];
