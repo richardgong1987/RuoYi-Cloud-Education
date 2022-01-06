@@ -49,22 +49,19 @@ https://www.elastic.co/elasticsearch/
 
 ```shell
 sql-eduction
-|-- ry-config.sql
-|-- edu2021-12-24.sql
-|-- menu.sql
-|-- file.sql
+|-- ry-config20220106.sql
+|-- ry-clould-2022-01-05.sql
 
 ```
 
-- ry-config.sql请刷覆盖到ry-config库中
+- ry-config20220106.sql请刷覆盖到ry-config库中
+- ry-clould-2022-01-05.sql请刷覆盖到ry-cloud库中
   
   注意:
 
   这里的mysql,redis密码统一放在ruoyi-application-dev.yml
 
    另外minio的用户名和密码在ruoyi-file-dev.yml里需要修改 
-
-- 其它三个都刷到ry-clould库中
 
 - 教育平台的微服务是RuoYiEducationAdminApplication,RuoYiFileApplication启动这个两个
 
