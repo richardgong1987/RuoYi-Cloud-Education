@@ -49,8 +49,8 @@ https://www.elastic.co/elasticsearch/
 
 ```shell
 sql-eduction
-|-- ry-config20220106.sql
-|-- ry-clould-2022-01-05.sql
+|-- ry_config20220106.sql
+|-- ry_clould20220105.sql
 
 ```
 
