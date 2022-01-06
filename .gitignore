@@ -49,3 +49,4 @@ tmp.toml
 *.jar
 docker/mysql/data
 docker/mysql/db
+logs
