@@ -46,3 +46,6 @@ yarn.lock
 ./tools/yarn.lock
 tmp.json
 tmp.toml
+*.jar
+docker/mysql/data
+docker/mysql/db
