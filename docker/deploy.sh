@@ -9,18 +9,20 @@ usage() {
 # 开启所需端口
 port(){
 	firewall-cmd --add-port=80/tcp --permanent
-	firewall-cmd --add-port=8080/tcp --permanent
+	firewall-cmd --add-port=8086/tcp --permanent
 	firewall-cmd --add-port=8848/tcp --permanent
 	firewall-cmd --add-port=9848/tcp --permanent
 	firewall-cmd --add-port=9849/tcp --permanent
 	firewall-cmd --add-port=6379/tcp --permanent
 	firewall-cmd --add-port=3306/tcp --permanent
-	firewall-cmd --add-port=9100/tcp --permanent
 	firewall-cmd --add-port=9200/tcp --permanent
 	firewall-cmd --add-port=9201/tcp --permanent
 	firewall-cmd --add-port=9202/tcp --permanent
 	firewall-cmd --add-port=9203/tcp --permanent
-	firewall-cmd --add-port=9300/tcp --permanent
+	firewall-cmd --add-port=9204/tcp --permanent
+	firewall-cmd --add-port=9205/tcp --permanent
+	firewall-cmd --add-port=9206/tcp --permanent
+	firewall-cmd --add-port=9207/tcp --permanent
 	service firewalld restart
 }
 

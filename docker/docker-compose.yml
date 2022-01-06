@@ -71,7 +71,7 @@ services:
       context: ./ruoyi/gateway
       dockerfile: dockerfile
     ports:
-      - "8080:8080"
+      - "8086:8086"
     depends_on:
       - ruoyi-redis
     links:
@@ -82,7 +82,7 @@ services:
       context: ./ruoyi/auth
       dockerfile: dockerfile
     ports:
-      - "9200:9200"
+      - "9201:9201"
     depends_on:
       - ruoyi-redis
     links:
@@ -93,7 +93,7 @@ services:
       context: ./ruoyi/modules/system
       dockerfile: dockerfile
     ports:
-      - "9201:9201"
+      - "9202:9202"
     depends_on:
       - ruoyi-redis
       - ruoyi-mysql
@@ -106,7 +106,7 @@ services:
       context: ./ruoyi/modules/gen
       dockerfile: dockerfile
     ports:
-      - "9202:9202"
+      - "9203:9203"
     depends_on:
       - ruoyi-mysql
     links:
@@ -117,7 +117,7 @@ services:
       context: ./ruoyi/modules/job
       dockerfile: dockerfile
     ports:
-      - "9203:9203"
+      - "9204:9204"
     depends_on:
       - ruoyi-mysql
     links:
@@ -128,7 +128,7 @@ services:
       context: ./ruoyi/modules/file
       dockerfile: dockerfile
     ports:
-      - "9300:9300"
+      - "9205:9205"
     volumes:
     - ./ruoyi/uploadPath:/home/ruoyi/uploadPath
   ruoyi-visual-monitor:
@@ -137,13 +137,13 @@ services:
       context: ./ruoyi/visual/monitor
       dockerfile: dockerfile
     ports:
-      - "9100:9100"
+      - "9206:9206"
   ruoyi-modules-education-admin:
     container_name: ruoyi-modules-education-admin
     build:
       context: ./ruoyi/modules-education/education-admin
       dockerfile: dockerfile
     ports:
-      - "9301:9301"
+      - "9207:9207"
     volumes:
       - ./ruoyi/uploadPath:/home/ruoyi/uploadPath
