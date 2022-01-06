@@ -26,16 +26,49 @@ services:
       - ./mysql/logs:/logs
       - ./mysql/data:/var/lib/mysql
     command: [
-          'mysqld',
-          '--innodb-buffer-pool-size=80M',
-          '--character-set-server=utf8mb4',
-          '--collation-server=utf8mb4_unicode_ci',
-          '--default-time-zone=+8:00',
-          '--lower-case-table-names=1'
-        ]
+        'mysqld',
+        '--innodb-buffer-pool-size=80M',
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci',
+        '--default-time-zone=+8:00',
+        '--lower-case-table-names=1'
+    ]
     environment:
       MYSQL_DATABASE: 'ry-cloud'
       MYSQL_ROOT_PASSWORD: password
+  ruoyi-minio:
+    container_name: ruoyi-minio
+    build:
+      context: ./minio
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    environment:
+      - MINIO_ACCESS_KEY=admin
+      - MINIO_SECRET_KEY=password
+    volumes:
+      - ./minio/data:/data
+
+  ruoyi-elasticsearch:
+    container_name: ruoyi-elasticsearch
+    build:
+      context: ./elasticsearch
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es02,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./elasticsearch/data01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+
   ruoyi-redis:
     container_name: ruoyi-redis
     build:
