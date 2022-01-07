@@ -13,29 +13,6 @@ services:
       - "8848:8848"
       - "9848:9848"
       - "9849:9849"
-    depends_on:
-      - ruoyi-mysql
-  ruoyi-mysql:
-    container_name: ruoyi-mysql
-    build:
-      context: ./mysql
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./mysql/conf:/etc/mysql/conf.d
-      - ./mysql/logs:/logs
-      - ./mysql/data:/var/lib/mysql
-    command: [
-        'mysqld',
-        '--innodb-buffer-pool-size=80M',
-        '--character-set-server=utf8mb4',
-        '--collation-server=utf8mb4_unicode_ci',
-        '--default-time-zone=+8:00',
-        '--lower-case-table-names=1'
-    ]
-    environment:
-      MYSQL_DATABASE: 'ry-cloud'
-      MYSQL_ROOT_PASSWORD: password
   ruoyi-minio:
     container_name: ruoyi-minio
     build:
@@ -125,10 +102,8 @@ services:
       - "9202:9202"
     depends_on:
       - ruoyi-redis
-      - ruoyi-mysql
     links:
       - ruoyi-redis
-      - ruoyi-mysql
   ruoyi-modules-gen:
     container_name: ruoyi-modules-gen
     build:
@@ -136,10 +111,6 @@ services:
       dockerfile: dockerfile
     ports:
       - "9203:9203"
-    depends_on:
-      - ruoyi-mysql
-    links:
-      - ruoyi-mysql
   ruoyi-modules-job:
     container_name: ruoyi-modules-job
     build:
@@ -147,10 +118,6 @@ services:
       dockerfile: dockerfile
     ports:
       - "9204:9204"
-    depends_on:
-      - ruoyi-mysql
-    links:
-      - ruoyi-mysql
   ruoyi-modules-file:
     container_name: ruoyi-modules-file
     build:
