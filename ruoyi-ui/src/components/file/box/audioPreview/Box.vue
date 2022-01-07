@@ -53,7 +53,6 @@ export default {
   border-radius: 8px;
   box-shadow: $tabBoxShadow;
   padding: 8px 16px 16px 16px;
-  background: linear-gradient(to right, $Primary, #a0cfff);
   width: 300px;
   z-index: 3;
   .top {
