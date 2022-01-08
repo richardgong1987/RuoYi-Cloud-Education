@@ -80,7 +80,7 @@ sql-eduction
 
 * ### 讲义管理,各个老师班级管理
   
-  ![](/Users/richard/IdeaProjects/RuoYi-Cloud-Education/assets/2022-01-04-10-10-45-image.png)
+  ![](assets/2022-01-04-10-10-45-image.png)
   
   ![](assets/2022-01-03-11-08-03-image.png)
 
