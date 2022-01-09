@@ -1,0 +1,4 @@
+# 基础镜像
+FROM bitnami/minio
+# author
+MAINTAINER richard
