@@ -1,21 +1,32 @@
 mvn clean package
 
-cd docker
+cd docker_pro/ruoyi/auth
 
-sh copy.sh
+sh deploy-dev.sh
 
-docker-compose build --no-cache
 
-docker tag docker_ruoyi-redis richardgong1987/docker_ruoyi-redis
-docker tag docker_ruoyi-minio richardgong1987/docker_ruoyi-minio
-docker tag docker_ruoyi-nginx richardgong1987/docker_ruoyi-nginx
-docker tag docker_ruoyi-elasticsearch richardgong1987/docker_ruoyi-elasticsearch
 
-docker tag docker_ruoyi-gateway richardgong1987/docker_ruoyi-gateway
-docker tag docker_ruoyi-auth richardgong1987/docker_ruoyi-auth
-docker tag docker_ruoyi-modules-system richardgong1987/docker_ruoyi-modules-system
-docker tag docker_ruoyi-modules-file richardgong1987/docker_ruoyi-modules-file
-docker tag docker_ruoyi-modules-education-admin richardgong1987/docker_ruoyi-modules-education-admin
+cd ../gateway
+
+sh deploy-dev.sh
+
+cd ../modules/file
+
+sh deploy-dev.sh
+
+cd ../modules/system
+
+sh deploy-dev.sh
+
+cd ../../modules-education/education-admin
+
+sh deploy-dev.sh
+
+
+
+
+
+#docker tag docker_ruoyi-nginx richardgong1987/docker_ruoyi-nginx
 
 docker login --username=richardgong1987 --password-stdin  < ~/DockerPassword.txt
 
