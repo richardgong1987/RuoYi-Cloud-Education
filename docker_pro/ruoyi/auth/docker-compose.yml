@@ -2,7 +2,7 @@ version: '3'
 services:
   backend:
     image: richardgong1987/docker_ruoyi-auth
-    container_name: framework
+    container_name: ruoyi-auth
     build: .
     ports:
       - "9201:9201"

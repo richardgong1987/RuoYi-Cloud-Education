@@ -1,21 +1,5 @@
 version : '3.8'
 services:
-  ruoyi-nacos:
-    container_name: ruoyi-nacos
-    build:
-      context: ./nacos
-    environment:
-      - MODE=standalone
-    volumes:
-      - ./nacos/logs/:/home/nacos/logs
-      - ./nacos/conf/application.properties:/home/nacos/conf/application.properties
-    ports:
-      - "8848:8848"
-      - "9848:9848"
-      - "9849:9849"
-    links:
-      - ruoyi-gateway
-
   ruoyi-minio:
     container_name: ruoyi-minio
     build:

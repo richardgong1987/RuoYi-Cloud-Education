@@ -1,0 +1,8 @@
+version: '3'
+services:
+  backend:
+    image: richardgong1987/docker_ruoyi-modules-file
+    container_name: ruoyi-modules-file
+    build: .
+    ports:
+      - "9300:9300"
