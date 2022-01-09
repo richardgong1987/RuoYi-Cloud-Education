@@ -19,26 +19,26 @@ cp -r ../ruoyi-ui/dist/** ./nginx/html/dist
 
 # copy jar
 echo "begin copy ruoyi-gateway "
-cp ../ruoyi-gateway/target/ruoyi-gateway.jar ./ruoyi/gateway
+cp ../ruoyi-gateway/target/ruoyi-gateway.jar ./ruoyi/gateway/app.jar
 
 echo "begin copy ruoyi-auth "
-cp ../ruoyi-auth/target/ruoyi-auth.jar ./ruoyi/auth
+cp ../ruoyi-auth/target/ruoyi-auth.jar ./ruoyi/auth/app.jar
 
 echo "begin copy ruoyi-visual "
-cp ../ruoyi-visual/ruoyi-monitor/target/ruoyi-visual-monitor.jar  ./ruoyi/visual/monitor
+cp ../ruoyi-visual/ruoyi-monitor/target/ruoyi-visual-monitor.jar  ./ruoyi/visual/monitor/app.jar
 
 echo "begin copy ruoyi-modules-system "
-cp ../ruoyi-modules/ruoyi-system/target/ruoyi-modules-system.jar ./ruoyi/modules/system
+cp ../ruoyi-modules/ruoyi-system/target/ruoyi-modules-system.jar ./ruoyi/modules/system/app.jar
 
 echo "begin copy ruoyi-modules-file "
-cp ../ruoyi-modules/ruoyi-file/target/ruoyi-modules-file.jar ./ruoyi/modules/file
+cp ../ruoyi-modules/ruoyi-file/target/ruoyi-modules-file.jar ./ruoyi/modules/file/app.jar
 
 echo "begin copy ruoyi-modules-job "
-cp ../ruoyi-modules/ruoyi-job/target/ruoyi-modules-job.jar ./ruoyi/modules/job
+cp ../ruoyi-modules/ruoyi-job/target/ruoyi-modules-job.jar ./ruoyi/modules/job/app.jar
 
 echo "begin copy ruoyi-modules-gen "
-cp ../ruoyi-modules/ruoyi-gen/target/ruoyi-modules-gen.jar ./ruoyi/modules/gen
+cp ../ruoyi-modules/ruoyi-gen/target/ruoyi-modules-gen.jar ./ruoyi/modules/gen/app.jar
 
 echo "begin copy education-admin "
-cp ../ruoyi-modules-eduction/education-admin/target/education-admin.jar ./ruoyi/modules-education/education-admin
+cp ../ruoyi-modules-eduction/education-admin/target/education-admin.jar ./ruoyi/modules-education/education-admin/app.jar
 
