@@ -5,6 +5,11 @@
 能批量改作业,管理学校,学生,文件网盘,讲义管理
 
 项目还在不断更新迭代中. 有还有功能没完善. 大概会在2022年1月底会上一版,包含微信小程序. 
+[项目的微信小程序地址](https://github.com/richardgong1987/ruoyi-cloud-education-miniprogram)
+
+```text
+https://github.com/richardgong1987/ruoyi-cloud-education-miniprogram
+```
 
 # 安装方式
 
