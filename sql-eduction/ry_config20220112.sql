@@ -1,9 +1,18 @@
-DROP DATABASE IF EXISTS `ry-config`;
+/*
+ Navicat Premium Data Transfer
 
-CREATE DATABASE  `ry-config`;
+ Source Server         : localhost_3306
+ Source Server Type    : MySQL
+ Source Server Version : 80026
+ Source Host           : localhost:3306
+ Source Schema         : ry-config
 
+ Target Server Type    : MySQL
+ Target Server Version : 80026
+ File Encoding         : 65001
 
-USE `ry-config`;
+ Date: 12/01/2022 09:32:39
+*/
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -14,30 +23,30 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `config_info`;
 CREATE TABLE `config_info` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `data_id` varchar(255) COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-  `group_id` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `content` longtext COLLATE utf8_bin NOT NULL COMMENT 'content',
-  `md5` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT 'md5',
+  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
+  `group_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `content` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'content',
+  `md5` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'md5',
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `src_user` text COLLATE utf8_bin COMMENT 'source user',
-  `src_ip` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT 'source ip',
-  `app_name` varchar(128) COLLATE utf8_bin DEFAULT NULL,
-  `tenant_id` varchar(128) COLLATE utf8_bin DEFAULT '' COMMENT '租户字段',
-  `c_desc` varchar(256) COLLATE utf8_bin DEFAULT NULL,
-  `c_use` varchar(64) COLLATE utf8_bin DEFAULT NULL,
-  `effect` varchar(64) COLLATE utf8_bin DEFAULT NULL,
-  `type` varchar(64) COLLATE utf8_bin DEFAULT NULL,
-  `c_schema` text COLLATE utf8_bin,
+  `src_user` text CHARACTER SET utf8 COLLATE utf8_bin COMMENT 'source user',
+  `src_ip` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'source ip',
+  `app_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '租户字段',
+  `c_desc` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `c_use` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `effect` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `type` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `c_schema` text CHARACTER SET utf8 COLLATE utf8_bin,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_configinfo_datagrouptenant` (`data_id`,`group_id`,`tenant_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin COMMENT='config_info';
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin COMMENT='config_info';
 
 -- ----------------------------
 -- Records of config_info
 -- ----------------------------
 BEGIN;
-INSERT INTO `config_info` VALUES (1, 'application-dev.yml', 'DEFAULT_GROUP', 'spring:\n  main:\n    allow-bean-definition-overriding: true\n  autoconfigure:\n    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure\n  redis:\n    host: localhost\n    port: 6379\n    password: \n  datasource: \n    driver-class-name: com.mysql.cj.jdbc.Driver\n    url: jdbc:mysql://localhost:3306/ry-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8\n    username: root\n    password: password\n# feign 配置\nfeign:\n  sentinel:\n    enabled: true\n  okhttp:\n    enabled: true\n  httpclient:\n    enabled: false\n  client:\n    config:\n      default:\n        connectTimeout: 10000\n        readTimeout: 10000\n  compression:\n    request:\n      enabled: true\n    response:\n      enabled: true\n\n# 暴露监控端点\nmanagement:\n  endpoints:\n    web:\n      exposure:\n        include: \'*\'\n', '0f12c8dae0124d5b42d19c0fce602dfb', '2019-11-29 16:31:20', '2021-12-29 17:13:19', '', '0:0:0:0:0:0:0:1', '', '', '通用配置', 'null', 'null', 'yaml', 'null');
+INSERT INTO `config_info` VALUES (1, 'application-dev.yml', 'DEFAULT_GROUP', 'spring:\n  main:\n    allow-circular-references: true\n    allow-bean-definition-overriding: true\n  autoconfigure:\n    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure\n  cloud:\n    sentinel:\n      filter:\n        # sentinel 在 springboot 2.6.x 不兼容问题的处理\n        enabled: false\n  redis:\n    host: localhost\n    port: 6379\n    password: \n  datasource: \n    driver-class-name: com.mysql.cj.jdbc.Driver\n    url: jdbc:mysql://localhost:3306/ry-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8\n    username: root\n    password: password\n# feign 配置\nfeign:\n  sentinel:\n    enabled: true\n  okhttp:\n    enabled: true\n  httpclient:\n    enabled: false\n  client:\n    config:\n      default:\n        connectTimeout: 10000\n        readTimeout: 10000\n  compression:\n    request:\n      enabled: true\n    response:\n      enabled: true\n\n# 暴露监控端点\nmanagement:\n  endpoints:\n    web:\n      exposure:\n        include: \'*\'', '9bc613d3b70ba6901a46afd9ed5be721', '2019-11-29 16:31:20', '2022-01-12 01:30:43', '', '0:0:0:0:0:0:0:1', '', '', '通用配置', 'null', 'null', 'yaml', 'null');
 INSERT INTO `config_info` VALUES (2, 'ruoyi-gateway-dev.yml', 'DEFAULT_GROUP', 'spring:\n  cloud:\n    gateway:\n      discovery:\n        locator:\n          lowerCaseServiceId: true\n          enabled: true\n      routes:\n        # 认证中心\n        - id: ruoyi-auth\n          uri: lb://ruoyi-auth\n          predicates:\n            - Path=/auth/**\n          filters:\n            # 验证码处理\n            - CacheRequestFilter\n            - ValidateCodeFilter\n            - StripPrefix=1\n        # 代码生成\n        - id: ruoyi-gen\n          uri: lb://ruoyi-gen\n          predicates:\n            - Path=/code/**\n          filters:\n            - StripPrefix=1\n        # 定时任务\n        - id: ruoyi-job\n          uri: lb://ruoyi-job\n          predicates:\n            - Path=/schedule/**\n          filters:\n            - StripPrefix=1\n        # 系统模块\n        - id: ruoyi-system\n          uri: lb://ruoyi-system\n          predicates:\n            - Path=/system/**\n          filters:\n            - StripPrefix=1\n        # 文件服务\n        - id: ruoyi-file\n          uri: lb://ruoyi-file\n          predicates:\n            - Path=/file/**\n          filters:\n            - StripPrefix=1\n          # education admin services    \n        - id: ruoyi-education-admin\n          uri: lb://ruoyi-education-admin\n          predicates:\n            - Path=/edu-admin/**\n          filters:\n            - StripPrefix=1 \n# 安全配置\nsecurity:\n  # 验证码\n  captcha:\n    enabled: false\n    type: math\n  # 防止XSS攻击\n  xss:\n    enabled: true\n    excludeUrls:\n      - /system/notice\n  # 不校验白名单\n  ignore:\n    whites:\n      - /auth/logout\n      - /auth/login\n      - /auth/register\n      - /*/v2/api-docs\n      - /csrf\n', '7acf79b52a0b6d0f586463ef9851f9ca', '2020-05-14 14:17:55', '2022-01-02 01:32:33', '', '0:0:0:0:0:0:0:1', '', '', '网关模块', 'null', 'null', 'yaml', 'null');
 INSERT INTO `config_info` VALUES (3, 'ruoyi-auth-dev.yml', 'DEFAULT_GROUP', 'spring: ', '7c13cae4122a56d004b526caef17a29c', '2020-11-20 00:00:00', '2021-12-29 17:10:48', '', '0:0:0:0:0:0:0:1', '', '', '认证中心', 'null', 'null', 'yaml', 'null');
 INSERT INTO `config_info` VALUES (4, 'ruoyi-monitor-dev.yml', 'DEFAULT_GROUP', '# spring\r\nspring: \r\n  security:\r\n    user:\r\n      name: ruoyi\r\n      password: 123456\r\n  boot:\r\n    admin:\r\n      ui:\r\n        title: 若依服务状态监控\r\n', 'd8997d0707a2fd5d9fc4e8409da38129', '2020-11-20 00:00:00', '2020-12-21 16:28:07', NULL, '0:0:0:0:0:0:0:1', '', '', '监控中心', 'null', 'null', 'yaml', 'null');
@@ -55,13 +64,13 @@ COMMIT;
 DROP TABLE IF EXISTS `config_info_aggr`;
 CREATE TABLE `config_info_aggr` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `data_id` varchar(255) COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-  `group_id` varchar(255) COLLATE utf8_bin NOT NULL COMMENT 'group_id',
-  `datum_id` varchar(255) COLLATE utf8_bin NOT NULL COMMENT 'datum_id',
-  `content` longtext COLLATE utf8_bin NOT NULL COMMENT '内容',
+  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
+  `group_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
+  `datum_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'datum_id',
+  `content` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '内容',
   `gmt_modified` datetime NOT NULL COMMENT '修改时间',
-  `app_name` varchar(128) COLLATE utf8_bin DEFAULT NULL,
-  `tenant_id` varchar(128) COLLATE utf8_bin DEFAULT '' COMMENT '租户字段',
+  `app_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '租户字段',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_configinfoaggr_datagrouptenantdatum` (`data_id`,`group_id`,`tenant_id`,`datum_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin COMMENT='增加租户字段';
@@ -78,17 +87,17 @@ COMMIT;
 DROP TABLE IF EXISTS `config_info_beta`;
 CREATE TABLE `config_info_beta` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `data_id` varchar(255) COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-  `group_id` varchar(128) COLLATE utf8_bin NOT NULL COMMENT 'group_id',
-  `app_name` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT 'app_name',
-  `content` longtext COLLATE utf8_bin NOT NULL COMMENT 'content',
-  `beta_ips` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT 'betaIps',
-  `md5` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT 'md5',
+  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
+  `group_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
+  `app_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'app_name',
+  `content` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'content',
+  `beta_ips` varchar(1024) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'betaIps',
+  `md5` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'md5',
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `src_user` text COLLATE utf8_bin COMMENT 'source user',
-  `src_ip` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT 'source ip',
-  `tenant_id` varchar(128) COLLATE utf8_bin DEFAULT '' COMMENT '租户字段',
+  `src_user` text CHARACTER SET utf8 COLLATE utf8_bin COMMENT 'source user',
+  `src_ip` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'source ip',
+  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '租户字段',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_configinfobeta_datagrouptenant` (`data_id`,`group_id`,`tenant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin COMMENT='config_info_beta';
@@ -105,17 +114,17 @@ COMMIT;
 DROP TABLE IF EXISTS `config_info_tag`;
 CREATE TABLE `config_info_tag` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `data_id` varchar(255) COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-  `group_id` varchar(128) COLLATE utf8_bin NOT NULL COMMENT 'group_id',
-  `tenant_id` varchar(128) COLLATE utf8_bin DEFAULT '' COMMENT 'tenant_id',
-  `tag_id` varchar(128) COLLATE utf8_bin NOT NULL COMMENT 'tag_id',
-  `app_name` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT 'app_name',
-  `content` longtext COLLATE utf8_bin NOT NULL COMMENT 'content',
-  `md5` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT 'md5',
+  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
+  `group_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
+  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT 'tenant_id',
+  `tag_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'tag_id',
+  `app_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'app_name',
+  `content` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'content',
+  `md5` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'md5',
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `src_user` text COLLATE utf8_bin COMMENT 'source user',
-  `src_ip` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT 'source ip',
+  `src_user` text CHARACTER SET utf8 COLLATE utf8_bin COMMENT 'source user',
+  `src_ip` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'source ip',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_configinfotag_datagrouptenanttag` (`data_id`,`group_id`,`tenant_id`,`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin COMMENT='config_info_tag';
@@ -132,11 +141,11 @@ COMMIT;
 DROP TABLE IF EXISTS `config_tags_relation`;
 CREATE TABLE `config_tags_relation` (
   `id` bigint NOT NULL COMMENT 'id',
-  `tag_name` varchar(128) COLLATE utf8_bin NOT NULL COMMENT 'tag_name',
-  `tag_type` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT 'tag_type',
-  `data_id` varchar(255) COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-  `group_id` varchar(128) COLLATE utf8_bin NOT NULL COMMENT 'group_id',
-  `tenant_id` varchar(128) COLLATE utf8_bin DEFAULT '' COMMENT 'tenant_id',
+  `tag_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'tag_name',
+  `tag_type` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'tag_type',
+  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
+  `group_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
+  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT 'tenant_id',
   `nid` bigint NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`nid`),
   UNIQUE KEY `uk_configtagrelation_configidtag` (`id`,`tag_name`,`tag_type`),
@@ -155,7 +164,7 @@ COMMIT;
 DROP TABLE IF EXISTS `group_capacity`;
 CREATE TABLE `group_capacity` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `group_id` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'Group ID，空字符表示整个集群',
+  `group_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'Group ID，空字符表示整个集群',
   `quota` int unsigned NOT NULL DEFAULT '0' COMMENT '配额，0表示使用默认值',
   `usage` int unsigned NOT NULL DEFAULT '0' COMMENT '使用量',
   `max_size` int unsigned NOT NULL DEFAULT '0' COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
@@ -181,22 +190,22 @@ DROP TABLE IF EXISTS `his_config_info`;
 CREATE TABLE `his_config_info` (
   `id` bigint unsigned NOT NULL,
   `nid` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `data_id` varchar(255) COLLATE utf8_bin NOT NULL,
-  `group_id` varchar(128) COLLATE utf8_bin NOT NULL,
-  `app_name` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT 'app_name',
-  `content` longtext COLLATE utf8_bin NOT NULL,
-  `md5` varchar(32) COLLATE utf8_bin DEFAULT NULL,
+  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `group_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `app_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'app_name',
+  `content` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `md5` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `src_user` text COLLATE utf8_bin,
-  `src_ip` varchar(50) COLLATE utf8_bin DEFAULT NULL,
-  `op_type` char(10) COLLATE utf8_bin DEFAULT NULL,
-  `tenant_id` varchar(128) COLLATE utf8_bin DEFAULT '' COMMENT '租户字段',
+  `src_user` text CHARACTER SET utf8 COLLATE utf8_bin,
+  `src_ip` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `op_type` char(10) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '租户字段',
   PRIMARY KEY (`nid`),
   KEY `idx_gmt_create` (`gmt_create`),
   KEY `idx_gmt_modified` (`gmt_modified`),
   KEY `idx_did` (`data_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin COMMENT='多租户改造';
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin COMMENT='多租户改造';
 
 -- ----------------------------
 -- Records of his_config_info
@@ -255,6 +264,8 @@ INSERT INTO `his_config_info` VALUES (8, 50, 'ruoyi-file-dev.yml', 'DEFAULT_GROU
 INSERT INTO `his_config_info` VALUES (8, 51, 'ruoyi-file-dev.yml', 'DEFAULT_GROUP', '', '# 本地文件上传    \nfile:\n    domain: http://127.0.0.1:9300\n    path: D:/ruoyi/uploadPath\n    prefix: /statics\n\n# FastDFS配置\nfdfs:\n  domain: http://8.129.231.12\n  soTimeout: 3000\n  connectTimeout: 2000\n  trackerList: 8.129.231.12:22122\n\n# Minio配置\nminio:\n  url: http://localhost:9000\n  accessKey: admin\n  secretKey: password\n  bucketName: education\n\n\ndeployment:\n  host: localhost\n\nspring:\n  main:\n    allow-bean-definition-overriding: true\n  mvc:\n    static-path-pattern: /**  \n  redis:\n    lettuce:\n      pool:\n        max-active: 8\n        max-wait: 10000\n        max-idle: 30\n        min-idle: 10\n    host: 127.0.0.1\n    port: 6379\n    timeout: 5000\n    database: 0\n    password:\n  web:\n    resources:\n      static-locations: classpath:/static\n  datasource:\n    data: classpath:database/data.sql\n    initialization-mode: ALWAYS\n    sql-script-encoding: utf-8\n  elasticsearch:\n    rest:\n      uris: 127.0.0.1:9200\n      password:\n      username:\n  servlet:\n    multipart:\n      enabled: true\n      max-request-size: 2048MB\n      max-file-size: 2048MB\n  data:\n    elasticsearch:\n      client:\n        reactive:\n          endpoints: 127.0.0.1:9200\n  jpa:\n    properties:\n      hibernate:\n        dialect: org.hibernate.dialect.MySQL5InnoDBDialect\n        hbm2ddl:\n          auto: update\n    show-sql: true\n    hibernate:\n      naming:\n        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl\n\nmybatis-plus:\n  global-config:\n    banner: false\n  type-aliases-package: com.ruoyi.file.domain\n  mapper-locations: classpath:mapper/*.xml\n  configuration:\n    map-underscore-to-camel-case: false\n\nufop:\n  minio:\n    endpoint: ${minio.url}\n    bucket-name: ${minio.bucketName}\n    access-key: ${minio.accessKey}\n    secret-key: ${minio.secretKey}\n  thumb-image:\n    height: 150\n    width: 150\n  storage-type: 0\n  local-storage-path:\n\n\nfiles:\n  docservice:\n    url:\n      command: coauthoring/CommandService.ashx\n      preloader: web-apps/apps/api/documents/cache-scripts.html\n      example: \'\'\n      site: http://localhost:80/\n      api: web-apps/apps/api/documents/api.js\n      converter: ConvertService.ashx\n    header: Authorization\n    edited-docs: .docx|.xlsx|.csv|.pptx|.txt\n    viewed-docs: .pdf|.djvu|.xps\n    secret: \'\'\n    convert-docs: .docm|.dotx|.dotm|.dot|.doc|.odt|.fodt|.ott|.xlsm|.xltx|.xltm|.xlt|.xls|.ods|.fods|.ots|.pptm|.ppt|.ppsx|.ppsm|.pps|.potx|.potm|.pot|.odp|.fodp|.otp|.rtf|.mht|.html|.htm|.xml|.epub|.fb2\n    timeout: 120000\nstorage-folder: app_data\nfilesize-max: 5242880\n  \n\n', 'f09e8146645cff41f1bf02496f357859', '2022-01-02 16:50:22', '2022-01-02 08:50:23', '', '0:0:0:0:0:0:0:1', 'U', '');
 INSERT INTO `his_config_info` VALUES (8, 52, 'ruoyi-file-dev.yml', 'DEFAULT_GROUP', '', '# 本地文件上传    \nfile:\n    domain: http://127.0.0.1:9300\n    path: D:/ruoyi/uploadPath\n    prefix: /statics\n\n# FastDFS配置\nfdfs:\n  domain: http://8.129.231.12\n  soTimeout: 3000\n  connectTimeout: 2000\n  trackerList: 8.129.231.12:22122\n\n# Minio配置\nminio:\n  url: http://localhost:9000\n  accessKey: admin\n  secretKey: password\n  bucketName: education\n\n\ndeployment:\n  host: localhost\n\nspring:\n  main:\n    allow-bean-definition-overriding: true\n  mvc:\n    static-path-pattern: /**  \n  redis:\n    lettuce:\n      pool:\n        max-active: 8\n        max-wait: 10000\n        max-idle: 30\n        min-idle: 10\n    host: 127.0.0.1\n    port: 6379\n    timeout: 5000\n    database: 0\n    password:\n  web:\n    resources:\n      static-locations: classpath:/static\n  datasource:\n    data: classpath:database/data.sql\n    initialization-mode: ALWAYS\n    sql-script-encoding: utf-8\n  elasticsearch:\n    rest:\n      uris: 127.0.0.1:9200\n      password:\n      username:\n  servlet:\n    multipart:\n      enabled: true\n      max-request-size: 2048MB\n      max-file-size: 2048MB\n  data:\n    elasticsearch:\n      client:\n        reactive:\n          endpoints: 127.0.0.1:9200\n  jpa:\n    properties:\n      hibernate:\n        dialect: org.hibernate.dialect.MySQL5InnoDBDialect\n        hbm2ddl:\n          auto: update\n    show-sql: true\n    hibernate:\n      naming:\n        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl\n\nmybatis-plus:\n  global-config:\n    banner: false\n  type-aliases-package: com.ruoyi.file.domain\n  mapper-locations: classpath:mapper/*.xml\n  configuration:\n    map-underscore-to-camel-case: false\n\nufop:\n  minio:\n    endpoint: ${minio.url}\n    bucket-name: ${minio.bucketName}\n    access-key: ${minio.accessKey}\n    secret-key: ${minio.secretKey}\n  thumb-image:\n    height: 150\n    width: 150\n  storage-type: 3\n  local-storage-path:\n\n\nfiles:\n  docservice:\n    url:\n      command: coauthoring/CommandService.ashx\n      preloader: web-apps/apps/api/documents/cache-scripts.html\n      example: \'\'\n      site: http://localhost:80/\n      api: web-apps/apps/api/documents/api.js\n      converter: ConvertService.ashx\n    header: Authorization\n    edited-docs: .docx|.xlsx|.csv|.pptx|.txt\n    viewed-docs: .pdf|.djvu|.xps\n    secret: \'\'\n    convert-docs: .docm|.dotx|.dotm|.dot|.doc|.odt|.fodt|.ott|.xlsm|.xltx|.xltm|.xlt|.xls|.ods|.fods|.ots|.pptm|.ppt|.ppsx|.ppsm|.pps|.potx|.potm|.pot|.odp|.fodp|.otp|.rtf|.mht|.html|.htm|.xml|.epub|.fb2\n    timeout: 120000\nstorage-folder: app_data\nfilesize-max: 5242880\n  \n\n', '712831bc9e0179456e369e1aa369a3b9', '2022-01-02 21:26:41', '2022-01-02 13:26:42', '', '0:0:0:0:0:0:0:1', 'U', '');
 INSERT INTO `his_config_info` VALUES (5, 53, 'ruoyi-system-dev.yml', 'DEFAULT_GROUP', '', '# spring配置\nspring: \n  datasource:\n    druid:\n      stat-view-servlet:\n        enabled: true\n        loginUsername: admin\n        loginPassword: 123456\n    dynamic:\n      druid:\n        initial-size: 5\n        min-idle: 5\n        maxActive: 20\n        maxWait: 60000\n        timeBetweenEvictionRunsMillis: 60000\n        minEvictableIdleTimeMillis: 300000\n        validationQuery: SELECT 1 FROM DUAL\n        testWhileIdle: true\n        testOnBorrow: false\n        testOnReturn: false\n        poolPreparedStatements: true\n        maxPoolPreparedStatementPerConnectionSize: 20\n        filters: stat,slf4j\n        connectionProperties: druid.stat.mergeSql\\=true;druid.stat.slowSqlMillis\\=5000\n      datasource:\n          # 主库数据源\n          master:\n            driver-class-name: com.mysql.cj.jdbc.Driver\n            url: jdbc:mysql://localhost:3306/ry-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8\n            username: root\n            password: password\n          # 从库数据源\n          # slave:\n            # username: \n            # password: \n            # url: \n            # driver-class-name: \n      # seata: true    # 开启seata代理，开启后默认每个数据源都代理，如果某个不需要代理可单独关闭\n\n# seata配置\nseata:\n  # 默认关闭，如需启用spring.datasource.dynami.seata需要同时开启\n  enabled: false\n  # Seata 应用编号，默认为 ${spring.application.name}\n  application-id: ${spring.application.name}\n  # Seata 事务组编号，用于 TC 集群名\n  tx-service-group: ${spring.application.name}-group\n  # 关闭自动代理\n  enable-auto-data-source-proxy: false\n  # 服务配置项\n  service:\n    # 虚拟组和分组的映射\n    vgroup-mapping:\n      ruoyi-system-group: default\n  config:\n    type: nacos\n    nacos:\n      serverAddr: 127.0.0.1:8848\n      group: SEATA_GROUP\n      namespace:\n  registry:\n    type: nacos\n    nacos:\n      application: seata-server\n      server-addr: 127.0.0.1:8848\n      namespace:\n\n# mybatis配置\nmybatis:\n    # 搜索指定包别名\n    typeAliasesPackage: com.ruoyi.system\n    # 配置mapper的扫描，找到所有的mapper.xml映射文件\n    mapperLocations: classpath:mapper/**/*.xml\n\n# swagger配置\nswagger:\n  title: 系统模块接口文档\n  license: Powered By ruoyi\n  licenseUrl: https://ruoyi.vip', '62fa3ec18ccb86be84eb9ab803bbbd15', '2022-01-04 10:57:53', '2022-01-04 02:57:53', '', '0:0:0:0:0:0:0:1', 'U', '');
+INSERT INTO `his_config_info` VALUES (1, 54, 'application-dev.yml', 'DEFAULT_GROUP', '', 'spring:\n  main:\n    allow-bean-definition-overriding: true\n  autoconfigure:\n    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure\n  redis:\n    host: localhost\n    port: 6379\n    password: \n  datasource: \n    driver-class-name: com.mysql.cj.jdbc.Driver\n    url: jdbc:mysql://localhost:3306/ry-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8\n    username: root\n    password: password\n# feign 配置\nfeign:\n  sentinel:\n    enabled: true\n  okhttp:\n    enabled: true\n  httpclient:\n    enabled: false\n  client:\n    config:\n      default:\n        connectTimeout: 10000\n        readTimeout: 10000\n  compression:\n    request:\n      enabled: true\n    response:\n      enabled: true\n\n# 暴露监控端点\nmanagement:\n  endpoints:\n    web:\n      exposure:\n        include: \'*\'\n', '0f12c8dae0124d5b42d19c0fce602dfb', '2022-01-12 09:30:22', '2022-01-12 01:30:22', '', '0:0:0:0:0:0:0:1', 'U', '');
+INSERT INTO `his_config_info` VALUES (1, 55, 'application-dev.yml', 'DEFAULT_GROUP', '', 'spring:\n  main:\n    allow-circular-references: true\n    allow-bean-definition-overriding: true\n  autoconfigure:\n    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure\n  cloud:\n    sentinel:\n      filter:\n        # sentinel 在 springboot 2.6.x 不兼容问题的处理\n        enabled: false\n  redis:\n    host: localhost\n    port: 6379\n    password: \n  datasource: \n    driver-class-name: com.mysql.cj.jdbc.Driver\n    url: jdbc:mysql://192.168.0.100:3306/ry-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8\n    username: root\n    password: password\n# feign 配置\nfeign:\n  sentinel:\n    enabled: true\n  okhttp:\n    enabled: true\n  httpclient:\n    enabled: false\n  client:\n    config:\n      default:\n        connectTimeout: 10000\n        readTimeout: 10000\n  compression:\n    request:\n      enabled: true\n    response:\n      enabled: true\n\n# 暴露监控端点\nmanagement:\n  endpoints:\n    web:\n      exposure:\n        include: \'*\'', 'a415adab049d6825f5c3356e3d8a1454', '2022-01-12 09:30:42', '2022-01-12 01:30:43', '', '0:0:0:0:0:0:0:1', 'U', '');
 COMMIT;
 
 -- ----------------------------
@@ -262,9 +273,9 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions` (
-  `role` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `resource` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `action` varchar(8) COLLATE utf8mb4_general_ci NOT NULL,
+  `role` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `resource` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `action` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   UNIQUE KEY `uk_role_permission` (`role`,`resource`,`action`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -279,8 +290,8 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
-  `username` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `role` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `role` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   UNIQUE KEY `idx_user_role` (`username`,`role`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -297,7 +308,7 @@ COMMIT;
 DROP TABLE IF EXISTS `tenant_capacity`;
 CREATE TABLE `tenant_capacity` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `tenant_id` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'Tenant ID',
+  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'Tenant ID',
   `quota` int unsigned NOT NULL DEFAULT '0' COMMENT '配额，0表示使用默认值',
   `usage` int unsigned NOT NULL DEFAULT '0' COMMENT '使用量',
   `max_size` int unsigned NOT NULL DEFAULT '0' COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
@@ -322,11 +333,11 @@ COMMIT;
 DROP TABLE IF EXISTS `tenant_info`;
 CREATE TABLE `tenant_info` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `kp` varchar(128) COLLATE utf8_bin NOT NULL COMMENT 'kp',
-  `tenant_id` varchar(128) COLLATE utf8_bin DEFAULT '' COMMENT 'tenant_id',
-  `tenant_name` varchar(128) COLLATE utf8_bin DEFAULT '' COMMENT 'tenant_name',
-  `tenant_desc` varchar(256) COLLATE utf8_bin DEFAULT NULL COMMENT 'tenant_desc',
-  `create_source` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT 'create_source',
+  `kp` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'kp',
+  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT 'tenant_id',
+  `tenant_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT 'tenant_name',
+  `tenant_desc` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'tenant_desc',
+  `create_source` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'create_source',
   `gmt_create` bigint NOT NULL COMMENT '创建时间',
   `gmt_modified` bigint NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`),
@@ -345,8 +356,8 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
-  `username` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `enabled` tinyint(1) NOT NULL,
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
