@@ -1,5 +1,25 @@
 package com.ruoyi.gen.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.core.constant.Constants;
@@ -31,6 +51,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.function.Function;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -308,7 +329,7 @@ public class GenTableServiceImpl implements IGenTableService {
     public void synchDb(String tableName) {
         GenTable table = genTableMapper.selectGenTableByName(tableName);
         List<GenTableColumn> tableColumns = table.getColumns();
-        List<String> tableColumnNames = tableColumns.stream().map(GenTableColumn::getColumnName).collect(Collectors.toList());
+        Map<String, GenTableColumn> tableColumnMap = tableColumns.stream().collect(Collectors.toMap(GenTableColumn::getColumnName, Function.identity()));
 
         List<GenTableColumn> dbTableColumns = genTableColumnMapper.selectDbTableColumnsByName(tableName);
         if (StringUtils.isEmpty(dbTableColumns)) {
@@ -317,8 +338,20 @@ public class GenTableServiceImpl implements IGenTableService {
         List<String> dbTableColumnNames = dbTableColumns.stream().map(GenTableColumn::getColumnName).collect(Collectors.toList());
 
         dbTableColumns.forEach(column -> {
-            if (!tableColumnNames.contains(column.getColumnName())) {
-                GenUtils.initColumnField(column, table);
+            GenUtils.initColumnField(column, table);
+            if (tableColumnMap.containsKey(column.getColumnName()))
+            {
+                GenTableColumn prevColumn = tableColumnMap.get(column.getColumnName());
+                column.setColumnId(prevColumn.getColumnId());
+                if (column.isList())
+                {
+                    // 如果是列表，继续保留字典类型
+                    column.setDictType(prevColumn.getDictType());
+                }
+                genTableColumnMapper.updateGenTableColumn(column);
+            }
+            else
+            {
                 genTableColumnMapper.insertGenTableColumn(column);
             }
         });
