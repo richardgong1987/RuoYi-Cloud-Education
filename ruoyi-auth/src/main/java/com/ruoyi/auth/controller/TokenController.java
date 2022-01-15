@@ -19,7 +19,7 @@ import com.ruoyi.system.api.model.LoginUser;
 
 /**
  * token 控制
- * 
+ *
  * @author ruoyi
  */
 @RestController
@@ -36,6 +36,15 @@ public class TokenController
     {
         // 用户登录
         LoginUser userInfo = sysLoginService.login(form.getUsername(), form.getPassword());
+        // 获取登录token
+        return R.ok(tokenService.createToken(userInfo));
+    }
+
+    @PostMapping("wxlogin")
+    public R<?> wxlogin(@RequestBody LoginBody form)
+    {
+        // 用户登录
+        LoginUser userInfo = sysLoginService.wxLogin(form.getUsername(), form.getPassword());
         // 获取登录token
         return R.ok(tokenService.createToken(userInfo));
     }

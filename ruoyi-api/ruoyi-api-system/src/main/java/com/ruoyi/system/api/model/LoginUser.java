@@ -3,6 +3,7 @@ package com.ruoyi.system.api.model;
 import java.io.Serializable;
 import java.util.Set;
 import com.ruoyi.system.api.domain.SysUser;
+import com.ruoyi.system.api.domain.WxUser;
 
 /**
  * 用户信息
@@ -146,5 +147,25 @@ public class LoginUser implements Serializable
     public void setSysUser(SysUser sysUser)
     {
         this.sysUser = sysUser;
+    }
+
+    public LoginUser() {}
+    /**
+     * 微信用户信息
+     */
+    public LoginUser(WxUser wxUser)
+    {
+        this.wxUser = wxUser;
+    }
+
+    private WxUser wxUser;
+    public WxUser getWxUser()
+    {
+        return wxUser;
+    }
+
+    public void setWxUser(WxUser wxUser)
+    {
+        this.wxUser = wxUser;
     }
 }

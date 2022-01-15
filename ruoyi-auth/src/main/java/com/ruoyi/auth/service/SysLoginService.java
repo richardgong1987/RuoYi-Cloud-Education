@@ -1,5 +1,7 @@
 package com.ruoyi.auth.service;
 
+import com.ruoyi.common.core.context.SecurityContextHolder;
+import com.ruoyi.system.api.domain.WxUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.ruoyi.common.core.constant.Constants;
@@ -20,7 +22,7 @@ import com.ruoyi.system.api.model.LoginUser;
 
 /**
  * 登录校验方法
- * 
+ *
  * @author ruoyi
  */
 @Component
@@ -90,6 +92,21 @@ public class SysLoginService
         recordLogininfor(username, Constants.LOGIN_SUCCESS, "登录成功");
         return userInfo;
     }
+    /**
+     * 微信登录验证
+     *
+     * @param openId 微信唯一标识
+     * @param sessionKey 微信会话密钥
+     * @return 结果
+     */
+    public LoginUser wxLogin(String openId, String sessionKey)
+    {
+        LoginUser loginUser = new LoginUser(new WxUser(openId, sessionKey));
+//        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(openId, sessionKey);
+//        authenticationToken.setDetails(loginUser);
+//        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        return loginUser;
+    }
 
     public void logout(String loginName)
     {
@@ -133,7 +150,7 @@ public class SysLoginService
 
     /**
      * 记录登录信息
-     * 
+     *
      * @param username 用户名
      * @param status 状态
      * @param message 消息内容
