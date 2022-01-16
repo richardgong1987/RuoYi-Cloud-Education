@@ -15,6 +15,7 @@ import com.ruoyi.file.service.FiletransferService;
 import com.ruoyi.file.service.UserFileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
@@ -30,7 +31,9 @@ public class TaskController {
     FiletransferService filetransferService;
     @Resource
     FileDealComp fileDealComp;
-    @Autowired
+
+    @Resource
+    @Lazy
     private IElasticSearchService elasticSearchService;
 
     @Scheduled(cron = "0 0/1 * * * ?")
