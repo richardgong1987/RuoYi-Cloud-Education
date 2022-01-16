@@ -40,10 +40,8 @@
         <javacpp.version>1.4.3</javacpp.version>
         <javacv.version>1.4.3</javacv.version>
         <ffmpeg.version>4.0.2-1.4.3</ffmpeg.version>
-
         <qiniu.version>7.7.0</qiniu.version>
         <hutool.version>5.5.8</hutool.version>
-        <minio.version>7.0.2</minio.version>
     </properties>
     <dependencyManagement>
         <dependencies>
