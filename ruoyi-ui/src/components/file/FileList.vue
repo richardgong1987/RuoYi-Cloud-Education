@@ -117,7 +117,6 @@ export default {
     filePath() {
       // 当左侧菜单选择“全部”或“我的分享”，文件路径发生变化时，再重新获取文件列表
       if ([0, 8].includes(this.fileType)) {
-        debugger
         this.setPageCount()
         this.getTableDataByType()
       }
