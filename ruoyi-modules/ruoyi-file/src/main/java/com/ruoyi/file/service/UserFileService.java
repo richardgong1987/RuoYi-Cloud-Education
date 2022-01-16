@@ -10,6 +10,8 @@ import javax.annotation.Resource;
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qiwenshare.common.constant.FileConstant;
 import com.qiwenshare.common.util.DateUtil;
@@ -232,5 +234,12 @@ public class UserFileService extends ServiceImpl<UserFileMapper, UserFile> imple
         });
     }
 
+    @Override
+    public IPage<FileListVo> getFileByFileType(Integer fileTypeId, Long currentPage, Long pageCount, long userId) {
+        Page<FileListVo> page = new Page<>(currentPage, pageCount);
 
+        UserFile userFile = new UserFile();
+        userFile.setUserId(userId);
+        return userFileMapper.selectPageVo(page, userFile, fileTypeId);
+    }
 }

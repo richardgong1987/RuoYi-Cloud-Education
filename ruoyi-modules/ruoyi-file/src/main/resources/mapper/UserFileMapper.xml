@@ -162,4 +162,40 @@
         WHERE file_userfile.userId = #{userId}
     </select>
 
+    <select id="selectPageVo" parameterType="com.ruoyi.file.domain.UserFile" resultType="com.ruoyi.file.vo.file.FileListVo">
+        select * from file_userfile a
+        left join file_image on a.fileId = file_image.fileId
+        left join file_file on file_file.fileId = a.fileId
+        <where>
+            <if test="fileTypeId != null">
+                <choose>
+                    <when test="fileTypeId != 5">
+                        extendName in (select fileExtendName from fileclassification where fileTypeId = #{fileTypeId})
+                    </when>
+                    <otherwise>
+                        extendName not in (select fileExtendName from fileclassification where fileTypeId in (1, 2, 3, 4))
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="userFile.userId != null">
+                and a.userId = #{userFile.userId}
+            </if>
+            <if test="userFile.filePath != null">
+                and a.filePath = #{userFile.filePath}
+            </if>
+            <if test="userFile.extendName != null">
+                and a.extendName = #{userFile.extendName}
+            </if>
+            <if test="userFile.userFileId != null">
+                and a.userFileId = #{userFile.userFileId}
+            </if>
+            <if test="userFile.fileName != null">
+                and a.fileName = #{userFile.fileName}
+            </if>
+            and a.deleteFlag = 0
+        </where>
+        ORDER BY isDir desc
+    </select>
+
+
 </mapper>

@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.qiwenshare.common.anno.MyLog;
 import com.qiwenshare.common.result.RestResult;
 import com.qiwenshare.common.util.DateUtil;
@@ -368,36 +369,11 @@ public class FileController {
             userId = SecurityUtils.getUserId();
         }
 
-        List<FileListVo> fileList;
-        Long beginCount = 0L;
-        if (pageCount == 0 || currentPage == 0) {
-            beginCount = 0L;
-            pageCount = 10L;
-        } else {
-            beginCount = (currentPage - 1) * pageCount;
-        }
-
-        Long total = 0L;
-        if (fileType == UFOPUtils.OTHER_TYPE) {
-
-            List<String> arrList = new ArrayList<>();
-            arrList.addAll(Arrays.asList(UFOPUtils.DOC_FILE));
-            arrList.addAll(Arrays.asList(UFOPUtils.IMG_FILE));
-            arrList.addAll(Arrays.asList(UFOPUtils.VIDEO_FILE));
-            arrList.addAll(Arrays.asList(UFOPUtils.MUSIC_FILE));
-
-            fileList = userFileService.selectFileNotInExtendNames(arrList, beginCount, pageCount, userId);
-            total = userFileService.selectCountNotInExtendNames(arrList, beginCount, pageCount, userId);
-        } else {
-            fileList = userFileService.selectFileByExtendName(UFOPUtils.getFileExtendsByType(fileType), beginCount, pageCount, userId);
-            total = userFileService.selectCountByExtendName(UFOPUtils.getFileExtendsByType(fileType), beginCount, pageCount, userId);
-        }
-
+        IPage<FileListVo> result = userFileService.getFileByFileType(fileType, currentPage, pageCount, userId);
         Map<String, Object> map = new HashMap<>();
-        map.put("list", fileList);
-        map.put("total", total);
+        map.put("list", result.getRecords());
+        map.put("total", result.getTotal());
         return RestResult.success().data(map);
-
     }
 
     @Operation(summary = "获取文件树", description = "文件移动的时候需要用到该接口，用来展示目录树", tags = {"file"})

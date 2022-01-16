@@ -5,6 +5,7 @@ import com.ruoyi.file.domain.StorageBean;
 import com.ruoyi.file.dto.file.DownloadFileDTO;
 import com.ruoyi.file.dto.file.PreviewDTO;
 import com.ruoyi.file.dto.file.UploadFileDTO;
+import com.ruoyi.file.vo.file.UploadFileVo;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,4 +37,6 @@ public interface IFiletransferService {
     StorageBean selectStorageByUser(StorageBean storageBean);
 
     Long selectStorageSizeByUserId(Long userId);
+
+    UploadFileVo uploadFileSpeed(UploadFileDTO uploadFileDTO, Long userId);
 }

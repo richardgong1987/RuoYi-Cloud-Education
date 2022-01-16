@@ -2,7 +2,9 @@ package com.ruoyi.file.service;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.Adler32;
 import java.util.zip.CheckedOutputStream;
 import java.util.zip.ZipEntry;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.qiwenshare.common.util.DateUtil;
 import com.qiwenshare.ufop.constant.StorageTypeEnum;
@@ -40,6 +43,7 @@ import com.ruoyi.file.dto.file.PreviewDTO;
 import com.ruoyi.file.dto.file.UploadFileDTO;
 import com.ruoyi.file.mapper.*;
 import com.ruoyi.file.vo.file.FileListVo;
+import com.ruoyi.file.vo.file.UploadFileVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,6 +60,8 @@ public class FiletransferService implements IFiletransferService {
 
     @Resource
     UserFileMapper userFileMapper;
+    @Resource
+    UploadTaskDetailMapper uploadTaskDetailMapper;
 
     @Resource
     UFOPFactory ufopFactory;
@@ -373,4 +379,77 @@ public class FiletransferService implements IFiletransferService {
     public Long selectStorageSizeByUserId(Long userId) {
         return userFileMapper.selectStorageSizeByUserId(userId);
     }
+
+    @Override
+    public UploadFileVo uploadFileSpeed(UploadFileDTO uploadFileDTO, Long userId) {
+        UploadFileVo uploadFileVo = new UploadFileVo();
+        Map<String, Object> param = new HashMap<>();
+        param.put("identifier", uploadFileDTO.getIdentifier());
+        List<FileBean> list = fileMapper.selectByMap(param);
+
+        if (list != null && !list.isEmpty()) {
+            FileBean file = list.get(0);
+
+            UserFile userFile = new UserFile();
+
+            userFile.setUserId(userId);
+            String relativePath = uploadFileDTO.getRelativePath();
+            if (relativePath.contains("/")) {
+                userFile.setFilePath(uploadFileDTO.getFilePath() + UFOPUtils.getParentPath(relativePath) + "/");
+                fileDealComp.restoreParentFilePath(uploadFileDTO.getFilePath() + UFOPUtils.getParentPath(relativePath) + "/", userId);
+                fileDealComp.deleteRepeatSubDirFile(uploadFileDTO.getFilePath(), userId);
+            } else {
+                userFile.setFilePath(uploadFileDTO.getFilePath());
+            }
+
+            String fileName = uploadFileDTO.getFilename();
+            userFile.setFileName(UFOPUtils.getFileNameNotExtend(fileName));
+            userFile.setExtendName(UFOPUtils.getFileExtendName(fileName));
+            userFile.setDeleteFlag(0);
+
+            List<UserFile> userFileList = userFileMapper.selectList(new QueryWrapper<>(userFile));
+            if (userFileList.size() <= 0) {
+
+                userFile.setIsDir(0);
+                userFile.setUploadTime(DateUtil.getCurrentTime());
+                userFile.setFileId(file.getFileId());
+                userFileMapper.insert(userFile);
+                fileDealComp.uploadESByUserFileId(userFile.getUserFileId());
+            }
+
+            uploadFileVo.setSkipUpload(true);
+
+        } else {
+            uploadFileVo.setSkipUpload(false);
+
+            List<Integer> uploaded = uploadTaskDetailMapper.selectUploadedChunkNumList(uploadFileDTO.getIdentifier());
+            if (uploaded != null && !uploaded.isEmpty()) {
+                uploadFileVo.setUploaded(uploaded);
+            } else {
+
+                LambdaQueryWrapper<UploadTask> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+                lambdaQueryWrapper.eq(UploadTask::getIdentifier, uploadFileDTO.getIdentifier());
+                List<UploadTask> rslist = uploadTaskMapper.selectList(lambdaQueryWrapper);
+                if (rslist == null || rslist.isEmpty()) {
+                    UploadTask uploadTask = new UploadTask();
+                    uploadTask.setIdentifier(uploadFileDTO.getIdentifier());
+                    uploadTask.setUploadTime(DateUtil.getCurrentTime());
+                    uploadTask.setUploadStatus(UploadFileStatusEnum.UNCOMPLATE.getCode());
+                    uploadTask.setFileName(uploadFileDTO.getFilename());
+                    String relativePath = uploadFileDTO.getRelativePath();
+                    if (relativePath.contains("/")) {
+                        uploadTask.setFilePath(uploadFileDTO.getFilePath() + UFOPUtils.getParentPath(relativePath) + "/");
+                    } else {
+                        uploadTask.setFilePath(uploadFileDTO.getFilePath());
+                    }
+                    uploadTask.setExtendName(uploadTask.getExtendName());
+                    uploadTask.setUserId(userId);
+                    uploadTaskMapper.insert(uploadTask);
+                }
+            }
+
+        }
+        return uploadFileVo;
+    }
+
 }
