@@ -5,6 +5,7 @@ import config from '@/config/index'
 import { Message } from 'element-ui'
 import { fileImgMap, unknownImg, fileSuffixCodeModeMap } from '@/libs/map'
 
+console.log("process.env.GATEWAYprocess.env.GATEWAYprocess.env.GATEWAYprocess.env.GATEWAYprocess.env.GATEWAY:",process.env.GATEWAY)
 // 全局函数
 const globalFunction = {
 	/**
@@ -37,7 +38,7 @@ const globalFunction = {
 	 * @returns {string} 图片缩略图路径
 	 */
 	getImgMinPath(row) {
-		return `${config.baseContext}/filetransfer/preview?userFileId=${
+		return `${config.GATEWAY}/file/filetransfer/preview?userFileId=${
 			row.userFileId
 		}&isMin=true&shareBatchNum=${row.shareBatchNum}&extractionCode=${
 			row.extractionCode
@@ -49,7 +50,7 @@ const globalFunction = {
 	 * @returns {string} 文件路径
 	 */
 	getViewFilePath(row) {
-		return `${config.baseContext}/filetransfer/preview?userFileId=${
+		return `${config.GATEWAY}/file/filetransfer/preview?userFileId=${
 			row.userFileId
 		}&isMin=false&shareBatchNum=${row.shareBatchNum}&extractionCode=${
 			row.extractionCode
@@ -61,7 +62,7 @@ const globalFunction = {
 	 * @returns {string}  文件下载路径
 	 */
 	getDownloadFilePath(row) {
-		return `${config.baseContext}/filetransfer/downloadfile?userFileId=${
+		return `${config.GATEWAY}/file/filetransfer/downloadfile?userFileId=${
 			row.userFileId
 		}&shareBatchNum=${row.shareBatchNum}&extractionCode=${
 			row.extractionCode
@@ -73,7 +74,7 @@ const globalFunction = {
 	 * @returns {string} office 文件创建路径
 	 */
 	createFileOnlineByOffice(data) {
-		let fileUrl = `${location.protocol}//${location.host}${config.baseContext}`
+		let fileUrl = `${location.protocol}//${location.host}${config.GATEWAY}/file/`
 		const { href } = router.resolve({
 			name: 'Onlyoffice',
 			query: {
@@ -100,8 +101,8 @@ const globalFunction = {
 		let extendName = row.extendName
 
 		fileUrl = `${location.protocol}//${location.host}${
-			config.baseContext
-		}/filetransfer/preview?userFileId=${
+			config.GATEWAY
+		}/file/filetransfer/preview?userFileId=${
 			row.userFileId
 		}&isMin=false&shareBatchNum=${row.shareBatchNum}&extractionCode=${
 			row.extractionCode
@@ -134,8 +135,8 @@ const globalFunction = {
 		let extendName = row.extendName
 
 		fileUrl = `${location.protocol}//${location.host}${
-			config.baseContext
-		}/filetransfer/preview?userFileId=${
+			config.GATEWAY
+		}/file/filetransfer/preview?userFileId=${
 			row.userFileId
 		}&isMin=false&shareBatchNum=${row.shareBatchNum}&extractionCode=${
 			row.extractionCode
@@ -186,7 +187,7 @@ const globalFunction = {
 	 * @returns {string} 完整的分享链接
 	 */
 	getShareLink(shareBatchNum) {
-		return `${location.protocol}//${location.host}/share/${shareBatchNum}`
+		return `${location.protocol}//${location.host}/file/share/${shareBatchNum}`
 	},
 	/**
 	 * 复制分享链接

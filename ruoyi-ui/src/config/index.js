@@ -2,6 +2,8 @@
  * 存放工程配置项
  * @author 李雅婷
  */
+
+
 const config = {
 	/**
 	 * @description 域名
@@ -27,6 +29,7 @@ const config = {
 	 * 若修改了此值，请同步修改 vue.config.js 中 devServer.proxy 对应的值
 	 */
 	baseContext: process.env.VUE_APP_BASE_API,
+  GATEWAY: require('../../GATE_WAY').GATEWAY,
 	/**
 	 * 存放 token 时的命名方式
 	 */

@@ -137,15 +137,15 @@ public class FiletransferController {
     @GetMapping("/preview")
     public void preview(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, PreviewDTO previewDTO) {
         UserFile userFile = userFileService.getById(previewDTO.getUserFileId());
-        boolean authResult = fileDealComp.checkAuthDownloadAndPreview(previewDTO.getShareBatchNum(),
-                previewDTO.getExtractionCode(),
-                previewDTO.getToken(),
-                previewDTO.getUserFileId());
-
-        if (!authResult) {
-            log.error("没有权限预览！！！");
-            return;
-        }
+//        boolean authResult = fileDealComp.checkAuthDownloadAndPreview(previewDTO.getShareBatchNum(),
+//                previewDTO.getExtractionCode(),
+//                previewDTO.getToken(),
+//                previewDTO.getUserFileId());
+//
+//        if (!authResult) {
+//            log.error("没有权限预览！！！");
+//            return;
+//        }
 
         FileBean fileBean = fileService.getById(userFile.getFileId());
         /********************************** 图片预览适配 **************************************/
