@@ -1,18 +1,6 @@
-/*
- Navicat Premium Data Transfer
+DROP DATABASE IF EXISTS `ry-config`;
 
- Source Server         : localhost_3306
- Source Server Type    : MySQL
- Source Server Version : 80026
- Source Host           : localhost:3306
- Source Schema         : ry-config
-
- Target Server Type    : MySQL
- Target Server Version : 80026
- File Encoding         : 65001
-
- Date: 25/01/2022 20:17:28
-*/
+USE `ry-config`;
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
