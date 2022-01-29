@@ -1,14 +1,14 @@
 mvn clean package
 
-cd ../gateway
-
-sh deploy-dev.sh
 
 cd docker_pro/ruoyi/auth
 
 sh deploy-dev.sh
 
 
+cd ../gateway
+
+sh deploy-dev.sh
 
 
 cd ../modules/file
