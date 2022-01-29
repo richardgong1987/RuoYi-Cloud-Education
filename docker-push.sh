@@ -1,7 +1,11 @@
 mvn clean package
 
+cd ruoyi-ui
 
-cd docker_pro/ruoyi/auth
+yarn build:prod
+
+
+cd ../docker_pro/ruoyi/auth
 
 sh deploy-dev.sh
 
@@ -23,7 +27,12 @@ cd ../../modules-education/education-admin
 
 sh deploy-dev.sh
 
+cd ../../../nginx
 
+sh deploy-dev.sh
+
+
+docker tag docker_ruoyi-auth richardgong1987/docker_ruoyi-auth
 
 docker tag docker_ruoyi-auth richardgong1987/docker_ruoyi-auth
 

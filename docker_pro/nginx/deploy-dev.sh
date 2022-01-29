@@ -4,6 +4,7 @@ set -eu
 
 # copy html
 echo "begin copy html "
-cp -r ../../ruoyi-ui/dist/** ./nginx/html/dist
+
+cp -fr ../../ruoyi-ui/dist/** ./html/dist
 
 docker-compose build && docker-compose push
