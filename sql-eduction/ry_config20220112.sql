@@ -1,6 +1,4 @@
-DROP DATABASE IF EXISTS `ry-config`;
 
-USE `ry-config`;
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
