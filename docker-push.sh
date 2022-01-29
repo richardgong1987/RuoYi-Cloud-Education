@@ -26,10 +26,19 @@ sh deploy-dev.sh
 
 
 
+docker tag docker_ruoyi-auth richardgong1987/docker_ruoyi-auth
 
-#docker tag docker_ruoyi-nginx richardgong1987/docker_ruoyi-nginx
+docker tag docker_ruoyi-gateway richardgong1987/docker_ruoyi-gateway
+
+docker tag docker_ruoyi-modules-system richardgong1987/docker_ruoyi-modules-system
+
+docker tag docker_ruoyi-modules-file richardgong1987/docker_ruoyi-modules-file
+
+docker tag docker_ruoyi-modules-education-admin richardgong1987/docker_ruoyi-modules-education-admin
+
 
 docker login --username=richardgong1987 --password-stdin  < ~/DockerPassword.txt
+
 
 docker push  richardgong1987/docker_ruoyi-gateway
 docker push  richardgong1987/docker_ruoyi-auth
