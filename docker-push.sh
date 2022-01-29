@@ -15,14 +15,13 @@ cd ../modules/file
 
 sh deploy-dev.sh
 
-cd ../modules/system
+cd ../system
 
 sh deploy-dev.sh
 
 cd ../../modules-education/education-admin
 
 sh deploy-dev.sh
-
 
 
 
