@@ -31,25 +31,27 @@ cd ../../../nginx
 
 sh deploy-dev.sh
 
+version=v2022_01_31_15_44
 
-docker tag docker_ruoyi-auth richardgong1987/docker_ruoyi-auth
+docker tag richardgong1987/docker_ruoyi-nginx richardgong1987/docker_ruoyi-nginx:$version
 
-docker tag docker_ruoyi-auth richardgong1987/docker_ruoyi-auth
+docker tag richardgong1987/docker_ruoyi-auth richardgong1987/docker_ruoyi-auth:$version
 
-docker tag docker_ruoyi-gateway richardgong1987/docker_ruoyi-gateway
+docker tag richardgong1987/docker_ruoyi-gateway richardgong1987/docker_ruoyi-gateway:$version
 
-docker tag docker_ruoyi-modules-system richardgong1987/docker_ruoyi-modules-system
+docker tag richardgong1987/docker_ruoyi-modules-system richardgong1987/docker_ruoyi-modules-system:$version
 
-docker tag docker_ruoyi-modules-file richardgong1987/docker_ruoyi-modules-file
+docker tag richardgong1987/docker_ruoyi-modules-file richardgong1987/docker_ruoyi-modules-file:$version
 
-docker tag docker_ruoyi-modules-education-admin richardgong1987/docker_ruoyi-modules-education-admin
+docker tag richardgong1987/docker_ruoyi-modules-education-admin richardgong1987/docker_ruoyi-modules-education-admin:$version
 
 
 docker login --username=richardgong1987 --password-stdin  < ~/DockerPassword.txt
 
 
-docker push  richardgong1987/docker_ruoyi-gateway
-docker push  richardgong1987/docker_ruoyi-auth
-docker push  richardgong1987/docker_ruoyi-modules-system
-docker push  richardgong1987/docker_ruoyi-modules-file
-docker push  richardgong1987/docker_ruoyi-modules-education-admin
+docker push  richardgong1987/docker_ruoyi-nginx:$version
+docker push  richardgong1987/docker_ruoyi-gateway:$version
+docker push  richardgong1987/docker_ruoyi-auth:$version
+docker push  richardgong1987/docker_ruoyi-modules-system:$version
+docker push  richardgong1987/docker_ruoyi-modules-file:$version
+docker push  richardgong1987/docker_ruoyi-modules-education-admin:$version
