@@ -8,9 +8,6 @@ for pid in "${pids[@]}"; do
      kill -9 $pid
 done
 
-sh /home/nacos/bin/shutdown.sh
-
-sh /home/nacos/bin/startup.sh -m standalone
 
 nohup java -jar ./ruoyi-gateway/target/ruoyi-gateway.jar &
 
