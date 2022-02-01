@@ -8,6 +8,13 @@ for pid in "${pids[@]}"; do
      kill -9 $pid
 done
 
+pids=( $(jps | grep education-admin | awk '{print $1}') )
+
+for pid in "${pids[@]}"; do
+     echo "killing $pid"
+     kill -9 $pid
+done
+
 
 nohup java -jar ./ruoyi-gateway/target/ruoyi-gateway.jar &
 
